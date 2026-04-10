@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusSHOP ULTRA</title>
+<title>NexusSHOP ULTRA MAX</title>
 
 <style>
 body{
@@ -11,6 +11,12 @@ body{
   font-family:'Segoe UI',sans-serif;
   background:#050505;
   color:white;
+  transition:.3s;
+}
+
+.light{
+  background:#f5f5f5;
+  color:black;
 }
 
 /* AUTH */
@@ -19,119 +25,79 @@ body{
   justify-content:center;
   align-items:center;
   height:100vh;
-  background:radial-gradient(circle,#0a0a0a,#000);
 }
 
 .box{
-  width:360px;
+  width:350px;
+  background:#111;
   padding:30px;
-  background:#0d0d0d;
   border-radius:20px;
-  box-shadow:0 0 40px rgba(255,0,200,0.2);
-  text-align:center;
 }
 
-input{
+input,select{
   width:100%;
-  padding:12px;
-  margin:8px 0;
-  background:#111;
-  border:none;
+  padding:10px;
+  margin:5px 0;
+  background:#222;
   color:white;
+  border:none;
   border-radius:10px;
 }
 
 .btn{
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  padding:10px;
   border:none;
   border-radius:10px;
   background:linear-gradient(90deg,#ff00cc,#ff0099);
   color:white;
   cursor:pointer;
-}
-
-.switch{
-  margin-top:10px;
-  opacity:0.7;
-  cursor:pointer;
-}
-
-/* FAKE VERIFY */
-.verify{
-  margin-top:15px;
-  padding:10px;
-  background:#111;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  justify-content:center;
-  cursor:pointer;
-}
-
-.verify.done{
-  background:#0f3;
-  color:black;
+  margin-top:5px;
 }
 
 /* HEADER */
 header{
   display:flex;
   justify-content:space-between;
-  padding:20px;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(10px);
+  padding:15px;
+  background:#000;
 }
 
 .logo{
-  font-size:26px;
   font-weight:bold;
-  background:linear-gradient(90deg,#00f0ff,#ff00c8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* HERO */
-.hero{
-  text-align:center;
-  padding:80px;
-}
-
-.hero h1{
-  font-size:70px;
-  margin:0;
-  background:linear-gradient(90deg,#00f0ff,#ff00c8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  font-size:22px;
 }
 
 /* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
   padding:20px;
 }
 
 .card{
   background:#111;
   padding:10px;
-  border-radius:15px;
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px rgba(255,0,200,0.3);
+  border-radius:10px;
 }
 
 .card img{
   width:100%;
-  height:160px;
+  height:140px;
   object-fit:cover;
-  border-radius:10px;
+}
+
+/* CART */
+.cart{
+  position:fixed;
+  right:0;
+  top:0;
+  width:300px;
+  height:100%;
+  background:#111;
+  padding:15px;
+  display:none;
 }
 
 .hidden{display:none}
@@ -143,31 +109,23 @@ header{
 <!-- AUTH -->
 <div id="auth" class="auth">
 <div class="box">
-
 <h2 id="title">Login</h2>
 
 <div id="loginBox">
 <input id="logUser" placeholder="Username">
 <input id="logPass" type="password" placeholder="Password">
-
-<div id="verify" class="verify" onclick="verifyCheck()">
-☐ I'm not a robot
-</div>
-
 <button class="btn" onclick="login()">Login</button>
-<div class="switch" onclick="showRegister()">Create account</div>
+<button class="btn" onclick="showRegister()">Register</button>
 </div>
 
 <div id="registerBox" class="hidden">
 <input id="regUser" placeholder="Username">
 <input id="regPass" type="password" placeholder="Password">
-
-<button class="btn" onclick="register()">Register</button>
-<div class="switch" onclick="showLogin()">Back to login</div>
+<button class="btn" onclick="register()">Create</button>
+<button class="btn" onclick="showLogin()">Back</button>
 </div>
 
 <p id="msg"></p>
-
 </div>
 </div>
 
@@ -176,71 +134,64 @@ header{
 
 <header>
 <div class="logo">NexusSHOP</div>
+
 <div>
-<span id="user"></span>
-<button class="btn" onclick="logout()">Вийти</button>
+<input id="search" placeholder="Пошук..." oninput="render()" style="width:120px;">
+<select id="filter" onchange="render()">
+<option value="all">Всі</option>
+<option value="low">До 100$</option>
+<option value="high">100$+</option>
+</select>
+
+<button onclick="toggleTheme()">🌙</button>
+<button onclick="toggleCart()">🛒 <span id="count">0</span></button>
+<button onclick="logout()">Вийти</button>
 </div>
 </header>
 
-<div class="hero">
-<h1>NEXUS</h1>
-<p>Майбутнє техніки ⚡</p>
-</div>
-
 <div class="grid" id="products"></div>
+
+<!-- CART -->
+<div id="cart" class="cart">
+<h3>Кошик</h3>
+<div id="cartItems"></div>
+<button class="btn" onclick="checkout()">Оплатити</button>
+<button class="btn" onclick="toggleCart()">Закрити</button>
+</div>
 
 </div>
 
 <script>
 // ===== AUTH =====
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let currentUser = localStorage.getItem("currentUser");
-let verified=false;
-
-function verifyCheck(){
-  verified=true;
-  let v=document.getElementById("verify");
-  v.innerText="✔ Verified";
-  v.classList.add("done");
-}
+let users=JSON.parse(localStorage.getItem("users"))||{};
+let currentUser=localStorage.getItem("currentUser");
 
 function showRegister(){
-  loginBox.classList.add("hidden");
   registerBox.classList.remove("hidden");
-  title.innerText="Register";
+  loginBox.classList.add("hidden");
 }
 
 function showLogin(){
-  loginBox.classList.remove("hidden");
   registerBox.classList.add("hidden");
-  title.innerText="Login";
+  loginBox.classList.remove("hidden");
 }
 
 function register(){
-  let u=regUser.value;
-  let p=regPass.value;
-
+  let u=regUser.value,p=regPass.value;
   if(!u||!p)return msg("Заповни поля");
-  if(users[u])return msg("Є такий користувач");
+  if(users[u])return msg("Є такий");
 
   users[u]={password:p};
   localStorage.setItem("users",JSON.stringify(users));
-  msg("Готово! Увійди");
-  showLogin();
+  msg("Готово!");
 }
 
 function login(){
-  let u=logUser.value;
-  let p=logPass.value;
-
-  if(!verified)return msg("Підтверди що ти не робот");
-
+  let u=logUser.value,p=logPass.value;
   if(users[u]&&users[u].password===p){
     localStorage.setItem("currentUser",u);
     start();
-  }else{
-    msg("Невірно");
-  }
+  }else msg("Невірно");
 }
 
 function logout(){
@@ -248,43 +199,101 @@ function logout(){
   location.reload();
 }
 
-function msg(t){
-  msg.innerText=t;
-}
+function msg(t){msg.innerText=t;}
 
-// START
 function start(){
   auth.style.display="none";
   app.style.display="block";
-  user.innerText=currentUser;
   render();
 }
 
-if(currentUser) start();
+if(currentUser)start();
 
-// ===== PRODUCTS =====
+// ===== DATA =====
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let favs=JSON.parse(localStorage.getItem("favs"))||[];
+
 const products=[
-{name:"RTX 4090",img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7"},
-{name:"RTX 4070",img:"https://images.unsplash.com/photo-1593640408182-31c70c8268f5"},
-{name:"PS5",img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"},
-{name:"Xbox",img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d"},
-{name:"Monitor",img:"https://images.unsplash.com/photo-1591488320449-011701bb6704"}
+{name:"RTX 4090",price:3000,img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7"},
+{name:"PS5",price:700,img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"},
+{name:"Xbox",price:600,img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d"},
+{name:"Monitor",price:200,img:"https://images.unsplash.com/photo-1591488320449-011701bb6704"},
+{name:"Mouse",price:50,img:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7"}
 ];
 
+// ===== RENDER =====
 function render(){
+  let s=search.value.toLowerCase();
+  let f=filter.value;
+
   let html="";
-  products.forEach(p=>{
+  products.filter(p=>{
+    let ok=p.name.toLowerCase().includes(s);
+    if(f==="low") ok=ok&&p.price<100;
+    if(f==="high") ok=ok&&p.price>=100;
+    return ok;
+  }).forEach((p,i)=>{
+    let fav=favs.includes(p.name);
+
     html+=`
     <div class="card">
       <img src="${p.img}">
-      <h3>${p.name}</h3>
-      <button class="btn">Купити</button>
+      <h4>${p.name}</h4>
+      <p>$${p.price}</p>
+      <button onclick="add(${i})">Купити</button>
+      <button onclick="toggleFav('${p.name}')">${fav?'❤️':'🤍'}</button>
     </div>`;
   });
-  productsDiv.innerHTML=html;
+
+  products.innerHTML=html;
+  update();
 }
 
-const productsDiv=document.getElementById("products");
+// ===== CART =====
+function add(i){
+  cart.push(products[i]);
+  save();
+}
+
+function save(){
+  localStorage.setItem("cart",JSON.stringify(cart));
+  localStorage.setItem("favs",JSON.stringify(favs));
+  update();
+}
+
+function update(){
+  count.innerText=cart.length;
+
+  let html="";
+  cart.forEach((p,i)=>{
+    html+=`${p.name} $${p.price} ❌<br>`;
+  });
+
+  cartItems.innerHTML=html;
+}
+
+function toggleCart(){
+  cart.style.display=cart.style.display==="block"?"none":"block";
+}
+
+function checkout(){
+  alert("Оплата пройшла ✅");
+  cart=[];
+  save();
+}
+
+// ===== FAV =====
+function toggleFav(n){
+  if(favs.includes(n))favs=favs.filter(f=>f!==n);
+  else favs.push(n);
+  save();
+  render();
+}
+
+// ===== THEME =====
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
 </script>
 
 </body>
