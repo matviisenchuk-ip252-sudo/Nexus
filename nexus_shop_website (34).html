@@ -4,80 +4,179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NexusSHOP MAX</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#050505;color:white;transition:.3s}
+body{
+  margin:0;
+  font-family:Arial;
+  background:#050505;
+  color:white;
+  transition:.3s;
+}
 .light{background:#f5f5f5;color:#111}
-header{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:20px 40px}
-.logo{font-size:32px;font-weight:bold;background:linear-gradient(90deg,#00f0ff,#ff00c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-nav a{pointer-events:auto;margin:0 10px;cursor:pointer}
+
+/* HEADER */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#00f0ff,#ff00c8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+nav{display:flex;flex-wrap:wrap}
+nav a{margin:5px 10px;cursor:pointer}
 .cart{cursor:pointer}
-section{position:relative;z-index:1;padding:40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:#111;border-radius:15px;padding:15px;transition:.3s}
+
+/* SECTIONS */
+section{
+  padding:40px 20px;
+  max-width:1200px;
+  margin:auto;
+}
+
+/* HERO */
+.hero-title{
+  font-size:clamp(32px,6vw,64px);
+  margin:0;
+  background:linear-gradient(90deg,#00f0ff,#ff00c8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:clamp(14px,2vw,18px);
+  color:#aaa;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:20px;
+}
+
+/* CARD */
+.card{
+  background:#111;
+  border-radius:15px;
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:.3s;
+}
 .light .card{background:white}
-.btn{margin-top:10px;padding:8px;border:none;border-radius:8px;background:#ff00cc;color:white;cursor:pointer}
-input{padding:8px;border-radius:6px;border:none;margin:5px}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* BUTTONS */
+.btn{
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:#ff00cc;
+  color:white;
+  cursor:pointer;
+  flex:1;
+}
+.card-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+/* INPUT */
+input{
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  margin:10px 0;
+  width:100%;
+  max-width:300px;
+}
+
+/* CART */
+.cart-panel{
+  position:fixed;
+  right:0;
+  top:0;
+  width:100%;
+  max-width:320px;
+  height:100%;
+  background:#111;
+  padding:20px;
+  display:none;
+  overflow:auto;
+}
+
+/* HIDDEN */
 .hidden{display:none}
-.cart-panel{position:fixed;right:0;top:0;width:300px;height:100%;background:#111;padding:20px;display:none;overflow:auto}
 </style>
 </head>
+
 <body>
 
 <header>
 <div class="logo">NexusSHOP</div>
+
 <nav>
-<a href="#" onclick="showPage('home');return false;">Головна</a>
-<a href="#" onclick="showPage('catalog');return false;">Каталог</a>
-<a href="#" onclick="showPage('checkout');return false;">Замовлення</a>
+<a onclick="showPage('home')">Головна</a>
+<a onclick="showPage('catalog')">Каталог</a>
+<a onclick="showPage('checkout')">Замовлення</a>
 </nav>
+
 <div>
 <button onclick="toggleTheme()">🌙</button>
 <span class="cart" onclick="toggleCart()">🛒 <span id="count">0</span></span>
 </div>
 </header>
 
-<section id="home" style="position:relative;overflow:hidden;text-align:center;padding:100px 20px;z-index:1">
-  <div style="position:relative;z-index:2">
-    <h1 class="hero-title">NexusSHOP</h1>
-    <p class="hero-sub">Твій стильний магазин техніки ⚡</p>
-    <div style="margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <button class="btn" onclick="showPage('catalog')">Перейти в каталог 🚀</button>
-      <button class="btn" onclick="toggleTheme()">Змінити тему 🌙</button>
-    </div>
-  </div>
+<!-- HOME -->
+<section id="home" style="text-align:center">
+<h1 class="hero-title">NexusSHOP</h1>
+<p class="hero-sub">Твій стильний магазин техніки ⚡</p>
+
+<div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<button class="btn" onclick="showPage('catalog')">Каталог 🚀</button>
+<button class="btn" onclick="toggleTheme()">Тема 🌙</button>
+</div>
 </section>
-<style>
-.hero-title{font-size:64px;margin:0;background:linear-gradient(90deg,#00f0ff,#ff00c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:glow 3s ease-in-out infinite alternate}
-.hero-sub{font-size:18px;color:#aaa;margin-top:10px;animation:fadeIn 1.2s ease}
-@keyframes glow{from{text-shadow:0 0 10px rgba(0,240,255,.4)}to{text-shadow:0 0 30px rgba(255,0,200,.6)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-</style>
 
-
-
+<!-- CATALOG -->
 <section id="catalog" class="hidden">
 <h2>Каталог</h2>
-<input placeholder="Пошук" id="search" oninput="render()">
+<input placeholder="Пошук..." id="search" oninput="render()">
 <div class="grid" id="list"></div>
 </section>
 
+<!-- CHECKOUT -->
 <section id="checkout" class="hidden">
-<h2>Оформлення замовлення</h2>
-<input placeholder="Ім'я" id="name"><br>
-<input placeholder="Телефон" id="phone"><br>
+<h2>Оформлення</h2>
+<input placeholder="Ім'я" id="name">
+<input placeholder="Телефон" id="phone">
 <button class="btn" onclick="order()">Замовити</button>
 <p id="orderStatus"></p>
 </section>
 
-<section id="contacts" class="hidden">
-<h2>Контакти</h2>
-<p>📞 Телефон: +380 68 741 44 18</p>
-<p>📧 Email: nexusshop@gmail.com</p>
-<p>📍 Адреса: м. Івано-Франківськ, Україна</p>
-<p>💬 Telegram: @nexusshop_support</p>
-<p>📸 Instagram: @nexusshop.ua</p>
-</section>
-
+<!-- CART -->
 <div class="cart-panel" id="cartPanel">
 <button class="btn" onclick="toggleCart()">Закрити ✖</button>
 <h3>Кошик</h3>
@@ -85,15 +184,6 @@ input{padding:8px;border-radius:6px;border:none;margin:5px}
 </div>
 
 <script>
-// гарантія що все працює
-window.addEventListener('DOMContentLoaded', ()=>{
-  showPage('home');
-
-  document.querySelectorAll('nav a')[0].onclick=()=>showPage('home');
-  document.querySelectorAll('nav a')[1].onclick=()=>showPage('catalog');
-  document.querySelectorAll('nav a')[2].onclick=()=>showPage('checkout');
-});
-
 const products=[
 {name:"Gaming PC RTX 4090",price:3000,img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming PC RTX 4070",price:1800,img:"https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=800&q=80"},
@@ -114,30 +204,44 @@ const products=[
 let cart=[];
 
 function render(){
-let s=document.getElementById('search')?.value?.toLowerCase()||'';
+let s=document.getElementById('search').value.toLowerCase();
 let html='';
+
 products.filter(p=>p.name.toLowerCase().includes(s)).forEach((p,i)=>{
-html+=`<div class='card'>
-<img src='${p.img}' onerror="this.src='https://picsum.photos/400/200?random='+Math.random()" style='width:100%;height:150px;object-fit:cover;border-radius:10px'>
-<br>${p.name}<br>$${p.price}<br>
-<button class='btn' onclick='add(${i})'>Купити</button>
-<button class='btn' onclick='fav(${i})'>❤️</button></div>`;
+html+=`
+<div class="card">
+<img src="${p.img}">
+<div><b>${p.name}</b></div>
+<div>$${p.price}</div>
+<div class="card-buttons">
+<button class="btn" onclick="add(${i})">Купити</button>
+<button class="btn" onclick="fav()">❤️</button>
+</div>
+</div>`;
 });
+
 document.getElementById('list').innerHTML=html;
 }
 
-function add(i){cart.push(products[i]);update();}
+function add(i){
+cart.push(products[i]);
+update();
+}
 
 function update(){
 document.getElementById('count').innerText=cart.length;
+
 let html='';
 cart.forEach((p,i)=>{
-html+=`${p.name} $${p.price} <button onclick='del(${i})'>❌</button><br>`;
+html+=`${p.name} $${p.price} <button onclick="del(${i})">❌</button><br>`;
 });
 document.getElementById('cartItems').innerHTML=html;
 }
 
-function del(i){cart.splice(i,1);update();}
+function del(i){
+cart.splice(i,1);
+update();
+}
 
 function toggleCart(){
 let c=document.getElementById('cartPanel');
@@ -145,31 +249,36 @@ c.style.display=c.style.display==='block'?'none':'block';
 }
 
 function showPage(p){
-['home','catalog','checkout','contacts'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el) el.classList.add('hidden');
+['home','catalog','checkout'].forEach(id=>{
+document.getElementById(id).classList.add('hidden');
 });
-const target=document.getElementById(p);
-if(target) target.classList.remove('hidden');
+document.getElementById(p).classList.remove('hidden');
 if(p==='catalog') render();
 }
 
 function order(){
 let name=document.getElementById('name').value;
 let phone=document.getElementById('phone').value;
+
 if(!name||!phone||cart.length===0){
 document.getElementById('orderStatus').innerText='Заповни все!';
 return;
 }
+
 document.getElementById('orderStatus').innerText='✅ Замовлення оформлено!';
-cart=[];update();
+cart=[];
+update();
 }
 
 function toggleTheme(){
 document.body.classList.toggle('light');
 }
 
-function fav(i){alert('Додано в обране ❤️');}
+function fav(){
+alert('Додано в обране ❤️');
+}
+
+showPage('home');
 </script>
 
 </body>
