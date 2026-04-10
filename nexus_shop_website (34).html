@@ -13,48 +13,67 @@ body{
   color:white;
 }
 
-/* AUTH UI */
+/* AUTH */
 .auth{
   display:flex;
   justify-content:center;
   align-items:center;
   height:100vh;
+  background:radial-gradient(circle,#0a0a0a,#000);
 }
 
-.auth-box{
-  width:350px;
-}
-
-.auth h1{
-  font-size:40px;
+.box{
+  width:360px;
+  padding:30px;
+  background:#0d0d0d;
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(255,0,200,0.2);
+  text-align:center;
 }
 
 input{
   width:100%;
   padding:12px;
   margin:8px 0;
-  background:#0d0d0d;
-  border:1px solid #222;
+  background:#111;
+  border:none;
   color:white;
   border-radius:10px;
 }
 
 .btn{
+  width:100%;
   padding:12px;
+  margin-top:10px;
   border:none;
   border-radius:10px;
   background:linear-gradient(90deg,#ff00cc,#ff0099);
   color:white;
   cursor:pointer;
-  width:100%;
-  margin-top:10px;
 }
 
 .switch{
   margin-top:10px;
-  text-align:center;
   opacity:0.7;
   cursor:pointer;
+}
+
+/* FAKE VERIFY */
+.verify{
+  margin-top:15px;
+  padding:10px;
+  background:#111;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.verify.done{
+  background:#0f3;
+  color:black;
 }
 
 /* HEADER */
@@ -63,17 +82,29 @@ header{
   justify-content:space-between;
   padding:20px;
   background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
 }
 
 .logo{
-  font-size:24px;
+  font-size:26px;
   font-weight:bold;
+  background:linear-gradient(90deg,#00f0ff,#ff00c8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 /* HERO */
 .hero{
   text-align:center;
-  padding:80px 20px;
+  padding:80px;
+}
+
+.hero h1{
+  font-size:70px;
+  margin:0;
+  background:linear-gradient(90deg,#00f0ff,#ff00c8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 /* GRID */
@@ -87,13 +118,20 @@ header{
 .card{
   background:#111;
   padding:10px;
-  border-radius:10px;
+  border-radius:15px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 0 20px rgba(255,0,200,0.3);
 }
 
 .card img{
   width:100%;
-  height:150px;
+  height:160px;
   object-fit:cover;
+  border-radius:10px;
 }
 
 .hidden{display:none}
@@ -104,26 +142,28 @@ header{
 
 <!-- AUTH -->
 <div id="auth" class="auth">
-<div class="auth-box">
+<div class="box">
 
-<h1 id="title">Register</h1>
+<h2 id="title">Login</h2>
 
-<div id="registerBox">
-<input id="regUser" placeholder="Username">
-<input id="regEmail" placeholder="Email">
-<input id="regPass" type="password" placeholder="Password">
-<input id="regPass2" type="password" placeholder="Confirm Password">
-
-<button class="btn" onclick="register()">Register</button>
-<div class="switch" onclick="showLogin()">or Login</div>
-</div>
-
-<div id="loginBox" class="hidden">
+<div id="loginBox">
 <input id="logUser" placeholder="Username">
 <input id="logPass" type="password" placeholder="Password">
 
+<div id="verify" class="verify" onclick="verifyCheck()">
+☐ I'm not a robot
+</div>
+
 <button class="btn" onclick="login()">Login</button>
-<div class="switch" onclick="showRegister()">or Register</div>
+<div class="switch" onclick="showRegister()">Create account</div>
+</div>
+
+<div id="registerBox" class="hidden">
+<input id="regUser" placeholder="Username">
+<input id="regPass" type="password" placeholder="Password">
+
+<button class="btn" onclick="register()">Register</button>
+<div class="switch" onclick="showLogin()">Back to login</div>
 </div>
 
 <p id="msg"></p>
@@ -131,14 +171,14 @@ header{
 </div>
 </div>
 
-<!-- SITE -->
+<!-- APP -->
 <div id="app" class="hidden">
 
 <header>
 <div class="logo">NexusSHOP</div>
 <div>
 <span id="user"></span>
-<button onclick="logout()">Вийти</button>
+<button class="btn" onclick="logout()">Вийти</button>
 </div>
 </header>
 
@@ -152,109 +192,99 @@ header{
 </div>
 
 <script>
-// USERS
+// ===== AUTH =====
 let users = JSON.parse(localStorage.getItem("users")) || {};
 let currentUser = localStorage.getItem("currentUser");
+let verified=false;
 
-// SWITCH UI
-function showLogin(){
-  document.getElementById('registerBox').classList.add('hidden');
-  document.getElementById('loginBox').classList.remove('hidden');
-  document.getElementById('title').innerText="Login";
+function verifyCheck(){
+  verified=true;
+  let v=document.getElementById("verify");
+  v.innerText="✔ Verified";
+  v.classList.add("done");
 }
 
 function showRegister(){
-  document.getElementById('registerBox').classList.remove('hidden');
-  document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('title').innerText="Register";
+  loginBox.classList.add("hidden");
+  registerBox.classList.remove("hidden");
+  title.innerText="Register";
 }
 
-// REGISTER
+function showLogin(){
+  loginBox.classList.remove("hidden");
+  registerBox.classList.add("hidden");
+  title.innerText="Login";
+}
+
 function register(){
-  let u = regUser.value;
-  let e = regEmail.value;
-  let p = regPass.value;
-  let p2 = regPass2.value;
+  let u=regUser.value;
+  let p=regPass.value;
 
-  if(!u || !e || !p || !p2){
-    msg("Заповни всі поля");
-    return;
-  }
+  if(!u||!p)return msg("Заповни поля");
+  if(users[u])return msg("Є такий користувач");
 
-  if(p !== p2){
-    msg("Паролі не співпадають");
-    return;
-  }
-
-  if(users[u]){
-    msg("Користувач вже існує");
-    return;
-  }
-
-  users[u] = {email:e,password:p};
-  localStorage.setItem("users", JSON.stringify(users));
-
-  msg("Успішна реєстрація! Тепер увійди");
+  users[u]={password:p};
+  localStorage.setItem("users",JSON.stringify(users));
+  msg("Готово! Увійди");
   showLogin();
 }
 
-// LOGIN
 function login(){
-  let u = logUser.value;
-  let p = logPass.value;
+  let u=logUser.value;
+  let p=logPass.value;
 
-  if(users[u] && users[u].password === p){
-    localStorage.setItem("currentUser", u);
+  if(!verified)return msg("Підтверди що ти не робот");
+
+  if(users[u]&&users[u].password===p){
+    localStorage.setItem("currentUser",u);
     start();
   }else{
-    msg("Неправильний логін або пароль");
+    msg("Невірно");
   }
 }
 
-// LOGOUT
 function logout(){
   localStorage.removeItem("currentUser");
   location.reload();
 }
 
-// MESSAGE
 function msg(t){
-  document.getElementById('msg').innerText = t;
+  msg.innerText=t;
 }
 
-// START APP
+// START
 function start(){
-  document.getElementById('auth').style.display="none";
-  document.getElementById('app').style.display="block";
-  document.getElementById('user').innerText=currentUser;
-
-  renderProducts();
+  auth.style.display="none";
+  app.style.display="block";
+  user.innerText=currentUser;
+  render();
 }
 
-// PRODUCTS
+if(currentUser) start();
+
+// ===== PRODUCTS =====
 const products=[
 {name:"RTX 4090",img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7"},
+{name:"RTX 4070",img:"https://images.unsplash.com/photo-1593640408182-31c70c8268f5"},
 {name:"PS5",img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"},
 {name:"Xbox",img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d"},
 {name:"Monitor",img:"https://images.unsplash.com/photo-1591488320449-011701bb6704"}
 ];
 
-function renderProducts(){
-  let html='';
+function render(){
+  let html="";
   products.forEach(p=>{
     html+=`
     <div class="card">
       <img src="${p.img}">
-      <p>${p.name}</p>
+      <h3>${p.name}</h3>
+      <button class="btn">Купити</button>
     </div>`;
   });
-  document.getElementById('products').innerHTML=html;
+  productsDiv.innerHTML=html;
 }
 
-// CHECK SESSION
-if(currentUser){
-  start();
-}
+const productsDiv=document.getElementById("products");
 </script>
 
 </body>
