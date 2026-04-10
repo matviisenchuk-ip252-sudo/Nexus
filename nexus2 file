@@ -15,7 +15,6 @@ body{
 }
 .light{background:#f5f5f5;color:#111}
 
-/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
@@ -24,6 +23,7 @@ header{
   flex-wrap:wrap;
   gap:10px;
 }
+
 .logo{
   font-size:28px;
   font-weight:bold;
@@ -31,18 +31,18 @@ header{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 nav{display:flex;flex-wrap:wrap}
 nav a{margin:5px 10px;cursor:pointer}
+
 .cart{cursor:pointer}
 
-/* SECTIONS */
 section{
   padding:40px 20px;
   max-width:1200px;
   margin:auto;
 }
 
-/* HERO */
 .hero-title{
   font-size:clamp(32px,6vw,64px);
   margin:0;
@@ -50,19 +50,18 @@ section{
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
+
 .hero-sub{
   font-size:clamp(14px,2vw,18px);
   color:#aaa;
 }
 
-/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
   gap:20px;
 }
 
-/* CARD */
 .card{
   background:#111;
   border-radius:15px;
@@ -87,7 +86,6 @@ section{
   margin-bottom:10px;
 }
 
-/* BUTTONS */
 .btn{
   padding:8px;
   border:none;
@@ -97,13 +95,13 @@ section{
   cursor:pointer;
   flex:1;
 }
+
 .card-buttons{
   display:flex;
   gap:8px;
   margin-top:10px;
 }
 
-/* INPUT */
 input{
   padding:10px;
   border-radius:8px;
@@ -113,7 +111,6 @@ input{
   max-width:300px;
 }
 
-/* CART */
 .cart-panel{
   position:fixed;
   right:0;
@@ -127,7 +124,6 @@ input{
   overflow:auto;
 }
 
-/* HIDDEN */
 .hidden{display:none}
 </style>
 </head>
@@ -184,6 +180,8 @@ input{
 </div>
 
 <script>
+const fallback = "https://via.placeholder.com/300x160?text=No+Image";
+
 const products=[
 {name:"Gaming PC RTX 4090",price:3000,img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming PC RTX 4070",price:1800,img:"https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=800&q=80"},
@@ -192,13 +190,15 @@ const products=[
 {name:"Gaming Monitor 144Hz",price:320,img:"https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming Monitor 240Hz",price:500,img:"https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming Mouse RGB",price:50,img:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80"},
-{name:"Wireless Mouse Pro",price:90,img:"https://images.unsplash.com/photo-1587825140709-9dffebf5c2c7?auto=format&fit=crop&w=800&q=80"},
+
+/* FIXED IMAGES */
+{name:"Wireless Mouse Pro",price:90,img:"https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80"},
 {name:"Mechanical Keyboard",price:150,img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming Headset",price:120,img:"https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=800&q=80"},
 {name:"Streaming Microphone",price:140,img:"https://images.unsplash.com/photo-1580894908361-967195033215?auto=format&fit=crop&w=800&q=80"},
 {name:"Gaming Chair",price:350,img:"https://images.unsplash.com/photo-1598300056393-4aac492f4344?auto=format&fit=crop&w=800&q=80"},
-{name:"Webcam Full HD",price:80,img:"https://images.unsplash.com/photo-1587825140699-2d5b6b2e0a3c?auto=format&fit=crop&w=800&q=80"},
-{name:"RGB Mouse Pad",price:40,img:"https://images.unsplash.com/photo-1587202372775-9893e7bfa6c0?auto=format&fit=crop&w=800&q=80"}
+{name:"Webcam Full HD",price:80,img:"https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?auto=format&fit=crop&w=800&q=80"},
+{name:"RGB Mouse Pad",price:40,img:"https://images.unsplash.com/photo-1603484477859-abe6a73f9366?auto=format&fit=crop&w=800&q=80"}
 ];
 
 let cart=[];
@@ -210,7 +210,7 @@ let html='';
 products.filter(p=>p.name.toLowerCase().includes(s)).forEach((p,i)=>{
 html+=`
 <div class="card">
-<img src="${p.img}">
+<img src="${p.img}" onerror="this.src='${fallback}'">
 <div><b>${p.name}</b></div>
 <div>$${p.price}</div>
 <div class="card-buttons">
