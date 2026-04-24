@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -176,14 +177,18 @@ function showLogin(){
   loginBox.classList.remove("hidden");
 }
 
+function showMsg(t){
+  document.getElementById("msg").innerText=t;
+}
+
 function register(){
   let u=regUser.value,p=regPass.value;
-  if(!u||!p)return msg("Заповни поля");
-  if(users[u])return msg("Є такий");
+  if(!u||!p)return showMsg("Заповни поля");
+  if(users[u])return showMsg("Є такий");
 
   users[u]={password:p};
   localStorage.setItem("users",JSON.stringify(users));
-  msg("Готово!");
+  showMsg("Готово! Тепер увійди");
 }
 
 function login(){
@@ -191,15 +196,13 @@ function login(){
   if(users[u]&&users[u].password===p){
     localStorage.setItem("currentUser",u);
     start();
-  }else msg("Невірно");
+  }else showMsg("Невірно");
 }
 
 function logout(){
   localStorage.removeItem("currentUser");
   location.reload();
 }
-
-function msg(t){msg.innerText=t;}
 
 function start(){
   auth.style.display="none";
@@ -298,3 +301,4 @@ function toggleTheme(){
 
 </body>
 </html>
+```
