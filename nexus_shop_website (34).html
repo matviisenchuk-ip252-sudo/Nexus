@@ -1,25 +1,38 @@
-html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusSHOP ULTRA MAX PRO</title>
-
+<title>NexusSHOP</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap');
 
-/* ===== BASE ===== */
-body{
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#0a0a0a;
-  color:white;
-  transition:.3s;
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0a0a;
+  --surface:#111;
+  --surface2:#1a1a1a;
+  --accent:#ff00cc;
+  --accent2:#00ffcc;
+  --text:#fff;
+  --text2:#aaa;
 }
 
-.light{
-  background:#f5f5f5;
-  color:#111;
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:background .3s,color .3s;
+  min-height:100vh;
+}
+
+body.light{
+  --bg:#f0f0f0;
+  --surface:#fff;
+  --surface2:#e8e8e8;
+  --text:#111;
+  --text2:#555;
 }
 
 /* ===== AUTH ===== */
@@ -27,372 +40,498 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+  min-height:100vh;
+  background:radial-gradient(ellipse at 60% 40%, #1a0033 0%, #0a0a0a 70%);
 }
 
 .box{
   width:360px;
-  background:#111;
-  padding:30px;
+  background:var(--surface);
+  padding:36px 30px;
   border-radius:20px;
-  box-shadow:0 0 30px rgba(255,0,150,.2);
-  animation:fadeIn .5s;
+  border:1px solid rgba(255,0,204,.15);
+  box-shadow:0 0 60px rgba(255,0,204,.1);
+  animation:fadeIn .4s ease;
 }
 
-input,select{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  background:#1e1e1e;
-  color:white;
-  border:none;
-  border-radius:12px;
+.box h2{
+  font-family:'Orbitron',monospace;
+  font-size:20px;
+  color:var(--accent);
+  margin-bottom:20px;
+  letter-spacing:2px;
 }
+
+.field{
+  width:100%;
+  padding:11px 14px;
+  margin:6px 0;
+  background:var(--surface2);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;
+  font-size:14px;
+  font-family:'Inter',sans-serif;
+  outline:none;
+  transition:border .2s;
+}
+
+.field:focus{border-color:rgba(255,0,204,.4)}
 
 .btn{
   width:100%;
-  padding:12px;
+  padding:11px;
   border:none;
-  border-radius:12px;
-  background:linear-gradient(90deg,#ff00cc,#ff0099);
-  color:white;
+  border-radius:10px;
   cursor:pointer;
-  margin-top:6px;
-  transition:.2s;
+  font-size:14px;
+  font-weight:600;
+  font-family:'Inter',sans-serif;
+  margin-top:8px;
+  transition:transform .15s,opacity .15s;
 }
 
-.btn:hover{
-  transform:scale(1.05);
+.btn:hover{transform:scale(1.02)}
+.btn:active{transform:scale(.98)}
+
+.btn-primary{
+  background:linear-gradient(90deg,#ff00cc,#cc0099);
+  color:#fff;
 }
+
+.btn-ghost{
+  background:transparent;
+  color:var(--text2);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25)}
+
+.msg{
+  font-size:13px;
+  margin-top:10px;
+  min-height:18px;
+  color:#ff6688;
+  text-align:center;
+}
+
+.msg.ok{color:#00ffcc}
 
 /* ===== HEADER ===== */
 header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 20px;
+  padding:14px 22px;
   background:#000;
-  box-shadow:0 2px 10px rgba(0,0,0,.5);
+  border-bottom:1px solid rgba(255,0,204,.1);
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .logo{
-  font-size:22px;
-  font-weight:bold;
-  color:#ff00cc;
+  font-family:'Orbitron',monospace;
+  font-size:18px;
+  color:var(--accent);
+  letter-spacing:2px;
 }
 
 .controls{
   display:flex;
-  gap:10px;
+  gap:8px;
   align-items:center;
 }
 
-.controls input{
+.controls .field{
   width:140px;
+  margin:0;
+  padding:8px 12px;
+  font-size:13px;
 }
+
+.icon-btn{
+  background:var(--surface2);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--text);
+  border-radius:8px;
+  padding:7px 12px;
+  cursor:pointer;
+  font-size:14px;
+  transition:.2s;
+}
+
+.icon-btn:hover{background:var(--accent);border-color:var(--accent)}
 
 /* ===== GRID ===== */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:20px;
-  padding:20px;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:18px;
+  padding:22px;
 }
 
 .card{
-  background:#141414;
-  padding:12px;
-  border-radius:15px;
-  transition:.3s;
-  position:relative;
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:14px;
   overflow:hidden;
+  transition:transform .25s,box-shadow .25s;
+  animation:fadeIn .3s ease;
+  position:relative;
 }
 
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px rgba(255,0,150,.3);
+  transform:translateY(-4px);
+  box-shadow:0 0 25px rgba(255,0,204,.2);
 }
 
 .card img{
   width:100%;
-  height:150px;
+  height:145px;
   object-fit:cover;
-  border-radius:10px;
+  display:block;
 }
+
+.card-body{padding:12px}
+
+.card h4{font-size:14px;font-weight:600;margin-bottom:4px}
 
 .price{
-  color:#00ffcc;
-  font-weight:bold;
+  color:var(--accent2);
+  font-weight:700;
+  font-size:16px;
+  margin-bottom:10px;
 }
 
-/* ===== BADGE ===== */
 .badge{
   position:absolute;
   top:10px;
-  right:10px;
-  background:#ff0099;
-  padding:3px 8px;
-  border-radius:10px;
-  font-size:12px;
+  left:10px;
+  background:var(--accent);
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.5px;
 }
+
+.card .btn{margin-top:0;padding:9px}
 
 /* ===== CART ===== */
 .cart{
   position:fixed;
-  right:0;
-  top:0;
-  width:320px;
-  height:100%;
-  background:#111;
-  padding:15px;
+  right:0;top:0;
+  width:300px;height:100%;
+  background:#0d0d0d;
+  border-left:1px solid rgba(255,0,204,.15);
+  padding:20px 15px;
   transform:translateX(100%);
   transition:.3s;
-  overflow:auto;
+  overflow-y:auto;
+  z-index:200;
 }
 
-.cart.active{
-  transform:translateX(0);
+.cart.active{transform:translateX(0)}
+
+.cart h3{
+  font-family:'Orbitron',monospace;
+  font-size:15px;
+  color:var(--accent);
+  margin-bottom:16px;
+  letter-spacing:1px;
 }
 
 .cart-item{
-  margin-bottom:10px;
-  padding:8px;
-  background:#1e1e1e;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 12px;
+  background:var(--surface2);
   border-radius:10px;
+  margin-bottom:8px;
+  font-size:13px;
+}
+
+.cart-item-name{flex:1;font-weight:500}
+.cart-price{color:var(--accent2);font-weight:600;margin-left:8px}
+.remove-btn{
+  background:none;border:none;cursor:pointer;
+  color:#ff4466;font-size:16px;margin-left:8px;
+  transition:transform .15s;
+}
+.remove-btn:hover{transform:scale(1.3)}
+
+.cart-total{
+  margin:14px 0 10px;
+  font-size:15px;
+  font-weight:700;
+  text-align:right;
+  color:var(--accent2);
+}
+
+.cart-empty{
+  color:var(--text2);
+  font-size:13px;
+  text-align:center;
+  margin-top:40px;
 }
 
 /* ===== TOAST ===== */
 .toast{
   position:fixed;
-  bottom:20px;
+  bottom:24px;
   left:50%;
-  transform:translateX(-50%);
-  background:#222;
-  padding:10px 20px;
+  transform:translateX(-50%) translateY(60px);
+  background:#1a1a1a;
+  border:1px solid rgba(255,0,204,.3);
+  color:#fff;
+  padding:10px 22px;
   border-radius:10px;
-  display:none;
+  font-size:14px;
+  opacity:0;
+  transition:all .3s;
+  z-index:999;
+  pointer-events:none;
 }
 
-/* ===== ANIM ===== */
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+
 @keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px)}
+  from{opacity:0;transform:translateY(16px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-.hidden{display:none}
+.hidden{display:none!important}
 
+select.field option{background:#1a1a1a;color:#fff}
 </style>
 </head>
-
 <body>
 
 <!-- AUTH -->
 <div id="auth" class="auth">
-<div class="box">
+  <div class="box">
+    <h2 id="authTitle">LOGIN</h2>
 
-<h2 id="title">Login</h2>
+    <div id="loginBox">
+      <input class="field" id="logUser" placeholder="Логін" autocomplete="username">
+      <input class="field" id="logPass" type="password" placeholder="Пароль" autocomplete="current-password">
+      <button class="btn btn-primary" onclick="login()">Увійти</button>
+      <button class="btn btn-ghost" onclick="showRegister()">Немає акаунту? Реєстрація</button>
+    </div>
 
-<div id="loginBox">
-<input id="logUser" placeholder="Username">
-<input id="logPass" type="password" placeholder="Password">
-<button class="btn" onclick="login()">Login</button>
-<button class="btn" onclick="showRegister()">Register</button>
-</div>
+    <div id="registerBox" class="hidden">
+      <input class="field" id="regUser" placeholder="Придумай логін" autocomplete="username">
+      <input class="field" id="regPass" type="password" placeholder="Придумай пароль" autocomplete="new-password">
+      <button class="btn btn-primary" onclick="register()">Створити акаунт</button>
+      <button class="btn btn-ghost" onclick="showLogin()">← Назад до входу</button>
+    </div>
 
-<div id="registerBox" class="hidden">
-<input id="regUser" placeholder="Username">
-<input id="regPass" type="password" placeholder="Password">
-<button class="btn" onclick="register()">Create</button>
-<button class="btn" onclick="showLogin()">Back</button>
-</div>
-
-<p id="msg"></p>
-
-</div>
+    <p class="msg" id="msg"></p>
+  </div>
 </div>
 
 <!-- APP -->
 <div id="app" class="hidden">
 
-<header>
-<div class="logo">NexusSHOP</div>
+  <header>
+    <div class="logo">NEXUS<span style="color:#fff">SHOP</span></div>
+    <div class="controls">
+      <input class="field" id="search" placeholder="🔍 Пошук..." oninput="render()">
+      <select class="field" id="filter" onchange="render()">
+        <option value="all">Всі ціни</option>
+        <option value="low">До $100</option>
+        <option value="high">$100+</option>
+      </select>
+      <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+      <button class="icon-btn" onclick="toggleCart()">🛒 <span id="count">0</span></button>
+      <button class="icon-btn" onclick="logout()">Вийти</button>
+    </div>
+  </header>
 
-<div class="controls">
-<input id="search" placeholder="Пошук..." oninput="render()">
+  <div class="grid" id="products"></div>
 
-<select id="filter" onchange="render()">
-<option value="all">Всі</option>
-<option value="low">До 100$</option>
-<option value="high">100$+</option>
-</select>
-
-<button onclick="toggleTheme()">🌙</button>
-<button onclick="toggleCart()">🛒 <span id="count">0</span></button>
-<button onclick="logout()">Вийти</button>
-</div>
-</header>
-
-<div class="grid" id="products"></div>
-
-<!-- CART -->
-<div id="cart" class="cart">
-<h3>Кошик</h3>
-<div id="cartItems"></div>
-<button class="btn" onclick="checkout()">Оплатити</button>
-</div>
+  <div id="cart" class="cart">
+    <h3>🛒 Кошик</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal"></div>
+    <button class="btn btn-primary" onclick="checkout()">Оплатити</button>
+  </div>
 
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-
 /* ===== ELEMENTS ===== */
-const auth = document.getElementById("auth");
-const app = document.getElementById("app");
-
-const loginBox = document.getElementById("loginBox");
+const authEl      = document.getElementById("auth");
+const appEl       = document.getElementById("app");
+const loginBox    = document.getElementById("loginBox");
 const registerBox = document.getElementById("registerBox");
-
-const logUser = document.getElementById("logUser");
-const logPass = document.getElementById("logPass");
-
-const regUser = document.getElementById("regUser");
-const regPass = document.getElementById("regPass");
-
-const msgEl = document.getElementById("msg");
-
-const search = document.getElementById("search");
-const filter = document.getElementById("filter");
-const productsEl = document.getElementById("products");
-
-const cartEl = document.getElementById("cart");
-const cartItems = document.getElementById("cartItems");
-const count = document.getElementById("count");
-
-const toast = document.getElementById("toast");
+const logUser     = document.getElementById("logUser");
+const logPass     = document.getElementById("logPass");
+const regUser     = document.getElementById("regUser");
+const regPass     = document.getElementById("regPass");
+const msgEl       = document.getElementById("msg");
+const searchEl    = document.getElementById("search");
+const filterEl    = document.getElementById("filter");
+const productsEl  = document.getElementById("products");
+const cartEl      = document.getElementById("cart");
+const cartItemsEl = document.getElementById("cartItems");
+const cartTotalEl = document.getElementById("cartTotal");
+const countEl     = document.getElementById("count");
+const toastEl     = document.getElementById("toast");
 
 /* ===== DATA ===== */
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let currentUser = localStorage.getItem("currentUser");
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let favs = JSON.parse(localStorage.getItem("favs")) || [];
+let users       = JSON.parse(localStorage.getItem("nx_users")) || {};
+let currentUser = localStorage.getItem("nx_user") || null;
+let cart        = JSON.parse(localStorage.getItem("nx_cart")) || [];
 
 /* ===== PRODUCTS ===== */
 const products = [
-{name:"RTX 4090",price:3000,img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7"},
-{name:"PS5",price:700,img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"},
-{name:"Xbox Series X",price:600,img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d"},
-{name:"Monitor 4K",price:200,img:"https://images.unsplash.com/photo-1591488320449-011701bb6704"},
-{name:"Gaming Mouse",price:50,img:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7"},
-{name:"Keyboard RGB",price:120,img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3"},
-{name:"Gaming Chair",price:350,img:"https://images.unsplash.com/photo-1598300056393-4aac492f4344"},
-{name:"Laptop RTX",price:1800,img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8"}
+  {id:0, name:"RTX 4090",      price:3000, img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400"},
+  {id:1, name:"PS5",           price:700,  img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400"},
+  {id:2, name:"Xbox Series X", price:600,  img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400"},
+  {id:3, name:"Monitor 4K",    price:200,  img:"https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400"},
+  {id:4, name:"Gaming Mouse",  price:50,   img:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=400"},
+  {id:5, name:"Keyboard RGB",  price:120,  img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400"},
+  {id:6, name:"Gaming Chair",  price:350,  img:"https://images.unsplash.com/photo-1598300056393-4aac492f4344?w=400"},
+  {id:7, name:"Laptop RTX",    price:1800, img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400"}
 ];
 
 /* ===== AUTH ===== */
 function showRegister(){
-  registerBox.classList.remove("hidden");
+  document.getElementById("authTitle").textContent = "REGISTER";
   loginBox.classList.add("hidden");
+  registerBox.classList.remove("hidden");
+  clearMsg();
 }
 
 function showLogin(){
+  document.getElementById("authTitle").textContent = "LOGIN";
   registerBox.classList.add("hidden");
   loginBox.classList.remove("hidden");
+  clearMsg();
 }
 
-function showMsg(t){
-  msgEl.innerText = t;
-}
+function clearMsg(){ msgEl.textContent=""; msgEl.className="msg"; }
+function showMsg(t,ok){ msgEl.textContent=t; msgEl.className="msg"+(ok?" ok":""); }
 
 function register(){
-  let u = regUser.value.trim();
-  let p = regPass.value.trim();
-
-  if(!u || !p) return showMsg("Заповни поля");
-  if(users[u]) return showMsg("Є такий");
-
-  users[u] = {password:p};
-  localStorage.setItem("users", JSON.stringify(users));
-
-  showMsg("Готово!");
-  showLogin();
+  const u = regUser.value.trim();
+  const p = regPass.value.trim();
+  if(!u || !p)   return showMsg("Заповни всі поля");
+  if(u.length<3) return showMsg("Логін мінімум 3 символи");
+  if(p.length<4) return showMsg("Пароль мінімум 4 символи");
+  if(users[u])   return showMsg("Такий логін вже зайнятий");
+  users[u] = { password: p };
+  localStorage.setItem("nx_users", JSON.stringify(users));
+  showMsg("Акаунт створено! Тепер увійди 🎉", true);
+  regUser.value=""; regPass.value="";
+  setTimeout(showLogin, 1200);
 }
 
 function login(){
-  let u = logUser.value.trim();
-  let p = logPass.value.trim();
-
-  if(users[u] && users[u].password === p){
-    localStorage.setItem("currentUser", u);
-    start();
-  } else {
-    showMsg("Невірно");
-  }
+  const u = logUser.value.trim();
+  const p = logPass.value.trim();
+  if(!u || !p)              return showMsg("Заповни всі поля");
+  if(!users[u])             return showMsg("Акаунт не знайдено");
+  if(users[u].password!==p) return showMsg("Невірний пароль");
+  currentUser = u;
+  localStorage.setItem("nx_user", u);
+  cart = JSON.parse(localStorage.getItem("nx_cart_"+u)) || [];
+  start();
 }
 
 function logout(){
-  localStorage.removeItem("currentUser");
+  saveCart();
+  localStorage.removeItem("nx_user");
+  currentUser = null;
+  cart = [];
   location.reload();
 }
 
 function start(){
-  auth.style.display = "none";
-  app.classList.remove("hidden");
+  authEl.style.display = "none";
+  appEl.classList.remove("hidden");
   render();
+  updateCart();
 }
 
 /* ===== RENDER ===== */
 function render(){
-  let s = search.value.toLowerCase();
-  let f = filter.value;
+  const s = searchEl.value.toLowerCase();
+  const f = filterEl.value;
 
-  let html = "";
-
-  products.filter(p=>{
+  const filtered = products.filter(p => {
     let ok = p.name.toLowerCase().includes(s);
-    if(f==="low") ok = ok && p.price < 100;
+    if(f==="low")  ok = ok && p.price < 100;
     if(f==="high") ok = ok && p.price >= 100;
     return ok;
-  }).forEach((p,i)=>{
-
-    html += `
-    <div class="card">
-      <div class="badge">NEW</div>
-      <img src="${p.img}">
-      <h4>${p.name}</h4>
-      <p class="price">$${p.price}</p>
-      <button class="btn" onclick="add(${i})">Купити</button>
-    </div>
-    `;
   });
 
-  productsEl.innerHTML = html;
-  update();
+  if(!filtered.length){
+    productsEl.innerHTML = `<p style="color:var(--text2);padding:30px;grid-column:1/-1;text-align:center">Нічого не знайдено 😔</p>`;
+    return;
+  }
+
+  productsEl.innerHTML = filtered.map(p => `
+    <div class="card">
+      <div class="badge">NEW</div>
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="card-body">
+        <h4>${p.name}</h4>
+        <p class="price">$${p.price}</p>
+        <button class="btn btn-primary" onclick="addToCart(${p.id})">В кошик</button>
+      </div>
+    </div>
+  `).join("");
 }
 
 /* ===== CART ===== */
-function add(i){
-  cart.push(products[i]);
-  save();
-  showToast("Додано в кошик");
+function addToCart(productId){
+  const product = products.find(p => p.id === productId);
+  if(!product) return;
+  cart.push({...product});
+  saveCart();
+  updateCart();
+  showToast(`✅ ${product.name} додано в кошик`);
 }
 
-function save(){
-  localStorage.setItem("cart", JSON.stringify(cart));
-  update();
+function removeFromCart(cartIndex){
+  cart.splice(cartIndex, 1);
+  saveCart();
+  updateCart();
 }
 
-function update(){
-  count.innerText = cart.length;
+function saveCart(){
+  if(currentUser){
+    localStorage.setItem("nx_cart_"+currentUser, JSON.stringify(cart));
+  }
+}
 
-  let html = "";
-  cart.forEach((p,i)=>{
-    html += `<div class="cart-item">${p.name} - $${p.price}</div>`;
-  });
+function updateCart(){
+  countEl.textContent = cart.length;
+  if(!cart.length){
+    cartItemsEl.innerHTML = `<p class="cart-empty">Кошик порожній 🛒</p>`;
+    cartTotalEl.textContent = "";
+    return;
+  }
 
-  cartItems.innerHTML = html;
+  cartItemsEl.innerHTML = cart.map((p,i) => `
+    <div class="cart-item">
+      <span class="cart-item-name">${p.name}</span>
+      <span class="cart-price">$${p.price}</span>
+      <button class="remove-btn" onclick="removeFromCart(${i})">✕</button>
+    </div>
+  `).join("");
+
+  const total = cart.reduce((sum,p)=>sum+p.price,0);
+  cartTotalEl.textContent = `Разом: $${total}`;
 }
 
 function toggleCart(){
@@ -400,9 +539,12 @@ function toggleCart(){
 }
 
 function checkout(){
-  showToast("Оплата успішна ✅");
+  if(!cart.length) return showToast("Кошик порожній!");
+  showToast("💳 Оплата пройшла успішно!");
   cart = [];
-  save();
+  saveCart();
+  updateCart();
+  cartEl.classList.remove("active");
 }
 
 /* ===== UI ===== */
@@ -410,19 +552,24 @@ function toggleTheme(){
   document.body.classList.toggle("light");
 }
 
+let toastTimer;
 function showToast(t){
-  toast.innerText = t;
-  toast.style.display = "block";
-  setTimeout(()=>toast.style.display="none",2000);
+  toastEl.textContent = t;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 2500);
 }
 
 /* ===== INIT ===== */
-if(currentUser){
+if(currentUser && users[currentUser]){
+  cart = JSON.parse(localStorage.getItem("nx_cart_"+currentUser)) || [];
   start();
 }
 
+logPass.addEventListener("keydown", e => { if(e.key==="Enter") login(); });
+logUser.addEventListener("keydown", e => { if(e.key==="Enter") logPass.focus(); });
+regPass.addEventListener("keydown", e => { if(e.key==="Enter") register(); });
+regUser.addEventListener("keydown", e => { if(e.key==="Enter") regPass.focus(); });
 </script>
-
 </body>
 </html>
-```
