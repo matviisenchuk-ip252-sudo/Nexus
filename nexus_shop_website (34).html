@@ -1,7 +1,254 @@
-// ===== AUTH =====
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let currentUser = localStorage.getItem("currentUser");
+```html
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusSHOP ULTRA MAX PRO</title>
 
+<style>
+
+/* ===== BASE ===== */
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#0a0a0a;
+  color:white;
+  transition:.3s;
+}
+
+.light{
+  background:#f5f5f5;
+  color:#111;
+}
+
+/* ===== AUTH ===== */
+.auth{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+}
+
+.box{
+  width:360px;
+  background:#111;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,0,150,.2);
+  animation:fadeIn .5s;
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  background:#1e1e1e;
+  color:white;
+  border:none;
+  border-radius:12px;
+}
+
+.btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,#ff00cc,#ff0099);
+  color:white;
+  cursor:pointer;
+  margin-top:6px;
+  transition:.2s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+}
+
+/* ===== HEADER ===== */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 20px;
+  background:#000;
+  box-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  color:#ff00cc;
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.controls input{
+  width:140px;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.card{
+  background:#141414;
+  padding:12px;
+  border-radius:15px;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 0 20px rgba(255,0,150,.3);
+}
+
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.price{
+  color:#00ffcc;
+  font-weight:bold;
+}
+
+/* ===== BADGE ===== */
+.badge{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#ff0099;
+  padding:3px 8px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+/* ===== CART ===== */
+.cart{
+  position:fixed;
+  right:0;
+  top:0;
+  width:320px;
+  height:100%;
+  background:#111;
+  padding:15px;
+  transform:translateX(100%);
+  transition:.3s;
+  overflow:auto;
+}
+
+.cart.active{
+  transform:translateX(0);
+}
+
+.cart-item{
+  margin-bottom:10px;
+  padding:8px;
+  background:#1e1e1e;
+  border-radius:10px;
+}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#222;
+  padding:10px 20px;
+  border-radius:10px;
+  display:none;
+}
+
+/* ===== ANIM ===== */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.hidden{display:none}
+
+</style>
+</head>
+
+<body>
+
+<!-- AUTH -->
+<div id="auth" class="auth">
+<div class="box">
+
+<h2 id="title">Login</h2>
+
+<div id="loginBox">
+<input id="logUser" placeholder="Username">
+<input id="logPass" type="password" placeholder="Password">
+<button class="btn" onclick="login()">Login</button>
+<button class="btn" onclick="showRegister()">Register</button>
+</div>
+
+<div id="registerBox" class="hidden">
+<input id="regUser" placeholder="Username">
+<input id="regPass" type="password" placeholder="Password">
+<button class="btn" onclick="register()">Create</button>
+<button class="btn" onclick="showLogin()">Back</button>
+</div>
+
+<p id="msg"></p>
+
+</div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+
+<header>
+<div class="logo">NexusSHOP</div>
+
+<div class="controls">
+<input id="search" placeholder="Пошук..." oninput="render()">
+
+<select id="filter" onchange="render()">
+<option value="all">Всі</option>
+<option value="low">До 100$</option>
+<option value="high">100$+</option>
+</select>
+
+<button onclick="toggleTheme()">🌙</button>
+<button onclick="toggleCart()">🛒 <span id="count">0</span></button>
+<button onclick="logout()">Вийти</button>
+</div>
+</header>
+
+<div class="grid" id="products"></div>
+
+<!-- CART -->
+<div id="cart" class="cart">
+<h3>Кошик</h3>
+<div id="cartItems"></div>
+<button class="btn" onclick="checkout()">Оплатити</button>
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+/* ===== ELEMENTS ===== */
 const auth = document.getElementById("auth");
 const app = document.getElementById("app");
 
@@ -16,6 +263,35 @@ const regPass = document.getElementById("regPass");
 
 const msgEl = document.getElementById("msg");
 
+const search = document.getElementById("search");
+const filter = document.getElementById("filter");
+const productsEl = document.getElementById("products");
+
+const cartEl = document.getElementById("cart");
+const cartItems = document.getElementById("cartItems");
+const count = document.getElementById("count");
+
+const toast = document.getElementById("toast");
+
+/* ===== DATA ===== */
+let users = JSON.parse(localStorage.getItem("users")) || {};
+let currentUser = localStorage.getItem("currentUser");
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let favs = JSON.parse(localStorage.getItem("favs")) || [];
+
+/* ===== PRODUCTS ===== */
+const products = [
+{name:"RTX 4090",price:3000,img:"https://images.unsplash.com/photo-1587202372775-e229f172b9d7"},
+{name:"PS5",price:700,img:"https://images.unsplash.com/photo-1606813907291-d86efa9b94db"},
+{name:"Xbox Series X",price:600,img:"https://images.unsplash.com/photo-1621259182978-fbf93132d53d"},
+{name:"Monitor 4K",price:200,img:"https://images.unsplash.com/photo-1591488320449-011701bb6704"},
+{name:"Gaming Mouse",price:50,img:"https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7"},
+{name:"Keyboard RGB",price:120,img:"https://images.unsplash.com/photo-1587829741301-dc798b83add3"},
+{name:"Gaming Chair",price:350,img:"https://images.unsplash.com/photo-1598300056393-4aac492f4344"},
+{name:"Laptop RTX",price:1800,img:"https://images.unsplash.com/photo-1517336714731-489689fd1ca8"}
+];
+
+/* ===== AUTH ===== */
 function showRegister(){
   registerBox.classList.remove("hidden");
   loginBox.classList.add("hidden");
@@ -35,12 +311,12 @@ function register(){
   let p = regPass.value.trim();
 
   if(!u || !p) return showMsg("Заповни поля");
-  if(users[u]) return showMsg("Є такий користувач");
+  if(users[u]) return showMsg("Є такий");
 
-  users[u] = {password: p};
+  users[u] = {password:p};
   localStorage.setItem("users", JSON.stringify(users));
 
-  showMsg("Готово! Тепер увійди");
+  showMsg("Готово!");
   showLogin();
 }
 
@@ -52,7 +328,7 @@ function login(){
     localStorage.setItem("currentUser", u);
     start();
   } else {
-    showMsg("Невірний логін або пароль");
+    showMsg("Невірно");
   }
 }
 
@@ -63,8 +339,90 @@ function logout(){
 
 function start(){
   auth.style.display = "none";
-  app.style.display = "block";
+  app.classList.remove("hidden");
   render();
 }
 
-if(currentUser) start();
+/* ===== RENDER ===== */
+function render(){
+  let s = search.value.toLowerCase();
+  let f = filter.value;
+
+  let html = "";
+
+  products.filter(p=>{
+    let ok = p.name.toLowerCase().includes(s);
+    if(f==="low") ok = ok && p.price < 100;
+    if(f==="high") ok = ok && p.price >= 100;
+    return ok;
+  }).forEach((p,i)=>{
+
+    html += `
+    <div class="card">
+      <div class="badge">NEW</div>
+      <img src="${p.img}">
+      <h4>${p.name}</h4>
+      <p class="price">$${p.price}</p>
+      <button class="btn" onclick="add(${i})">Купити</button>
+    </div>
+    `;
+  });
+
+  productsEl.innerHTML = html;
+  update();
+}
+
+/* ===== CART ===== */
+function add(i){
+  cart.push(products[i]);
+  save();
+  showToast("Додано в кошик");
+}
+
+function save(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  update();
+}
+
+function update(){
+  count.innerText = cart.length;
+
+  let html = "";
+  cart.forEach((p,i)=>{
+    html += `<div class="cart-item">${p.name} - $${p.price}</div>`;
+  });
+
+  cartItems.innerHTML = html;
+}
+
+function toggleCart(){
+  cartEl.classList.toggle("active");
+}
+
+function checkout(){
+  showToast("Оплата успішна ✅");
+  cart = [];
+  save();
+}
+
+/* ===== UI ===== */
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
+
+function showToast(t){
+  toast.innerText = t;
+  toast.style.display = "block";
+  setTimeout(()=>toast.style.display="none",2000);
+}
+
+/* ===== INIT ===== */
+if(currentUser){
+  start();
+}
+
+</script>
+
+</body>
+</html>
+```
