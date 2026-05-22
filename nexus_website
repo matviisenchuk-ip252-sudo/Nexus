@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusSHOP v5 — Next-Gen Tech Store 🚀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060608;--surface:#0e0e12;--surface2:#16161c;--surface3:#1e1e26;
+  --border:rgba(255,255,255,.06);--border-h:rgba(255,255,255,.14);
+  --accent:#7c5cfc;--accent2:#00e5c3;--accent3:#ff5555;
+  --text:#f0f0f8;--text2:#888;--text3:#555;
+  --glow:rgba(124,92,252,.18);--glow2:rgba(0,229,195,.12);
+  --green:#22c55e;--gold:#f0a500;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;top:-20%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(124,92,252,.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-20%;right:-10%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(0,229,195,.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:4px}
+
+/* ===== BRANDS STRIP ===== */
+.brands-strip{background:var(--surface);border-top:1px solid var(--border);padding:14px 0;overflow:hidden}
+.brands-inner{display:flex;align-items:center;gap:24px;padding:0 28px}
+.brands-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.brands-scroll{display:flex;gap:16px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);animation:brandScroll 22s linear infinite}
+@keyframes brandScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.brand-tag{font-size:12px;font-weight:700;color:var(--text2);padding:5px 14px;border:1px solid var(--border);border-radius:20px;white-space:nowrap;letter-spacing:.5px;transition:all .2s}
+.brand-tag:hover{border-color:var(--border-h);color:var(--text)}
+
+/* ===== FOOTER ===== */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 0 0}
+.footer-inner{display:flex;gap:48px;padding:0 28px 32px;border-bottom:1px solid var(--border)}
+.footer-brand{flex:1.5}
+.footer-logo{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--accent);letter-spacing:3px;margin-bottom:10px}
+.footer-logo span{color:var(--text)}
+.footer-tagline{font-size:13px;color:var(--text3);margin-bottom:18px;line-height:1.6}
+.footer-socials{display:flex;gap:8px;flex-wrap:wrap}
+.social-pill{padding:7px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;color:var(--text2);font-size:12px;font-weight:600;text-decoration:none;transition:all .2s}
+.social-pill:hover{border-color:var(--accent);color:var(--accent)}
+.footer-links{display:flex;gap:40px;flex:2}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col strong{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.footer-col a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;font-size:12px;color:var(--text3)}
+.footer-badges{display:flex;gap:10px}
+.f-badge{padding:4px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:600;color:var(--text2)}
+
+/* ===== AUTH ===== */
+.auth-wrap{display:flex;justify-content:center;align-items:center;min-height:100vh;position:relative;z-index:10}
+.auth-bg{position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(124,92,252,.12) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(0,229,195,.08) 0%,transparent 50%),#060608}
+.auth-box{position:relative;width:400px;background:var(--surface);border:1px solid rgba(124,92,252,.2);border-radius:24px;padding:44px 40px;box-shadow:0 0 80px rgba(124,92,252,.12),0 0 0 1px rgba(124,92,252,.08);animation:slideUp .5s cubic-bezier(.16,1,.3,1)}
+.auth-logo{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:24px;font-weight:700;color:var(--accent);letter-spacing:3px;margin-bottom:4px;text-align:center}
+.auth-logo span{color:var(--text)}
+.auth-sub{text-align:center;color:var(--text3);font-size:11px;margin-bottom:30px;letter-spacing:2px;text-transform:uppercase}
+.form-group{position:relative;margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.field{width:100%;padding:13px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;outline:none;transition:border .2s,box-shadow .2s}
+.field:focus{border-color:rgba(124,92,252,.5);box-shadow:0 0 0 3px rgba(124,92,252,.1)}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;font-family:'Outfit',sans-serif;margin-top:8px;transition:all .2s;letter-spacing:.3px}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:linear-gradient(135deg,#7c5cfc,#5a3de0);color:#fff;box-shadow:0 4px 20px rgba(124,92,252,.35)}
+.btn-primary:hover{box-shadow:0 6px 30px rgba(124,92,252,.5);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);margin-top:6px}
+.btn-ghost:hover{border-color:var(--border-h);color:var(--text)}
+.auth-msg{font-size:12px;text-align:center;margin-top:12px;min-height:16px;color:var(--accent3)}
+.auth-msg.ok{color:var(--accent2)}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:16px 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-divider span{font-size:11px;color:var(--text3);letter-spacing:.5px}
+.auth-demo{margin-top:14px;padding:12px;background:rgba(124,92,252,.08);border:1px dashed rgba(124,92,252,.2);border-radius:8px;font-size:11px;color:var(--text3);text-align:center;line-height:1.8}
+.auth-demo b{color:var(--accent)}
+
+/* ===== HEADER ===== */
+header{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:64px;background:rgba(6,6,8,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.logo{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--accent);letter-spacing:3px;display:flex;align-items:center;gap:8px;cursor:default}
+.logo span{color:var(--text)}
+.logo-dot{width:7px;height:7px;background:var(--accent2);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 8px var(--accent2)}
+.header-center{display:flex;align-items:center;gap:8px;flex:1;max-width:420px;margin:0 28px}
+.search-wrap{position:relative;flex:1}
+.search-wrap input{width:100%;padding:10px 14px 10px 38px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border .2s,box-shadow .2s}
+.search-wrap input:focus{border-color:rgba(124,92,252,.4);box-shadow:0 0 0 3px rgba(124,92,252,.08)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:15px}
+.header-right{display:flex;align-items:center;gap:8px}
+.icon-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;color:var(--text2);cursor:pointer;font-size:13px;transition:all .2s;white-space:nowrap}
+.icon-btn:hover{border-color:var(--border-h);color:var(--text);background:var(--surface3)}
+.cart-badge,.wish-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+.cart-badge{background:var(--accent);color:#fff}
+.wish-badge{background:var(--accent3);color:#fff}
+.cart-badge.bump{animation:bump .3s cubic-bezier(.36,.07,.19,.97)}
+
+/* ===== FILTER BAR ===== */
+.filter-bar{display:flex;align-items:center;gap:8px;padding:14px 28px;border-bottom:1px solid var(--border);overflow-x:auto;background:rgba(14,14,18,.7);backdrop-filter:blur(10px)}
+.filter-bar::-webkit-scrollbar{height:0}
+.cat-btn{display:flex;align-items:center;gap:6px;padding:8px 18px;border:1px solid var(--border);border-radius:20px;background:transparent;color:var(--text2);font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.cat-btn:hover{border-color:var(--border-h);color:var(--text)}
+.cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 20px rgba(124,92,252,.35)}
+.sort-select{margin-left:auto;padding:8px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;color:var(--text2);font-size:13px;font-family:'Outfit',sans-serif;outline:none;cursor:pointer;flex-shrink:0}
+.sort-select option{background:#1e1e26}
+
+/* ===== GRID ===== */
+.main-layout{display:flex;min-height:calc(100vh-130px);position:relative;z-index:1}
+.grid{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;padding:24px 28px;align-content:start}
+
+/* ===== CARD ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;animation:fadeUp .4s cubic-bezier(.16,1,.3,1) both;cursor:pointer;position:relative;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 0 1px rgba(124,92,252,.25);border-color:rgba(124,92,252,.3)}
+.card-img-wrap{position:relative;overflow:hidden;background:var(--surface2)}
+.card-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(6,6,8,.6) 100%);opacity:0;transition:opacity .3s}
+.card:hover .card-img-wrap::after{opacity:1}
+.card img{width:100%;height:190px;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1);background:var(--surface2)}
+.card:hover img{transform:scale(1.08)}
+.card-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:14px;z-index:2;opacity:0;transition:opacity .3s}
+.card:hover .card-overlay{opacity:1}
+.quick-add{width:100%;padding:10px;background:rgba(124,92,252,.95);backdrop-filter:blur(4px);border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:background .2s;letter-spacing:.5px}
+.quick-add:hover{background:var(--accent)}
+.card-badges{position:absolute;top:12px;left:12px;display:flex;gap:5px;flex-wrap:wrap;z-index:3}
+.badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.badge-new{background:var(--accent);color:#fff}
+.badge-hot{background:#ff5555;color:#fff}
+.badge-sale{background:#f0a500;color:#000}
+.badge-top{background:var(--accent2);color:#000}
+.wishlist-btn{position:absolute;top:12px;right:12px;width:34px;height:34px;background:rgba(6,6,8,.75);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .25s;opacity:0;z-index:3}
+.card:hover .wishlist-btn{opacity:1}
+.wishlist-btn:hover{background:var(--accent3);border-color:var(--accent3)}
+.wishlist-btn.active{opacity:1;background:var(--accent3);border-color:var(--accent3)}
+.card-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.card-cat{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.card h4{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.3;color:var(--text)}
+.card-rating{display:flex;align-items:center;gap:5px;margin-bottom:10px}
+.stars{color:#f0a500;font-size:12px;letter-spacing:1px}
+.live-viewers{font-size:10px;color:var(--accent2);margin-left:auto;opacity:.8;font-weight:600}
+.rating-count{font-size:11px;color:var(--text3)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.price{font-size:20px;font-weight:700;color:var(--text);font-family:'Rajdhani','JetBrains Mono',monospace}
+.price-old{font-size:12px;color:var(--text3);text-decoration:line-through;margin-left:5px;font-family:'Rajdhani','JetBrains Mono',monospace}
+.add-btn{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;box-shadow:0 4px 14px rgba(124,92,252,.5);flex-shrink:0}
+.add-btn:hover{transform:scale(1.2) rotate(90deg);box-shadow:0 6px 24px rgba(124,92,252,.7)}
+
+/* ===== IMG PLACEHOLDER ===== */
+.img-placeholder{width:100%;height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--surface2),var(--surface3));gap:8px}
+.img-placeholder .ph-icon{font-size:48px;opacity:.5}
+.img-placeholder .ph-name{font-size:11px;color:var(--text3);text-align:center;padding:0 12px}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text2)}
+.empty-state div{font-size:56px;margin-bottom:16px}
+.empty-state p{font-size:15px}
+
+/* ===== OVERLAY ===== */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:199;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px)}
+.overlay.active{opacity:1;pointer-events:all}
+
+/* ===== PANELS (wish + cart) ===== */
+.side-panel{position:fixed;top:0;bottom:0;width:380px;background:var(--surface);z-index:200;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.side-panel.left{left:0;border-right:1px solid rgba(124,92,252,.15);transform:translateX(-100%)}
+.side-panel.right{right:0;border-left:1px solid rgba(124,92,252,.15);transform:translateX(100%)}
+.side-panel.active{transform:translateX(0)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:22px 22px 18px;border-bottom:1px solid var(--border)}
+.panel-head h3{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;color:var(--text);letter-spacing:2px}
+.close-btn{width:32px;height:32px;background:var(--surface2);border:1px solid var(--border);border-radius:50%;color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.close-btn:hover{background:var(--accent3);border-color:var(--accent3);color:#fff}
+
+/* ===== WISHLIST PANEL ===== */
+.wish-body{flex:1;overflow-y:auto;padding:16px}
+.wish-item{display:flex;gap:12px;align-items:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;animation:fadeUp .3s ease}
+.wish-item-img{width:60px;height:60px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--surface3)}
+.wish-item-info{flex:1;min-width:0}
+.wish-item-name{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wish-item-cat{font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.5px;margin-bottom:4px}
+.wish-item-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--text)}
+.wish-item-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.wish-add-btn{padding:6px 12px;background:var(--accent);border:none;border-radius:7px;color:#fff;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap;letter-spacing:.3px}
+.wish-add-btn:hover{background:#6a4ce8;transform:scale(1.04)}
+.wish-remove-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;transition:color .2s;text-align:right}
+.wish-remove-btn:hover{color:var(--accent3)}
+.panel-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:240px;color:var(--text3)}
+.panel-empty div{font-size:48px;margin-bottom:14px;opacity:.6}
+.panel-empty p{font-size:13px}
+
+/* ===== CART PANEL ===== */
+.cart-body{flex:1;overflow-y:auto;padding:16px}
+.cart-item{display:flex;gap:12px;align-items:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;animation:fadeUp .3s ease}
+.cart-item-img{width:54px;height:54px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--surface3)}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-cat{font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.5px}
+.cart-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.cart-item-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--text)}
+.qty-wrap{display:flex;align-items:center;gap:5px}
+.qty-btn{width:24px;height:24px;background:var(--surface3);border:1px solid var(--border);border-radius:5px;color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.qty-btn:hover{background:var(--accent);border-color:var(--accent)}
+.qty-num{font-size:13px;font-weight:700;min-width:20px;text-align:center}
+.remove-item{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;transition:color .2s;padding:2px}
+.remove-item:hover{color:var(--accent3)}
+.cart-foot{padding:18px 22px;border-top:1px solid var(--border);background:var(--surface)}
+.cart-summary{margin-bottom:16px}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:7px}
+.cart-row.total{font-size:17px;font-weight:700;color:var(--text);padding-top:10px;border-top:1px solid var(--border);margin-top:10px}
+.cart-row.total span:last-child{font-family:'Rajdhani','JetBrains Mono',monospace;color:var(--accent2)}
+.checkout-btn{width:100%;padding:15px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;letter-spacing:.5px;transition:all .2s;box-shadow:0 4px 20px rgba(124,92,252,.4)}
+.checkout-btn:hover{box-shadow:0 8px 30px rgba(124,92,252,.6);transform:translateY(-1px)}
+.checkout-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
+.secure-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:11px;color:var(--text3)}
+
+/* ===== CHECKOUT MODAL ===== */
+.checkout-wrap{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.checkout-wrap.active{opacity:1;pointer-events:all}
+.checkout-bg{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px)}
+.checkout-modal{position:relative;width:100%;max-width:560px;background:var(--surface);border:1px solid rgba(124,92,252,.3);border-radius:24px;transform:scale(.92) translateY(24px);transition:transform .4s cubic-bezier(.16,1,.3,1);max-height:94vh;overflow-y:auto}
+.checkout-wrap.active .checkout-modal{transform:scale(1) translateY(0)}
+.checkout-head{display:flex;align-items:center;justify-content:space-between;padding:26px 30px 18px;border-bottom:1px solid var(--border)}
+.checkout-head h2{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:16px;letter-spacing:2px}
+.checkout-body{padding:26px 30px}
+.checkout-step{display:none}
+.checkout-step.active{display:block;animation:fadeUp .3s ease}
+
+/* Progress */
+.c-progress{display:flex;align-items:center;margin-bottom:28px}
+.c-pdot{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text3);transition:all .3s;flex-shrink:0;position:relative}
+.c-pdot.active{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 4px rgba(124,92,252,.15)}
+.c-pdot.done{border-color:var(--accent);background:var(--accent);color:#fff}
+.c-pline{flex:1;height:2px;background:var(--border);margin:0 6px;transition:background .3s}
+.c-pline.done{background:var(--accent)}
+.c-plabel{position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text3);white-space:nowrap;letter-spacing:.5px;display:none}
+
+/* Order summary */
+.o-summary{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:22px}
+.o-summary-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.o-items{max-height:180px;overflow-y:auto}
+.o-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.o-item:last-child{border-bottom:none}
+.o-item-img{width:40px;height:40px;border-radius:7px;object-fit:cover;background:var(--surface3);flex-shrink:0}
+.o-item-name{flex:1;font-size:12px;font-weight:500;line-height:1.4}
+.o-item-qty{font-size:11px;color:var(--text3)}
+.o-item-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0}
+.o-total-row{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border);margin-top:4px}
+.o-total-label{font-size:13px;color:var(--text2)}
+.o-total-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--text)}
+
+/* Delivery */
+.d-section{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:22px}
+.d-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.f-field{margin-bottom:14px}
+.f-field label{display:block;font-size:11px;font-weight:600;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.f-field input,.f-field select{width:100%;padding:11px 14px;background:var(--surface3);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;outline:none;transition:border .2s}
+.f-field input:focus,.f-field select:focus{border-color:rgba(124,92,252,.5)}
+.f-field input::placeholder{color:var(--text3)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+/* Pay methods */
+.pm-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.pm-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.pm{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface2);border:2px solid var(--border);border-radius:14px;cursor:pointer;transition:all .2s}
+.pm:hover{border-color:var(--border-h)}
+.pm.sel{border-color:var(--accent);background:rgba(124,92,252,.07)}
+.pm-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--text3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.pm.sel .pm-radio{border-color:var(--accent)}
+.pm-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .2s}
+.pm.sel .pm-dot{transform:scale(1)}
+.pm-icon{font-size:26px;flex-shrink:0;line-height:1}
+.pm-info{flex:1}
+.pm-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.pm-desc{font-size:11px;color:var(--text3)}
+.pm-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;flex-shrink:0;letter-spacing:.5px}
+.pm-badge.instant{background:rgba(0,229,195,.15);color:var(--accent2)}
+.pm-badge.np{background:rgba(240,165,0,.15);color:var(--gold)}
+.pm-badge.web3{background:rgba(124,92,252,.2);color:var(--accent)}
+
+/* Card form */
+.card-form{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:22px;display:none}
+.card-form.show{display:block;animation:fadeUp .25s ease}
+.card-visual{height:56px;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);border-radius:10px;margin-bottom:14px;display:flex;align-items:center;padding:0 16px;gap:10px;position:relative;overflow:hidden}
+.card-visual::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.015) 10px,rgba(255,255,255,.015) 20px)}
+.card-chip{width:32px;height:24px;background:linear-gradient(135deg,#d4a843,#c89a30);border-radius:4px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;padding:3px}
+.card-chip div{background:rgba(0,0,0,.3);border-radius:1px}
+.card-network{margin-left:auto;font-size:20px}
+.card-num-display{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,.7);letter-spacing:2px}
+
+/* Pay btn */
+.pay-btn{width:100%;padding:16px;background:linear-gradient(135deg,#00c97a,#00a562);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;letter-spacing:.5px;transition:all .2s;box-shadow:0 4px 20px rgba(0,201,122,.3);display:flex;align-items:center;justify-content:center;gap:10px}
+.pay-btn:hover{box-shadow:0 8px 30px rgba(0,201,122,.5);transform:translateY(-1px)}
+.pay-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.back-btn{width:100%;padding:11px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text2);font-size:13px;font-weight:500;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;margin-top:10px}
+.back-btn:hover{border-color:var(--border-h);color:var(--text)}
+
+/* Success */
+.pay-success{text-align:center;padding:10px 0 6px}
+.success-icon{width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.25),rgba(0,229,195,.1));border:2px solid rgba(34,197,94,.5);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:36px;animation:successPop .6s cubic-bezier(.16,1,.3,1)}
+.pay-success h3{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:20px;color:var(--text);margin-bottom:10px}
+.pay-success p{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px}
+.order-num{padding:12px 22px;background:var(--surface2);border:1px dashed rgba(124,92,252,.35);border-radius:10px;font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;color:var(--accent);letter-spacing:3px;margin-bottom:20px;display:inline-block}
+.finish-btn{padding:14px 36px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(124,92,252,.4)}
+.finish-btn:hover{box-shadow:0 8px 30px rgba(124,92,252,.6);transform:translateY(-1px)}
+
+/* Promo input in checkout */
+.promo-input-row{display:flex;gap:8px;margin-bottom:14px}
+.promo-input-row input{flex:1;padding:10px 14px;background:var(--surface3);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border .2s}
+.promo-input-row input:focus{border-color:rgba(124,92,252,.4)}
+.promo-apply-btn{padding:10px 16px;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.3);border-radius:9px;color:var(--accent);font-size:13px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;white-space:nowrap;transition:all .2s}
+.promo-apply-btn:hover{background:rgba(124,92,252,.25)}
+.promo-status{font-size:12px;margin-bottom:14px;min-height:16px}
+.promo-status.ok{color:var(--accent2)}
+.promo-status.err{color:var(--accent3)}
+
+/* ===== PRODUCT MODAL ===== */
+.modal-wrap{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)}
+.modal-wrap.active{opacity:1;pointer-events:all}
+.modal{position:relative;width:100%;max-width:660px;background:var(--surface);border:1px solid rgba(124,92,252,.2);border-radius:22px;overflow:hidden;transform:scale(.92) translateY(20px);transition:transform .4s cubic-bezier(.16,1,.3,1);max-height:92vh;overflow-y:auto}
+.modal-wrap.active .modal{transform:scale(1) translateY(0)}
+.modal-img-wrap{position:relative;background:var(--surface2);height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal-img{width:100%;height:100%;object-fit:cover}
+.modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;background:rgba(6,6,8,.8);border:1px solid rgba(255,255,255,.1);border-radius:50%;color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.modal-close:hover{background:var(--accent3);border-color:var(--accent3);color:#fff}
+.modal-body{padding:26px}
+.modal-cat{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.modal-name{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:24px;font-weight:700;margin-bottom:10px;line-height:1.2}
+.modal-rating{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.modal-desc{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:22px}
+.modal-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.spec-item{padding:12px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px}
+.spec-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.spec-val{font-size:13px;font-weight:600;color:var(--text)}
+.modal-footer{display:flex;align-items:center;gap:14px}
+.modal-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:30px;font-weight:700;color:var(--text)}
+.modal-wish-btn{width:48px;height:48px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.modal-wish-btn:hover,.modal-wish-btn.active{background:var(--accent3);border-color:var(--accent3);color:#fff}
+.modal-add-btn{flex:1;padding:15px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(124,92,252,.4)}
+.modal-add-btn:hover{box-shadow:0 8px 30px rgba(124,92,252,.6);transform:translateY(-1px)}
+
+/* ===== TOAST ===== */
+.toasts{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none;align-items:center}
+.toast{background:rgba(14,14,18,.95);border:1px solid rgba(124,92,252,.3);color:var(--text);padding:12px 22px;border-radius:12px;font-size:13px;font-weight:500;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.4);animation:toastIn .35s cubic-bezier(.16,1,.3,1) forwards;backdrop-filter:blur(10px)}
+.toast.success{border-color:rgba(0,229,195,.4);color:var(--accent2)}
+.toast.error{border-color:rgba(255,85,85,.4);color:var(--accent3)}
+.toast.out{animation:toastOut .3s ease forwards}
+
+/* ===== USER MENU ===== */
+.user-btn{display:flex;align-items:center;gap:8px;padding:7px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;color:var(--text2);font-size:13px;cursor:pointer;transition:all .2s;position:relative}
+.user-btn:hover{border-color:var(--border-h);color:var(--text)}
+.user-avatar{width:26px;height:26px;background:linear-gradient(135deg,var(--accent),#5a3de0);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:6px;min-width:180px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translateY(-8px);transition:all .2s;z-index:200}
+.user-btn:focus-within .dropdown,.user-btn:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0)}
+.dropdown-item{display:block;width:100%;padding:10px 13px;background:none;border:none;color:var(--text2);font-size:13px;font-family:'Outfit',sans-serif;cursor:pointer;border-radius:7px;text-align:left;transition:all .15s}
+.dropdown-item:hover{background:var(--surface3);color:var(--text)}
+.dropdown-item.danger:hover{color:var(--accent3)}
+
+/* ===== STATS BAR ===== */
+.stats-bar{display:flex;border-bottom:1px solid var(--border)}
+.stat-item{flex:1;padding:14px 22px;border-right:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.stat-item:last-child{border-right:none}
+.stat-icon{font-size:22px}
+.stat-info span:first-child{display:block;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.stat-info strong{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;color:var(--text)}
+
+/* ===== PROMO ===== */
+.promo-banner{margin:22px 28px 0;padding:22px 26px;background:linear-gradient(135deg,rgba(124,92,252,.12) 0%,rgba(0,229,195,.07) 100%);border:1px solid rgba(124,92,252,.2);border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;overflow:hidden}
+.promo-banner::before{content:'';position:absolute;right:-60px;top:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(124,92,252,.12) 0%,transparent 60%)}
+.promo-banner::after{content:'';position:absolute;left:-40px;bottom:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(0,229,195,.08) 0%,transparent 60%)}
+.promo-text h3{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:17px;margin-bottom:4px}
+.promo-text p{font-size:13px;color:var(--text2)}
+.promo-right{display:flex;align-items:center;gap:12px;flex-shrink:0;position:relative;z-index:1}
+.promo-code{background:rgba(124,92,252,.15);border:1px dashed rgba(124,92,252,.5);border-radius:10px;padding:10px 20px;font-family:'Rajdhani','JetBrains Mono',monospace;font-size:18px;color:var(--accent);cursor:pointer;transition:all .2s;position:relative}
+.promo-code:hover{background:rgba(124,92,252,.28);transform:scale(1.03)}
+.promo-countdown{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:12px;color:var(--text3);text-align:center}
+.promo-countdown span{display:block;font-size:18px;color:var(--accent3);font-weight:700}
+
+/* ===== SCROLL TOP ===== */
+.scroll-top{position:fixed;bottom:90px;right:24px;width:40px;height:40px;background:var(--accent);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(124,92,252,.5);transition:all .3s;opacity:0;pointer-events:none;z-index:150}
+.scroll-top.show{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(124,92,252,.7)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideUp{from{opacity:0;transform:translateY(32px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.45)}70%{transform:scale(.85)}100%{transform:scale(1)}}
+@keyframes toastIn{from{opacity:0;transform:translateY(18px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastOut{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-12px) scale(.9)}}
+@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+@keyframes successPop{from{transform:scale(0) rotate(-10deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 20px rgba(124,92,252,.3)}50%{box-shadow:0 0 40px rgba(124,92,252,.6)}}
+
+.skeleton{background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+.hidden{display:none!important}
+select option{background:#1e1e26;color:#f0f0f8}
+
+/* Spinner */
+.spinner{width:22px;height:22px;border:2px solid rgba(255,255,255,.25);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+
+/* Light mode */
+body.light{--bg:#f0f0f6;--surface:#fff;--surface2:#e8e8f0;--surface3:#d8d8e8;--border:rgba(0,0,0,.08);--border-h:rgba(0,0,0,.16);--text:#0f0f18;--text2:#444455;--text3:#888899}
+
+/* ===== PROFILE PANEL ===== */
+.profile-wrap{position:fixed;inset:0;z-index:350;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.profile-wrap.active{opacity:1;pointer-events:all}
+.profile-bg{position:absolute;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(8px)}
+.profile-modal{position:relative;width:100%;max-width:680px;background:var(--surface);border:1px solid rgba(124,92,252,.22);border-radius:24px;overflow:hidden;transform:scale(.93) translateY(24px);transition:transform .4s cubic-bezier(.16,1,.3,1);max-height:94vh;overflow-y:auto;display:flex;flex-direction:column}
+.profile-wrap.active .profile-modal{transform:scale(1) translateY(0)}
+.profile-close{position:absolute;top:16px;right:16px;width:34px;height:34px;background:var(--surface2);border:1px solid var(--border);border-radius:50%;color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:5}
+.profile-close:hover{background:var(--accent3);border-color:var(--accent3);color:#fff}
+
+/* Header zone */
+.profile-hero{background:linear-gradient(135deg,#0a0416 0%,#140830 40%,#0a1830 100%);padding:36px 30px 28px;position:relative;overflow:hidden}
+.profile-hero::before{content:'';position:absolute;top:-40px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(124,92,252,.25),transparent 70%);pointer-events:none}
+.profile-hero::after{content:'';position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(0,229,195,.15),transparent 70%);pointer-events:none}
+.profile-hero-inner{position:relative;z-index:2;display:flex;align-items:center;gap:22px}
+.avatar-wrap{position:relative;flex-shrink:0}
+.avatar-img{width:82px;height:82px;border-radius:50%;object-fit:cover;border:3px solid rgba(124,92,252,.5);box-shadow:0 0 0 4px rgba(124,92,252,.15);display:block;background:var(--surface2)}
+.avatar-placeholder{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#5a3de0);border:3px solid rgba(124,92,252,.5);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff}
+.avatar-upload-btn{position:absolute;bottom:0;right:0;width:26px;height:26px;background:var(--accent2);border:2px solid var(--surface);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;transition:transform .2s}
+.avatar-upload-btn:hover{transform:scale(1.15)}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.profile-email{font-size:12px;color:rgba(255,255,255,.45);margin-bottom:10px}
+.profile-badges{display:flex;gap:7px;flex-wrap:wrap}
+.profile-badge{padding:3px 11px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.profile-badge.vip{background:rgba(240,165,0,.2);color:var(--gold);border:1px solid rgba(240,165,0,.3)}
+.profile-badge.verified{background:rgba(0,229,195,.15);color:var(--accent2);border:1px solid rgba(0,229,195,.3)}
+.profile-badge.member{background:rgba(124,92,252,.15);color:var(--accent);border:1px solid rgba(124,92,252,.3)}
+
+/* Profile tabs */
+.profile-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--surface)}
+.profile-tab{flex:1;padding:14px 8px;background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;letter-spacing:.5px;text-transform:uppercase}
+.profile-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.profile-tab:hover{color:var(--text)}
+
+/* Profile body */
+.profile-body{padding:24px 28px}
+.profile-section{display:none}
+.profile-section.active{display:block;animation:fadeUp .25s ease}
+
+/* Stats grid */
+.p-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.p-stat{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.p-stat-val{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--text);margin-bottom:3px}
+.p-stat-val.green{color:var(--accent2)}
+.p-stat-val.purple{color:var(--accent)}
+.p-stat-val.gold{color:var(--gold)}
+.p-stat-label{font-size:10px;color:var(--text3);letter-spacing:.5px;text-transform:uppercase}
+
+/* Edit form */
+.p-form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.p-field{margin-bottom:0}
+.p-field label{display:block;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.p-field input,.p-field select{width:100%;padding:10px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border .2s}
+.p-field input:focus{border-color:rgba(124,92,252,.5);box-shadow:0 0 0 3px rgba(124,92,252,.08)}
+.p-field input::placeholder{color:var(--text3)}
+.p-save-btn{padding:11px 24px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(124,92,252,.3)}
+.p-save-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,92,252,.5)}
+
+/* Orders */
+.orders-empty{text-align:center;padding:48px 20px;color:var(--text3)}
+.orders-empty div{font-size:48px;margin-bottom:14px;opacity:.5}
+.order-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px;transition:border-color .2s}
+.order-card:hover{border-color:rgba(124,92,252,.25)}
+.order-head{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.order-num{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:1px}
+.order-date{font-size:11px;color:var(--text3);margin-left:auto}
+.order-total{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--accent2);flex-shrink:0}
+.order-status{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px;flex-shrink:0}
+.order-status.delivered{background:rgba(0,229,195,.12);color:var(--accent2)}
+.order-status.processing{background:rgba(124,92,252,.12);color:var(--accent)}
+.order-status.cancelled{background:rgba(255,85,85,.12);color:var(--accent3)}
+.order-body{padding:12px 16px;display:none}
+.order-body.open{display:block;animation:fadeUp .2s ease}
+.order-item-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.order-item-row:last-child{border-bottom:none}
+.order-item-img{width:38px;height:38px;border-radius:7px;object-fit:contain;background:var(--surface3);padding:4px;flex-shrink:0}
+.order-item-name{flex:1;font-size:12px;font-weight:500}
+.order-item-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--text2);flex-shrink:0}
+.order-arrow{font-size:12px;color:var(--text3);transition:transform .2s;flex-shrink:0;margin-left:4px}
+.order-head.open .order-arrow{transform:rotate(180deg)}
+
+/* Wishlist in profile */
+.p-wish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.p-wish-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.p-wish-card:hover{border-color:rgba(124,92,252,.35);transform:translateY(-3px)}
+.p-wish-img{width:100%;height:80px;object-fit:contain;padding:8px;background:var(--surface3)}
+.p-wish-name{font-size:11px;font-weight:600;padding:7px 8px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-wish-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--accent2);padding:0 8px 8px}
+
+/* Security section */
+.security-item{display:flex;align-items:center;gap:14px;padding:14px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:10px}
+.security-icon{font-size:22px;flex-shrink:0}
+.security-info{flex:1}
+.security-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.security-desc{font-size:11px;color:var(--text3)}
+.security-action{padding:7px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:11px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.security-action:hover{border-color:var(--accent);color:var(--accent)}
+.danger-zone{margin-top:20px;padding:16px;border:1px solid rgba(255,85,85,.2);border-radius:12px;background:rgba(255,85,85,.04)}
+.danger-title{font-size:11px;font-weight:700;color:var(--accent3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+
+/* Responsive */
+@media(max-width:768px){
+  header{padding:0 16px;height:56px}
+  .header-center{max-width:200px;margin:0 10px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:14px 16px}
+  .side-panel{width:100%}
+  .stats-bar{display:none}
+  .promo-banner{flex-direction:column;margin:14px 16px 0}
+  .filter-bar{padding:10px 16px}
+  .hero-banner{flex-direction:column;min-height:320px;padding:32px 20px}
+  .hero-visual{display:none}
+  .hero-title{font-size:28px}
+}
+
+/* ===== HERO BANNER ===== */
+.hero-banner{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;min-height:360px;padding:40px 60px;background:linear-gradient(135deg,#0a0a18 0%,#12082e 50%,#0a1a10 100%);border-bottom:1px solid rgba(124,92,252,.2)}
+.hero-canvas{position:absolute;inset:0;pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:520px}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.3);border-radius:20px;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:18px}
+.hero-title{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:38px;font-weight:700;line-height:1.15;margin-bottom:14px;color:#fff}
+.hero-accent{background:linear-gradient(90deg,#7c5cfc,#00e5c3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;letter-spacing:.5px}
+.hero-actions{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.hero-btn-primary{padding:13px 28px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;box-shadow:0 6px 28px rgba(124,92,252,.45);transition:all .25s;letter-spacing:.3px}
+.hero-btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(124,92,252,.65)}
+.hero-btn-ghost{padding:13px 28px;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:10px;color:rgba(255,255,255,.8);font-size:14px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .25s}
+.hero-btn-ghost:hover{border-color:rgba(0,229,195,.5);color:#00e5c3}
+.hero-stats{display:flex;align-items:center;gap:20px}
+.hero-stat{text-align:center}
+.hero-stat strong{display:block;font-family:'Rajdhani','JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff}
+.hero-stat span{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.5px}
+.hero-stat-sep{width:1px;height:36px;background:rgba(255,255,255,.1)}
+.hero-visual{position:relative;z-index:2}
+.hero-card-float{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(20px);border-radius:20px;padding:24px;width:220px;text-align:center;animation:heroFloat 3s ease-in-out infinite;box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 0 1px rgba(124,92,252,.15)}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.hf-badge{font-size:10px;font-weight:700;color:#ff5555;letter-spacing:1px;margin-bottom:12px}
+.hf-icon{font-size:64px;margin-bottom:10px;filter:drop-shadow(0 8px 20px rgba(0,80,160,.6))}
+.hf-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
+.hf-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#00e5c3;margin-bottom:14px}
+.hf-btn{width:100%;padding:10px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s}
+.hf-btn:hover{opacity:.85}
+.hero-close{position:absolute;top:16px;right:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;width:32px;height:32px;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;z-index:3;transition:all .2s}
+.hero-close:hover{background:rgba(255,85,85,.3);color:#fff;border-color:rgba(255,85,85,.4)}
+
+/* ===== CARD IMAGE improved ===== */
+.card img{width:100%;height:200px;object-fit:contain;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1);padding:12px;background:transparent}
+
+/* ===== RECENTLY VIEWED ===== */
+.recently-wrap{padding:16px 28px 24px;border-top:1px solid var(--border);position:relative;z-index:1}
+.recently-head{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:700;color:var(--text2);letter-spacing:1px;margin-bottom:12px;text-transform:uppercase}
+.recently-list{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px}
+.recently-list::-webkit-scrollbar{height:3px}
+.recently-list::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+.recently-item{flex-shrink:0;width:120px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.recently-item:hover{border-color:rgba(124,92,252,.35);transform:translateY(-4px)}
+.recently-item img{width:100%;height:70px;object-fit:contain;background:var(--surface2);padding:6px}
+.recently-item-name{font-size:11px;font-weight:600;padding:6px 8px 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recently-item-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:0 8px 8px;color:var(--accent2)}
+
+/* ===== COMPARE ===== */
+.compare-bar{position:fixed;bottom:0;left:0;right:0;z-index:150;animation:slideUp .3s cubic-bezier(.16,1,.3,1)}
+.compare-bar-inner{display:flex;align-items:center;gap:14px;padding:14px 28px;background:rgba(14,14,18,.97);border-top:1px solid rgba(124,92,252,.3);backdrop-filter:blur(20px)}
+.compare-title{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:12px;color:var(--text2);letter-spacing:1px;flex-shrink:0}
+.compare-items{display:flex;gap:8px;flex:1;overflow-x:auto}
+.compare-chip{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.3);border-radius:20px;font-size:12px;color:var(--text);white-space:nowrap;flex-shrink:0}
+.compare-chip-remove{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;line-height:1;padding:0;transition:color .2s}
+.compare-chip-remove:hover{color:var(--accent3)}
+.compare-go-btn{padding:8px 20px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;flex-shrink:0;transition:all .2s}
+.compare-go-btn:hover{background:#6a4ce8}
+.compare-clear{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text3);cursor:pointer;padding:6px 12px;font-size:13px;flex-shrink:0;transition:all .2s}
+.compare-clear:hover{color:var(--accent3);border-color:var(--accent3)}
+.card-compare-btn{position:absolute;bottom:60px;right:12px;width:30px;height:30px;background:rgba(6,6,8,.75);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:var(--text2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;opacity:0;z-index:3;transition:all .2s}
+.card:hover .card-compare-btn{opacity:1}
+.card-compare-btn:hover,.card-compare-btn.active{background:rgba(124,92,252,.3);border-color:var(--accent);color:var(--accent)}
+/* Compare modal */
+.compare-modal-wrap{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.compare-modal-wrap.active{opacity:1;pointer-events:all}
+.compare-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px)}
+.compare-modal{position:relative;width:100%;max-width:900px;max-height:90vh;overflow-y:auto;background:var(--surface);border:1px solid rgba(124,92,252,.25);border-radius:20px;padding:28px}
+.compare-modal h2{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:16px;letter-spacing:2px;margin-bottom:24px}
+.compare-table{width:100%;border-collapse:collapse}
+.compare-table td,.compare-table th{padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;text-align:left}
+.compare-table th{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;background:var(--surface2)}
+.compare-table td:first-child{color:var(--text2);font-weight:600;width:130px}
+.compare-table .compare-val{font-weight:600;color:var(--text)}
+.compare-table .compare-best{color:var(--accent2);font-weight:700}
+.compare-close-btn{position:absolute;top:18px;right:18px;width:32px;height:32px;background:var(--surface2);border:1px solid var(--border);border-radius:50%;color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.compare-close-btn:hover{background:var(--accent3);border-color:var(--accent3);color:#fff}
+
+/* ===== VIEW TOGGLE ===== */
+.view-toggle{display:flex;gap:4px;padding:8px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-left:8px;flex-shrink:0}
+.vt-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px;padding:2px 6px;border-radius:5px;transition:all .15s}
+.vt-btn.active{background:var(--accent);color:#fff}
+.grid.list-view{grid-template-columns:1fr;gap:10px}
+.grid.list-view .card{flex-direction:row;height:110px}
+.grid.list-view .card-img-wrap{width:140px;flex-shrink:0;height:100%}
+.grid.list-view .card img{height:100%;width:140px;object-fit:contain}
+.grid.list-view .card-overlay{display:none}
+.grid.list-view .card-badges{flex-direction:column}
+
+/* ===== AI SUPPORT CHAT ===== */
+#aiChatBtn{position:fixed;bottom:28px;right:28px;z-index:500;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#7c5cfc,#00e5c3);border:none;cursor:pointer;font-size:26px;box-shadow:0 8px 32px rgba(124,92,252,.5),0 0 0 0 rgba(124,92,252,.4);animation:chatPulse 2.5s infinite;transition:transform .25s,box-shadow .25s;display:flex;align-items:center;justify-content:center}
+#aiChatBtn:hover{transform:scale(1.12);box-shadow:0 12px 40px rgba(124,92,252,.7)}
+#aiChatBtn .chat-notif{position:absolute;top:2px;right:2px;width:16px;height:16px;background:#ff5555;border-radius:50%;border:2px solid var(--bg);font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center}
+@keyframes chatPulse{0%,100%{box-shadow:0 8px 32px rgba(124,92,252,.5),0 0 0 0 rgba(124,92,252,.35)}50%{box-shadow:0 8px 32px rgba(124,92,252,.5),0 0 0 12px rgba(124,92,252,0)}}
+#aiChatWrap{position:fixed;bottom:104px;right:28px;z-index:500;width:370px;max-height:580px;background:var(--surface);border:1px solid rgba(124,92,252,.3);border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 0 1px rgba(124,92,252,.1);display:flex;flex-direction:column;transform:scale(.85) translateY(20px);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.16,1,.3,1);transform-origin:bottom right}
+#aiChatWrap.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(124,92,252,.12),rgba(0,229,195,.06));border-radius:20px 20px 0 0}
+.chat-head-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7c5cfc,#00e5c3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 0 14px rgba(124,92,252,.4)}
+.chat-head-info{flex:1}
+.chat-head-name{font-weight:700;font-size:14px;color:var(--text)}
+.chat-head-status{font-size:11px;color:var(--accent2);display:flex;align-items:center;gap:4px}
+.chat-head-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite}
+.chat-close-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:4px;border-radius:6px;transition:all .2s}
+.chat-close-btn:hover{background:var(--surface3);color:var(--text)}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:360px;min-height:200px}
+.chat-messages::-webkit-scrollbar{width:3px}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px}
+.chat-msg{max-width:82%;font-size:13px;line-height:1.5;animation:fadeUp .3s ease}
+.chat-msg.bot{align-self:flex-start}
+.chat-msg.user{align-self:flex-end}
+.chat-msg-bubble{padding:10px 14px;border-radius:14px}
+.chat-msg.bot .chat-msg-bubble{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px 14px 14px 14px}
+.chat-msg.user .chat-msg-bubble{background:linear-gradient(135deg,#7c5cfc,#5a3de0);color:#fff;border-radius:14px 14px 4px 14px}
+.chat-msg-time{font-size:10px;color:var(--text3);margin-top:3px;padding:0 2px}
+.chat-msg.user .chat-msg-time{text-align:right}
+.chat-typing{align-self:flex-start;display:flex;gap:4px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:4px 14px 14px 14px}
+.chat-typing span{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:typingDot 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}
+.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-quick-btns{display:flex;gap:6px;padding:0 14px 10px;flex-wrap:wrap}
+.chat-quick-btn{padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:14px;color:var(--text2);font-size:11px;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;white-space:nowrap}
+.chat-quick-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(124,92,252,.08)}
+.chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border);background:var(--surface);border-radius:0 0 20px 20px}
+.chat-input{flex:1;padding:10px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;font-family:'Outfit',sans-serif;outline:none;resize:none;transition:border .2s}
+.chat-input:focus{border-color:rgba(124,92,252,.4)}
+.chat-send-btn{width:38px;height:38px;background:linear-gradient(135deg,#7c5cfc,#5a3de0);border:none;border-radius:9px;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.chat-send-btn:hover{transform:scale(1.08);box-shadow:0 4px 14px rgba(124,92,252,.5)}
+.chat-send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ===== LIVE DEALS TICKER ===== */
+.deals-ticker{background:linear-gradient(90deg,rgba(124,92,252,.15),rgba(0,229,195,.1),rgba(124,92,252,.15));border-bottom:1px solid var(--border);padding:8px 0;overflow:hidden;position:relative}
+.deals-ticker::before,.deals-ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2}
+.deals-ticker::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.deals-ticker::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
+.deals-ticker-inner{display:flex;gap:0;white-space:nowrap;animation:tickerScroll 35s linear infinite}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 24px;font-size:12px;font-weight:600;color:var(--text2)}
+.ticker-item .ticker-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;background:var(--accent);color:#fff}
+.ticker-item .ticker-price{font-family:'Rajdhani','JetBrains Mono',monospace;color:var(--accent2)}
+.ticker-sep{color:var(--border-h);margin:0 4px}
+
+/* ===== FLASH SALE CARD ===== */
+.flash-sale-card{background:linear-gradient(135deg,rgba(255,85,85,.12),rgba(240,165,0,.08));border:1px solid rgba(255,85,85,.25);border-radius:18px;padding:16px;margin:0 28px 20px;display:flex;align-items:center;gap:16px;animation:fadeUp .4s ease}
+.flash-icon{font-size:32px;animation:bounce 1s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.flash-info{flex:1}
+.flash-title{font-size:16px;font-weight:700;color:#ff5555;margin-bottom:2px}
+.flash-sub{font-size:12px;color:var(--text2)}
+.flash-timer{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--gold)}
+
+/* ===== CATEGORY CARDS ===== */
+.cat-showcase{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:0 28px 20px}
+.cat-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cc1,rgba(124,92,252,.1)),var(--cc2,rgba(0,229,195,.05)));opacity:0;transition:opacity .3s}
+.cat-card:hover{transform:translateY(-4px);border-color:rgba(124,92,252,.3)}
+.cat-card:hover::before{opacity:1}
+.cat-card-icon{font-size:32px;margin-bottom:8px}
+.cat-card-name{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--text)}
+.cat-card-count{font-size:10px;color:var(--text3);margin-top:2px}
+
+/* ===== PROMO CARDS ROW ===== */
+.promo-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:0 28px 20px}
+.promo-card{padding:18px;border-radius:14px;cursor:pointer;transition:transform .3s;border:1px solid transparent}
+.promo-card:hover{transform:translateY(-3px)}
+.promo-card-1{background:linear-gradient(135deg,rgba(124,92,252,.2),rgba(90,61,224,.1));border-color:rgba(124,92,252,.25)}
+.promo-card-2{background:linear-gradient(135deg,rgba(0,229,195,.15),rgba(0,180,155,.08));border-color:rgba(0,229,195,.2)}
+.promo-card-3{background:linear-gradient(135deg,rgba(240,165,0,.15),rgba(255,140,0,.08));border-color:rgba(240,165,0,.2)}
+.promo-card-icon{font-size:28px;margin-bottom:8px}
+.promo-card-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.promo-card-sub{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* ===== TRENDING SECTION ===== */
+.section-head{display:flex;align-items:center;justify-content:space-between;padding:0 28px 14px}
+.section-title{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:15px;font-weight:700;color:var(--text);letter-spacing:1px}
+.section-sub{font-size:11px;color:var(--text3)}
+.section-more{font-size:12px;color:var(--accent);cursor:pointer;background:none;border:none;font-family:'Outfit',sans-serif;transition:color .2s}
+.section-more:hover{color:var(--accent2)}
+
+/* ===== FEATURED BANNER ===== */
+.featured-banner{margin:0 28px 20px;border-radius:18px;overflow:hidden;position:relative;min-height:140px;background:linear-gradient(135deg,#0f0320,#1a0850,#0a1a40);border:1px solid rgba(124,92,252,.2);cursor:pointer;transition:transform .3s}
+.featured-banner:hover{transform:scale(1.01)}
+.featured-banner-content{position:relative;z-index:2;padding:24px 28px;display:flex;align-items:center;gap:24px}
+.featured-banner-text h3{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.featured-banner-text p{font-size:13px;color:rgba(255,255,255,.6);margin-bottom:14px}
+.featured-banner-btn{padding:9px 20px;background:white;color:#7c5cfc;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;letter-spacing:.3px}
+.featured-banner-btn:hover{background:#7c5cfc;color:#fff}
+.featured-banner-price{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--accent2);margin-left:auto;white-space:nowrap}
+.featured-banner-glow{position:absolute;top:-40%;right:-10%;width:300px;height:300px;background:radial-gradient(ellipse,rgba(124,92,252,.3),transparent 70%);pointer-events:none}
+
+/* ===== AI BADGE on cards ===== */
+.ai-reco-badge{position:absolute;bottom:12px;right:12px;padding:3px 9px;background:linear-gradient(135deg,rgba(124,92,252,.9),rgba(0,229,195,.8));border-radius:8px;font-size:9px;font-weight:700;color:#fff;letter-spacing:.5px;z-index:3;opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover .ai-reco-badge{opacity:1}
+
+/* ===== LIGHT THEME OVERRIDE ===== */
+body.light{--bg:#f5f5fa;--surface:#ffffff;--surface2:#f0f0f7;--surface3:#e8e8f0;--border:rgba(0,0,0,.08);--border-h:rgba(0,0,0,.15);--text:#1a1a2e;--text2:#555;--text3:#999;--glow:rgba(124,92,252,.1)}
+body.light header{background:rgba(245,245,250,.92)}
+body.light .search-wrap input{color:#1a1a2e}
+body.light .sort-select{color:#1a1a2e;background:#f0f0f7}
+body.light .auth-bg{background:radial-gradient(ellipse at 30% 20%,rgba(124,92,252,.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(0,229,195,.05) 0%,transparent 50%),#f5f5fa}
+
+/* ===== V5 UPGRADES ===== */
+
+/* Improved scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent),var(--accent2));border-radius:10px}
+
+/* Noise overlay */
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0}
+
+/* ===== PRICE RANGE FILTER ===== */
+.price-filter{display:flex;align-items:center;gap:10px;padding:0 28px 14px;flex-wrap:wrap}
+.price-filter label{font-size:11px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.price-inputs{display:flex;align-items:center;gap:6px}
+.price-input{width:80px;padding:6px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:'Outfit',sans-serif;outline:none;text-align:center}
+.price-input:focus{border-color:var(--accent)}
+.price-sep{color:var(--text3);font-size:12px}
+.price-apply-btn{padding:6px 14px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
+.price-apply-btn:hover{background:#6a4ce8;transform:scale(1.04)}
+.price-reset-btn{padding:6px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text3);font-size:11px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
+.price-reset-btn:hover{border-color:var(--accent3);color:var(--accent3)}
+.active-filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.active-filter-chip{display:flex;align-items:center;gap:4px;padding:4px 10px;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.3);border-radius:20px;font-size:10px;font-weight:700;color:var(--accent);letter-spacing:.5px}
+.active-filter-chip button{background:none;border:none;color:var(--accent3);cursor:pointer;font-size:12px;padding:0;margin-left:2px;line-height:1}
+
+/* ===== STOCK BADGE ===== */
+.stock-low{color:var(--accent3)!important;font-weight:700}
+
+/* ===== ENHANCED CARD V5 ===== */
+.card{border-radius:20px}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(124,92,252,.06),transparent);opacity:0;transition:opacity .3s;pointer-events:none;z-index:0}
+.card:hover::before{opacity:1}
+.card-img-wrap{border-radius:20px 20px 0 0}
+
+/* ===== RATING FILTER BAR ===== */
+.rating-filter{display:flex;gap:5px;align-items:center;margin-left:8px}
+.rating-filter-btn{padding:5px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;color:var(--text3);font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.rating-filter-btn.active{background:rgba(240,165,0,.15);border-color:var(--gold);color:var(--gold)}
+.rating-filter-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ===== NEW TAG BADGE ===== */
+.v5-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:20px;font-size:9px;font-weight:800;color:#000;letter-spacing:1px;margin-left:6px;vertical-align:middle}
+
+/* ===== LOADING SKELETON ===== */
+.skeleton-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:skeletonFade 1.5s ease infinite}
+@keyframes skeletonFade{0%,100%{opacity:.5}50%{opacity:1}}
+.skeleton-img{width:100%;height:190px;background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-line{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--surface2) 25%,var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin:8px 16px}
+.skeleton-line.short{width:60%;margin:4px 16px}
+.skeleton-line.price{width:40%;height:20px;margin:12px 16px}
+
+/* ===== QUICK VIEW TOOLTIP ===== */
+.card-quick-view{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);opacity:0;background:rgba(124,92,252,.95);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-size:11px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .25s;z-index:4;white-space:nowrap;letter-spacing:.5px}
+.card:hover .card-quick-view{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+/* ===== IN STOCK INDICATOR ===== */
+.in-stock-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;flex-shrink:0}
+.in-stock-dot.green{background:var(--accent2);box-shadow:0 0 6px var(--accent2)}
+.in-stock-dot.yellow{background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.in-stock-dot.red{background:var(--accent3);box-shadow:0 0 6px var(--accent3)}
+
+/* ===== HEADER V5 UPGRADE ===== */
+header{background:rgba(6,6,8,.95);border-bottom:1px solid rgba(124,92,252,.12)}
+.logo{font-family:'Rajdhani','JetBrains Mono',monospace;font-size:20px;letter-spacing:4px;font-weight:700}
+.logo-dot{animation:pulse 1.5s infinite}
+
+/* ===== NOTIFICATION DOT ===== */
+.has-notif{position:relative}
+.notif-ring{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--accent3);border-radius:50%;border:2px solid var(--bg);animation:pulse 1.5s infinite}
+
+/* ===== PRODUCT COUNT BADGE ===== */
+.count-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;font-size:11px;color:var(--text2);font-weight:600}
+
+/* ===== ENHANCED MODAL V5 ===== */
+.modal-tabs{display:flex;gap:2px;margin-bottom:16px;background:var(--surface2);border-radius:10px;padding:3px}
+.modal-tab{flex:1;padding:8px;border:none;background:transparent;color:var(--text3);font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;border-radius:8px;transition:all .2s;letter-spacing:.3px}
+.modal-tab.active{background:var(--accent);color:#fff}
+.modal-tab-content{display:none}
+.modal-tab-content.active{display:block;animation:fadeUp .25s ease}
+
+/* ===== AI BADGE GLOW ===== */
+#aiChatBtn{background:linear-gradient(135deg,#7c5cfc,#00e5c3);box-shadow:0 4px 24px rgba(124,92,252,.5);animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* ===== NEW SECTION: TRENDING ===== */
+.trending-section{padding:0 28px 24px}
+.trending-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:14px}
+.trending-mini-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+.trending-mini-card:hover{transform:translateY(-4px);border-color:rgba(124,92,252,.3);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.trending-mini-img{width:100%;height:110px;object-fit:cover;background:var(--surface2)}
+.trending-mini-body{padding:10px}
+.trending-mini-name{font-size:12px;font-weight:600;margin-bottom:3px;line-height:1.3}
+.trending-mini-price{font-family:'Rajdhani',monospace;font-size:15px;font-weight:700;color:var(--accent2)}
+.trending-rank{position:absolute;top:8px;left:8px;width:24px;height:24px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;font-family:'Outfit',sans-serif}
+
+/* ===== SEARCH SUGGESTIONS ===== */
+.search-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid rgba(124,92,252,.2);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:200;overflow:hidden;max-height:280px;overflow-y:auto;display:none}
+.search-dropdown.show{display:block;animation:fadeUp .2s ease}
+.search-suggestion{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .15s;font-size:13px}
+.search-suggestion:hover{background:var(--surface2)}
+.search-suggestion-icon{font-size:18px;flex-shrink:0}
+.search-suggestion-name{flex:1;font-weight:500}
+.search-suggestion-price{font-family:'Rajdhani',monospace;font-size:13px;font-weight:700;color:var(--accent2);flex-shrink:0}
+.search-suggestion-cat{font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px}
+
+/* ===== COUNTDOWN ENHANCED ===== */
+.promo-countdown span{font-family:'JetBrains Mono','Rajdhani',monospace;letter-spacing:2px;color:var(--accent2);text-shadow:0 0 12px rgba(0,229,195,.5)}
+
+/* ===== FOOTER V5 ===== */
+.footer-logo{font-family:'Rajdhani',monospace;font-size:26px;letter-spacing:4px}
+
+/* ===== SMOOTH SCROLL ===== */
+html{scroll-behavior:smooth}
+
+/* ===== GRID IMPROVEMENTS ===== */
+.grid{gap:20px}
+
+/* ===== PRICE RANGE SLIDER LOOK ===== */
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(124,92,252,.6);cursor:pointer;border:2px solid var(--bg)}
+
+/* ===== STATS BAR V5 ===== */
+.stats-bar{background:linear-gradient(90deg,rgba(124,92,252,.06),rgba(0,229,195,.04));border-bottom:1px solid var(--border)}
+.stat-item{gap:10px}
+
+/* ===== CARD HOVER PRICE PULSE ===== */
+.card:hover .price{color:var(--accent2);transition:color .3s}
+
+/* ===== GRID LIST VIEW IMPROVEMENTS ===== */
+.grid.list-view .card{flex-direction:row;max-height:130px}
+.grid.list-view .card-img-wrap{width:140px;flex-shrink:0}
+.grid.list-view .card-img-wrap img{height:130px;width:140px;object-fit:cover}
+.grid.list-view .card-body{padding:12px 16px;flex:1}
+
+/* ===== LIGHT THEME IMPROVEMENTS ===== */
+body.light .card{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+body.light .card:hover{box-shadow:0 16px 40px rgba(124,92,252,.15)}
+body.light header{border-bottom:1px solid rgba(0,0,0,.06)}
+
+</style>
+</head>
+<body>
+
+<!-- ===== AUTH ===== -->
+<div id="authWrap" class="auth-wrap">
+  <div class="auth-bg"></div>
+  <div class="auth-box">
+    <div class="auth-logo">NEXUS<span>SHOP</span></div>
+    <div class="auth-sub">⚡ Next-Gen Tech Store v5</div>
+    <div id="loginBox">
+      <div class="form-group"><label>Логін</label><input class="field" id="logUser" placeholder="Введи логін" autocomplete="username"></div>
+      <div class="form-group"><label>Пароль</label><input class="field" id="logPass" type="password" placeholder="Введи пароль" autocomplete="current-password"></div>
+      <button class="btn btn-primary" onclick="login()">🚀 Увійти</button>
+      <div class="auth-divider"><span>або</span></div>
+      <button class="btn btn-ghost" onclick="showRegister()">Немає акаунту? Зареєструватись →</button>
+      <div class="auth-demo">💡 Демо: логін <b>demo</b> / пароль <b>demo</b></div>
+    </div>
+    <div id="registerBox" class="hidden">
+      <div class="form-group"><label>Логін</label><input class="field" id="regUser" placeholder="Придумай логін (мін. 3 символи)" autocomplete="username"></div>
+      <div class="form-group"><label>Пароль</label><input class="field" id="regPass" type="password" placeholder="Придумай пароль (мін. 4 символи)" autocomplete="new-password"></div>
+      <button class="btn btn-primary" onclick="register()">✨ Створити акаунт</button>
+      <div class="auth-divider"><span>або</span></div>
+      <button class="btn btn-ghost" onclick="showLogin()">← Повернутись до входу</button>
+    </div>
+    <p class="auth-msg" id="authMsg"></p>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app" class="hidden">
+  <header>
+    <div class="logo"><div class="logo-dot"></div>NEXUS<span>SHOP</span><span class="v5-tag">v5</span></div>
+    <div class="header-center">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="searchIn" placeholder="Шукай товари..." oninput="onSearchInput()" autocomplete="off" onblur="hideSearchDropdown()">
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Тема">🌙</button>
+      <button class="icon-btn" onclick="openWishlist()">❤️ <span class="wish-badge" id="wishCount">0</span></button>
+      <button class="icon-btn" onclick="openCart()">🛒 <span class="cart-badge" id="cartCount">0</span></button>
+      <div class="user-btn" tabindex="0">
+        <div class="user-avatar" id="userInitials">?</div>
+        <span id="userName"></span>
+        <span style="color:var(--text3);font-size:10px">▾</span>
+        <div class="dropdown">
+          <button class="dropdown-item" onclick="openProfile()">👤 Профіль</button>
+          <button class="dropdown-item" onclick="openWishlist()">❤️ Вподобане (<span id="ddWishCount">0</span>)</button>
+          <button class="dropdown-item" onclick="openCart()">🛒 Кошик (<span id="ddCartCount">0</span>)</button>
+          <button class="dropdown-item danger" onclick="logout()">🚪 Вийти</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="stats-bar" id="statsBar"></div>
+
+  <div class="promo-banner">
+    <div class="promo-text">
+      <h3>🎉 Весняний розпродаж −20%</h3>
+      <p>На всі товари категорії "Периферія" до кінця місяця</p>
+    </div>
+    <div class="promo-right">
+      <div>
+        <div class="promo-countdown">Закінчується через<span id="countdown">23:59:59</span></div>
+      </div>
+      <div class="promo-code" onclick="copyPromo()" title="Натисни щоб скопіювати">NEXUS20</div>
+    </div>
+  </div>
+
+  <!-- LIVE DEALS TICKER -->
+  <div class="deals-ticker" id="dealsTicker" style="display:none">
+    <div class="deals-ticker-inner" id="tickerInner"></div>
+  </div>
+
+  <div class="filter-bar" id="filterBar"></div>
+  <!-- PRICE & RATING FILTER -->
+  <div class="price-filter" id="priceFilter">
+    <label>💰 Ціна:</label>
+    <div class="price-inputs">
+      <input class="price-input" id="priceMin" type="number" placeholder="від $0" min="0" onkeydown="if(event.key==='Enter')applyPriceFilter()">
+      <span class="price-sep">—</span>
+      <input class="price-input" id="priceMax" type="number" placeholder="до $9999" min="0" onkeydown="if(event.key==='Enter')applyPriceFilter()">
+    </div>
+    <button class="price-apply-btn" onclick="applyPriceFilter()">Застосувати</button>
+    <button class="price-reset-btn" onclick="resetPriceFilter()">✕ Скинути</button>
+    <div class="rating-filter">
+      <span style="font-size:11px;color:var(--text3);font-weight:700;letter-spacing:1px;text-transform:uppercase">⭐ Рейтинг:</span>
+      <button class="rating-filter-btn" onclick="setRatingFilter(4.5)" id="rfBtn45">4.5+</button>
+      <button class="rating-filter-btn" onclick="setRatingFilter(4)" id="rfBtn4">4.0+</button>
+      <button class="rating-filter-btn" onclick="setRatingFilter(0)" id="rfBtnAll">Всі</button>
+    </div>
+    <div class="active-filters" id="activeFilters"></div>
+  </div>
+
+  <!-- PRODUCT COUNT + RESULTS INFO -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 28px 10px">
+    <div class="count-badge" id="productCount">0 товарів</div>
+  </div>
+
+
+  <!-- CATEGORY SHOWCASE -->
+  <div id="catShowcaseWrap" style="display:none">
+    <div class="section-head" style="padding-top:20px">
+      <div><div class="section-title">⚡ КАТЕГОРІЇ</div><div class="section-sub">Знайди саме те що шукаєш</div></div>
+    </div>
+    <div class="cat-showcase" id="catShowcase"></div>
+  </div>
+
+  <!-- PROMO CARDS -->
+  <div class="promo-cards" id="promoCards" style="display:none">
+    <div class="promo-card promo-card-1" onclick="setCategory('GPU');document.getElementById('heroBanner').style.display='none'">
+      <div class="promo-card-icon">🖥️</div>
+      <div class="promo-card-title">GPU Топ 2026</div>
+      <div class="promo-card-sub">RTX 4090, RX 7900 XTX та інші монстри</div>
+    </div>
+    <div class="promo-card promo-card-2" onclick="copyPromo()">
+      <div class="promo-card-icon">🎁</div>
+      <div class="promo-card-title">Промокод NEXUS20</div>
+      <div class="promo-card-sub">Знижка 20% на всі товари. Натисни щоб скопіювати!</div>
+    </div>
+    <div class="promo-card promo-card-3" onclick="setCategory('Аудіо')">
+      <div class="promo-card-icon">🎧</div>
+      <div class="promo-card-title">Аудіо розпродаж</div>
+      <div class="promo-card-sub">До -30% на навушники та звукові системи</div>
+    </div>
+  </div>
+
+  <!-- FEATURED BANNER -->
+  <div class="featured-banner" id="featuredBanner" style="display:none" onclick="openModal(0)">
+    <div class="featured-banner-glow"></div>
+    <div class="featured-banner-content">
+      <div class="featured-banner-text">
+        <h3>🔥 RTX 4090 Founders Edition</h3>
+        <p>Найпотужніша відеокарта. 24GB GDDR6X. 4K gaming. Ray Tracing.</p>
+        <button class="featured-banner-btn">Детальніше →</button>
+      </div>
+      <div class="featured-banner-price">$3,200</div>
+    </div>
+  </div>
+
+  <!-- TRENDING SECTION HEADER -->
+  <div class="section-head" id="trendingHead" style="display:none">
+    <div><div class="section-title">🛒 КАТАЛОГ ТОВАРІВ</div><div class="section-sub" id="productCount"></div></div>
+    <button class="section-more" onclick="setCategory('all')">Всі товари →</button>
+  </div>
+
+  <!-- HERO BANNER -->
+  <div class="hero-banner" id="heroBanner">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-tag">🔥 НОВА КОЛЕКЦІЯ 2026</div>
+      <h1 class="hero-title">Наступне покоління<br><span class="hero-accent">ігрових технологій</span></h1>
+      <p class="hero-sub">RTX 4090 · PS5 · OLED-монітори · Механічні клавіатури</p>
+      <div class="hero-actions">
+        <button class="hero-btn-primary" onclick="document.getElementById('heroBanner').style.display='none'">🚀 Переглянути каталог</button>
+        <button class="hero-btn-ghost" onclick="setCategory('GPU');document.getElementById('heroBanner').style.display='none'">🖥️ Топ GPU →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong>12</strong><span>Товарів</span></div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat"><strong>4.7★</strong><span>Рейтинг</span></div>
+        <div class="hero-stat-sep"></div>
+        <div class="hero-stat"><strong>−20%</strong><span>Знижка</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-float">
+        <div class="hf-badge">🔥 HOT DEAL</div>
+        <div class="hf-icon">🎮</div>
+        <div class="hf-name">PlayStation 5</div>
+        <div class="hf-price">$650</div>
+        <button class="hf-btn" onclick="addCart({stopPropagation:()=>{}},1);showToast('✅ PS5 в кошику','success')">+ В кошик</button>
+      </div>
+    </div>
+    <button class="hero-close" onclick="document.getElementById('heroBanner').style.display='none'" title="Закрити">✕</button>
+  </div>
+
+  <div class="main-layout">
+    <div class="grid" id="productsGrid"></div>
+  </div>
+
+  <!-- RECENTLY VIEWED -->
+  <div class="recently-wrap" id="recentlyWrap" style="display:none">
+    <div class="recently-head">
+      <span>🕒 Нещодавно переглянуті</span>
+      <button onclick="recentlyViewed=[];saveData();document.getElementById('recentlyWrap').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:11px">Очистити</button>
+    </div>
+    <div class="recently-list" id="recentlyList"></div>
+  </div>
+
+  <!-- COMPARISON BAR -->
+  <div class="compare-bar" id="compareBar" style="display:none">
+    <div class="compare-bar-inner">
+      <span class="compare-title">⚖️ Порівняння</span>
+      <div class="compare-items" id="compareItems"></div>
+      <button class="compare-go-btn" onclick="openCompare()">Порівняти →</button>
+      <button class="compare-clear" onclick="compareList=[];renderCompareBar()">✕</button>
+    </div>
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div class="compare-modal-wrap" id="compareModalWrap">
+    <div class="compare-modal-bg" onclick="document.getElementById('compareModalWrap').classList.remove('active')"></div>
+    <div class="compare-modal" id="compareModal"></div>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- WISHLIST PANEL -->
+<div class="side-panel left" id="wishPanel">
+  <div class="panel-head"><h3>❤️ ВПОДОБАНЕ</h3><button class="close-btn" onclick="closeWishlist()">✕</button></div>
+  <div class="wish-body" id="wishBody"></div>
+</div>
+
+<!-- CART PANEL -->
+<div class="side-panel right" id="cartPanel">
+  <div class="panel-head"><h3>🛒 КОШИК</h3><button class="close-btn" onclick="closeCart()">✕</button></div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot">
+    <div class="cart-summary" id="cartSummary"></div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()">💳 Оплатити →</button>
+    <div class="secure-note">🔒 Захищена оплата · SSL</div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-wrap" id="modalWrap">
+  <div class="modal-bg" onclick="closeModal()"></div>
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-wrap" id="checkoutWrap">
+  <div class="checkout-bg" onclick="closeCheckout()"></div>
+  <div class="checkout-modal">
+    <div class="checkout-head">
+      <h2 id="checkoutTitle">💳 ОПЛАТА</h2>
+      <button class="close-btn" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="checkout-body">
+      <!-- Progress bar -->
+      <div class="c-progress">
+        <div class="c-pdot active" id="cp1">1</div>
+        <div class="c-pline" id="cl1"></div>
+        <div class="c-pdot" id="cp2">2</div>
+        <div class="c-pline" id="cl2"></div>
+        <div class="c-pdot" id="cp3">3</div>
+      </div>
+
+      <!-- Step 1: Delivery -->
+      <div class="checkout-step active" id="cstep1">
+        <div class="o-summary">
+          <div class="o-summary-title">📦 Ваше замовлення</div>
+          <div class="o-items" id="oItems"></div>
+          <div class="o-total-row">
+            <span class="o-total-label">Разом до сплати</span>
+            <span class="o-total-price" id="oTotal">$0</span>
+          </div>
+        </div>
+        <div class="d-section">
+          <div class="d-title">🚚 Дані доставки</div>
+          <div class="f-field"><label>ПІБ</label><input id="dName" placeholder="Іваненко Іван Іванович"></div>
+          <div class="f-row">
+            <div class="f-field"><label>Телефон</label><input id="dPhone" placeholder="+380 (0XX) XXX-XX-XX"></div>
+            <div class="f-field"><label>Місто</label><input id="dCity" placeholder="Київ"></div>
+          </div>
+          <div class="f-field" style="margin-bottom:0">
+            <label>Спосіб доставки</label>
+            <select id="dMethod">
+              <option value="np">📦 Нова Пошта (1-3 дні) — від $5</option>
+              <option value="ukr">✉️ Укрпошта (3-7 днів) — від $2</option>
+              <option value="meest">🚛 Meest Express (1-2 дні) — від $8</option>
+              <option value="courier">🏠 Кур'єр додому (1 день) — від $12</option>
+            </select>
+          </div>
+        </div>
+        <button class="pay-btn" onclick="gotoStep(2)">Далі — Вибір оплати →</button>
+      </div>
+
+      <!-- Step 2: Payment -->
+      <div class="checkout-step" id="cstep2">
+        <div class="pm-title">Оберіть спосіб оплати</div>
+        <div class="pm-grid" id="pmGrid"></div>
+
+        <div class="card-form" id="cardFormEl">
+          <div class="card-visual">
+            <div class="card-chip"><div></div><div></div><div></div><div></div></div>
+            <span class="card-num-display" id="cardDisplay">•••• •••• •••• ••••</span>
+            <span class="card-network" id="cardNetwork">💳</span>
+          </div>
+          <div class="f-field"><label>Номер картки</label><input id="ccNum" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)"></div>
+          <div class="f-row">
+            <div class="f-field" style="margin-bottom:0"><label>Термін дії</label><input id="ccExp" placeholder="MM / YY" maxlength="7" oninput="formatExp(this)"></div>
+            <div class="f-field" style="margin-bottom:0"><label>CVV / CVC</label><input id="ccCvv" type="password" placeholder="•••" maxlength="3"></div>
+          </div>
+        </div>
+
+        <div style="height:20px"></div>
+        <div class="pm-title" style="margin-bottom:10px">🎁 Промокод</div>
+        <div class="promo-input-row">
+          <input id="promoIn" placeholder="Введи промокод..." oninput="this.value=this.value.toUpperCase()">
+          <button class="promo-apply-btn" onclick="applyPromo()">Застосувати</button>
+        </div>
+        <div class="promo-status" id="promoStatus"></div>
+
+        <button class="pay-btn" onclick="gotoStep(3)">✅ Підтвердити та оплатити</button>
+        <button class="back-btn" onclick="gotoStep(1)">← Назад до доставки</button>
+      </div>
+
+      <!-- Step 3: Processing/Success -->
+      <div class="checkout-step" id="cstep3">
+        <div id="payResult"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS STRIP -->
+<div class="brands-strip" id="brandsStrip" style="display:none">
+  <div class="brands-inner">
+    <span class="brands-label">ОФІЦІЙНІ ПАРТНЕРИ</span>
+    <div class="brands-scroll">
+      <span class="brand-tag">🟩 NVIDIA</span>
+      <span class="brand-tag">🔴 AMD</span>
+      <span class="brand-tag">🔵 Intel</span>
+      <span class="brand-tag">🍎 Apple</span>
+      <span class="brand-tag">🎮 Sony</span>
+      <span class="brand-tag">🟢 Microsoft</span>
+      <span class="brand-tag">🐍 Razer</span>
+      <span class="brand-tag">⚡ ASUS ROG</span>
+      <span class="brand-tag">🔥 MSI</span>
+      <span class="brand-tag">🟩 NVIDIA</span>
+      <span class="brand-tag">🔴 AMD</span>
+      <span class="brand-tag">🔵 Intel</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="siteFooter" style="display:none">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">NEXUS<span>SHOP</span></div>
+      <p class="footer-tagline">Next-Gen Tech, доставлене до вашого дому.</p>
+      <div class="footer-socials">
+        <a class="social-pill" href="#">📸 Instagram</a>
+        <a class="social-pill" href="#">💬 Telegram</a>
+        <a class="social-pill" href="#">▶️ YouTube</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col"><strong>Магазин</strong><a href="#">Каталог</a><a href="#">Новинки</a><a href="#">Розпродаж</a><a href="#">Бренди</a></div>
+      <div class="footer-col"><strong>Підтримка</strong><a href="#">FAQ</a><a href="#">Повернення</a><a href="#">Гарантія</a><a href="#">Контакти</a></div>
+      <div class="footer-col"><strong>Компанія</strong><a href="#">Про нас</a><a href="#">Вакансії</a><a href="#">Блог</a><a href="#">Партнерам</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 NexusSHOP v5 · Всі права захищені. 🚀</span>
+    <div class="footer-badges">
+      <span class="f-badge">🔒 SSL</span>
+      <span class="f-badge">✅ Перевірений продавець</span>
+      <span class="f-badge">🚚 Доставка 1-3 дні</span>
+    </div>
+  </div>
+</footer>
+
+<!-- PROFILE PANEL -->
+<div class="profile-wrap" id="profileWrap">
+  <div class="profile-bg" onclick="closeProfile()"></div>
+  <div class="profile-modal">
+    <button class="profile-close" onclick="closeProfile()">✕</button>
+
+    <!-- Hero -->
+    <div class="profile-hero">
+      <div class="profile-hero-inner">
+        <div class="avatar-wrap">
+          <img class="avatar-img" id="profileAvatarImg" src="" alt="" style="display:none">
+          <div class="avatar-placeholder" id="profileAvatarPlaceholder">MA</div>
+          <label class="avatar-upload-btn" title="Завантажити фото" for="avatarFileInput">📷</label>
+          <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="handleAvatarUpload(event)">
+        </div>
+        <div class="profile-info">
+          <div class="profile-name" id="profileNameDisplay">Користувач</div>
+          <div class="profile-email" id="profileEmailDisplay">member@nexusshop.ua</div>
+          <div class="profile-badges">
+            <span class="profile-badge vip">⭐ VIP</span>
+            <span class="profile-badge verified">✓ Верифікований</span>
+            <span class="profile-badge member">🚀 NexusMember</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="profile-tabs">
+      <button class="profile-tab active" onclick="switchProfileTab('overview')">📊 Огляд</button>
+      <button class="profile-tab" onclick="switchProfileTab('orders')">📦 Замовлення</button>
+      <button class="profile-tab" onclick="switchProfileTab('wishlist')">❤️ Вподобане</button>
+      <button class="profile-tab" onclick="switchProfileTab('edit')">✏️ Дані</button>
+      <button class="profile-tab" onclick="switchProfileTab('security')">🔒 Безпека</button>
+    </div>
+
+    <!-- Body -->
+    <div class="profile-body">
+
+      <!-- OVERVIEW -->
+      <div class="profile-section active" id="ptab-overview">
+        <div class="p-stats-grid">
+          <div class="p-stat">
+            <div class="p-stat-val purple" id="ps-orders">0</div>
+            <div class="p-stat-label">Замовлень</div>
+          </div>
+          <div class="p-stat">
+            <div class="p-stat-val green" id="ps-spent">$0</div>
+            <div class="p-stat-label">Витрачено</div>
+          </div>
+          <div class="p-stat">
+            <div class="p-stat-val gold" id="ps-wish">0</div>
+            <div class="p-stat-label">Вподобань</div>
+          </div>
+          <div class="p-stat">
+            <div class="p-stat-val" id="ps-reviews">0</div>
+            <div class="p-stat-label">Відгуків</div>
+          </div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px">🎯 Рівень лояльності</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:600;color:var(--accent)">NexusGold</span>
+            <span style="font-size:11px;color:var(--text3)">720 / 1000 балів до Platinum</span>
+          </div>
+          <div style="height:6px;background:var(--surface3);border-radius:4px;overflow:hidden">
+            <div style="height:6px;width:72%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .8s cubic-bezier(.16,1,.3,1)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--text3)"><span>Silver</span><span style="color:var(--gold)">Gold ✓</span><span>Platinum</span></div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(0,229,195,.08),rgba(124,92,252,.08));border:1px solid rgba(0,229,195,.2);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px">
+          <span style="font-size:32px">🎁</span>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--accent2);margin-bottom:3px">Ваш промокод: NEXUS20</div>
+            <div style="font-size:11px;color:var(--text3)">Знижка 20% на наступне замовлення. Дійсний до кінця місяця.</div>
+          </div>
+          <button onclick="copyPromo()" style="padding:8px 14px;background:rgba(0,229,195,.15);border:1px solid rgba(0,229,195,.3);border-radius:8px;color:var(--accent2);font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Outfit',sans-serif;flex-shrink:0">Скопіювати</button>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="profile-section" id="ptab-orders">
+        <div id="ordersContainer"></div>
+      </div>
+
+      <!-- WISHLIST -->
+      <div class="profile-section" id="ptab-wishlist">
+        <div id="profileWishContainer"></div>
+      </div>
+
+      <!-- EDIT -->
+      <div class="profile-section" id="ptab-edit">
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px">Особисті дані</div>
+          <div class="p-form-row">
+            <div class="p-field"><label>Ім'я</label><input id="pf-firstname" placeholder="Максим"></div>
+            <div class="p-field"><label>Прізвище</label><input id="pf-lastname" placeholder="Шевченко"></div>
+          </div>
+          <div class="p-form-row">
+            <div class="p-field"><label>Email</label><input id="pf-email" type="email" placeholder="email@example.com"></div>
+            <div class="p-field"><label>Телефон</label><input id="pf-phone" placeholder="+380 XX XXX XX XX"></div>
+          </div>
+        </div>
+        <div style="margin-bottom:18px">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px">Адреса доставки</div>
+          <div class="p-form-row">
+            <div class="p-field"><label>Місто</label><input id="pf-city" placeholder="Київ"></div>
+            <div class="p-field"><label>Поштовий індекс</label><input id="pf-zip" placeholder="01001"></div>
+          </div>
+          <div class="p-field" style="margin-bottom:12px"><label>Вулиця та будинок</label><input id="pf-address" placeholder="вул. Хрещатик, 1, кв. 42"></div>
+        </div>
+        <button class="p-save-btn" onclick="saveProfileData()">💾 Зберегти зміни</button>
+      </div>
+
+      <!-- SECURITY -->
+      <div class="profile-section" id="ptab-security">
+        <div class="security-item">
+          <span class="security-icon">🔑</span>
+          <div class="security-info">
+            <div class="security-title">Пароль</div>
+            <div class="security-desc">Останнє оновлення: нещодавно</div>
+          </div>
+          <button class="security-action" onclick="toast('Функція скидання пароля в розробці 🔧')">Змінити</button>
+        </div>
+        <div class="security-item">
+          <span class="security-icon">📱</span>
+          <div class="security-info">
+            <div class="security-title">Двофакторна автентифікація</div>
+            <div class="security-desc">Не підключена — рекомендуємо увімкнути</div>
+          </div>
+          <button class="security-action" onclick="toast('2FA буде доступна незабаром ⚡')">Увімкнути</button>
+        </div>
+        <div class="security-item">
+          <span class="security-icon">🖥️</span>
+          <div class="security-info">
+            <div class="security-title">Активні сесії</div>
+            <div class="security-desc">1 пристрій — цей браузер</div>
+          </div>
+          <button class="security-action" onclick="toast('Всі інші сесії завершено ✓','success')">Завершити всі</button>
+        </div>
+        <div class="security-item">
+          <span class="security-icon">🔔</span>
+          <div class="security-info">
+            <div class="security-title">Email-сповіщення</div>
+            <div class="security-desc">Отримувати оновлення про замовлення</div>
+          </div>
+          <button class="security-action" onclick="toast('Налаштування збережено ✓','success')">Увімкнено</button>
+        </div>
+        <div class="danger-zone">
+          <div class="danger-title">⚠️ Небезпечна зона</div>
+          <button onclick="if(confirm('Ти впевнений? Всі дані будуть видалені назавжди.')) logout()" style="padding:9px 18px;background:transparent;border:1px solid rgba(255,85,85,.4);border-radius:9px;color:var(--accent3);font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s">🗑️ Видалити акаунт</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- AI SUPPORT CHAT -->
+<button id="aiChatBtn" onclick="toggleChat()" title="AI Підтримка">
+  🤖
+  <div class="chat-notif">1</div>
+</button>
+
+<div id="aiChatWrap">
+  <div class="chat-head">
+    <div class="chat-head-avatar">🤖</div>
+    <div class="chat-head-info">
+      <div class="chat-head-name">NEXUS AI Підтримка</div>
+      <div class="chat-head-status">Онлайн · відповідає миттєво</div>
+    </div>
+    <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-quick-btns" id="chatQuickBtns">
+    <button class="chat-quick-btn" onclick="sendQuick('Які товари зараз в наявності?')">📦 Наявність</button>
+    <button class="chat-quick-btn" onclick="sendQuick('Як здійснити доставку?')">🚚 Доставка</button>
+    <button class="chat-quick-btn" onclick="sendQuick('Як повернути товар?')">↩️ Повернення</button>
+    <button class="chat-quick-btn" onclick="sendQuick('Є знижки чи промокоди?')">🎁 Знижки</button>
+  </div>
+  <div class="chat-input-row">
+    <textarea class="chat-input" id="chatInput" placeholder="Запитай щось про товари..." rows="1" onkeydown="chatKeydown(event)"></textarea>
+    <button class="chat-send-btn" id="chatSendBtn" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- TOASTS -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ========== STATE ========== */
+let users       = JSON.parse(localStorage.getItem('nx_users')) || {demo:{password:'demo'}};
+let currentUser = localStorage.getItem('nx_user') || null;
+let cart        = [];
+let wishlist    = [];
+let activeCategory = 'all';
+let sortMode    = 'default';
+let lightMode   = false;
+let selPayMethod = 'card';
+let promoApplied = false;
+let promoDiscount = 0;
+let recentlyViewed = [];
+let compareList = [];
+let viewMode = 'grid';
+
+/* ========== PRODUCT IMAGES — matched to product names ========== */
+const productPhotos = {
+  // id:0  RTX 4090 Founders — graphics card
+  0:  'https://images.unsplash.com/photo-1591489378430-ef2f4c626b35?w=600&q=80',
+  // id:1  PlayStation 5
+  1:  'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=600&q=80',
+  // id:2  Xbox Series X
+  2:  'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=600&q=80',
+  // id:3  Monitor 4K 144Hz
+  3:  'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600&q=80',
+  // id:4  Gaming Mouse Pro
+  4:  'https://images.unsplash.com/photo-1527814050087-3793815479db?w=600&q=80',
+  // id:5  Keyboard RGB TKL — mechanical keyboard
+  5:  'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80',
+  // id:6  Gaming Chair Ergo
+  6:  'https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=600&q=80',
+  // id:7  Laptop RTX 4070 — gaming laptop
+  7:  'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80',
+  // id:8  AirPods Pro 2
+  8:  'https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?w=600&q=80',
+  // id:9  SSD NVMe 2TB
+  9:  'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=600&q=80',
+  // id:10 Stream Deck XL
+  10: 'https://images.unsplash.com/photo-1616763355548-1b606f439f86?w=600&q=80',
+  // id:11 Razer Kraken V3 — gaming headset
+  11: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=600&q=80',
+  // id:12 MacBook Pro 16" M3
+  12: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&q=80',
+  // id:13 iPhone 16 Pro Max
+  13: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&q=80',
+  // id:14 Apple Watch Ultra 2
+  14: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80',
+  // id:15 Meta Quest 3 — VR headset
+  15: 'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=600&q=80',
+  // id:16 Sony WH-1000XM5 — over-ear headphones
+  16: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80',
+  // id:17 Nintendo Switch OLED
+  17: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=600&q=80',
+  // id:18 4K Webcam Pro
+  18: 'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=600&q=80',
+  // id:19 RX 7900 XTX — AMD GPU
+  19: 'https://images.unsplash.com/photo-1555617981-dac3772e4783?w=600&q=80',
+  // id:20 DDR5 RAM 32GB RGB
+  20: 'https://images.unsplash.com/photo-1562976540-1502c2145851?w=600&q=80',
+  // id:21 USB-C Microphone
+  21: 'https://images.unsplash.com/photo-1589003077984-894e133dabab?w=600&q=80',
+  // id:22 Gaming Desk RGB 160cm
+  22: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=600&q=80',
+  // id:23 Desk Mousepad XL
+  23: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=600&q=80',
+  // id:24 iPad Pro 13" M4
+  24: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&q=80',
+  // id:25 Portable BT Speaker
+  25: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&q=80',
+  // id:26 Ultrawide 34" OLED monitor
+  26: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600&q=80',
+  // id:27 TWS Earbuds ANC
+  27: 'https://images.unsplash.com/photo-1606400082777-ef05f3c5cde2?w=600&q=80',
+  // id:28 Laptop Bag Premium — backpack
+  28: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80',
+  // id:29 CPU Cooler 240mm — AIO liquid cooler
+  29: 'https://images.unsplash.com/photo-1555680202-c86f0e12f086?w=600&q=80',
+  // id:30 Smart TV 65" 4K
+  30: 'https://images.unsplash.com/photo-1593359677879-a4021072b626?w=600&q=80',
+  // id:31 Xiaomi Band 9 Pro — smart band
+  31: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=600&q=80',
+  // id:32 MacBook Air M3
+  32: 'https://images.unsplash.com/photo-1611186871525-5c359b7f7eda?w=600&q=80',
+  // id:33 Intel Core i9-14900K — CPU processor
+  33: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600&q=80',
+  // id:34 WH-XB910N Bass — Sony headphones
+  34: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&q=80',
+  // id:35 Retro Game Console
+  35: 'https://images.unsplash.com/photo-1531525645387-7f14be1bdbbd?w=600&q=80',
+};
+
+/* ========== UAH RATE ========== */
+const UAH_RATE = 41.15;
+function toUAH(usd){ return Math.round(usd * UAH_RATE).toLocaleString('uk-UA'); }
+
+/* ========== PRODUCTS ========== */
+const products = [
+  {id:0, name:'RTX 4090 Founders',price:3200,oldPrice:3800,cat:'GPU',badge:'top',rating:4.9,reviews:847,imgIcon:'🖥️',
+   desc:'Найпотужніша відеокарта. 24GB GDDR6X, Ada Lovelace, 4K/8K, трасування променів.',
+   specs:[["Пам'ять",'24GB GDDR6X'],['Ядра CUDA','16384'],['TDP','450W'],["Роз'єм",'PCIe 4.0']]},
+  {id:19,name:'RX 7900 XTX',price:899,oldPrice:999,cat:'GPU',badge:'sale',rating:4.7,reviews:612,imgIcon:'🎴',
+   desc:'Флагман AMD RDNA 3 з 24GB GDDR6. Конкурент RTX 4090 за нижчою ціною, підтримка 4K.',
+   specs:[["Пам'ять",'24GB GDDR6'],['Ядра','12288'],['TDP','355W'],["Роз'єм",'PCIe 4.0']]},
+  {id:1, name:'PlayStation 5',price:650,oldPrice:null,cat:'Консолі',badge:'hot',rating:4.8,reviews:2341,imgIcon:'🎮',
+   desc:'PS5 з SSD 825GB, підтримкою 4K/120fps та революційним DualSense контролером.',
+   specs:[['SSD','825 GB'],['CPU','AMD Zen 2'],['GPU','10.28 TF'],['RAM','16 GB']]},
+  {id:2, name:'Xbox Series X',price:580,oldPrice:620,cat:'Консолі',badge:'sale',rating:4.7,reviews:1563,imgIcon:'🕹️',
+   desc:'Найпотужніша Xbox. 1TB NVMe SSD, Game Pass Ultimate, 12 TF продуктивності.',
+   specs:[['SSD','1 TB NVMe'],['CPU','AMD Zen 2'],['GPU','12 TF'],['RAM','16 GB']]},
+  {id:17,name:'Nintendo Switch OLED',price:349,oldPrice:380,cat:'Консолі',badge:'new',rating:4.8,reviews:3204,imgIcon:'🕹️',
+   desc:'Nintendo Switch з 7" OLED-екраном, покращеним звуком та 64GB пам\'яті.',
+   specs:[['Екран','7" OLED'],["Пам'ять",'64 GB'],['Автономність','9 год'],['Режими','3 в 1']]},
+  {id:35,name:'Retro Game Console',price:89,oldPrice:110,cat:'Консолі',badge:'sale',rating:4.3,reviews:487,imgIcon:'👾',
+   desc:'Ретро-консоль з 10000+ вбудованих ігор. HDMI виход, 2 геймпади у комплекті.',
+   specs:[['Ігри','10000+'],['Виход','HDMI'],['Геймпади','2 шт'],["Пам'ять",'8 GB']]},
+  {id:3, name:'Monitor 4K 144Hz',price:420,oldPrice:499,cat:'Монітори',badge:'sale',rating:4.6,reviews:923,imgIcon:'📺',
+   desc:'IPS-монітор 4K з частотою 144Hz, 1ms відгуком, G-Sync та FreeSync.',
+   specs:[['Роздільність','3840×2160'],['Частота','144 Hz'],['Панель','IPS'],['Відгук','1 ms']]},
+  {id:26,name:'Ultrawide 34" OLED',price:1299,oldPrice:1499,cat:'Монітори',badge:'hot',rating:4.9,reviews:354,imgIcon:'🖥️',
+   desc:'34" OLED ultrawide 3440×1440 240Hz. Ідеальний контраст, 0.03ms відгук.',
+   specs:[['Роздільність','3440×1440'],['Частота','240 Hz'],['Панель','OLED'],['Відгук','0.03 ms']]},
+  {id:30,name:'Smart TV 65" 4K',price:799,oldPrice:999,cat:'Монітори',badge:'sale',rating:4.5,reviews:1102,imgIcon:'📺',
+   desc:'65" QLED Smart TV Dolby Vision, HDR10+, Google TV.',
+   specs:[['Розмір','65"'],['Тип','QLED'],['ОС','Google TV'],['HDR','Dolby Vision']]},
+  {id:7, name:'Laptop RTX 4070',price:1950,oldPrice:2200,cat:'Ноутбуки',badge:'hot',rating:4.8,reviews:741,imgIcon:'💻',
+   desc:'Ігровий ноутбук RTX 4070, 165Hz QHD, i7-13700H, 32GB DDR5.',
+   specs:[['GPU','RTX 4070'],['CPU','i7-13700H'],['RAM','32 GB DDR5'],['Дисплей','QHD 165Hz']]},
+  {id:12,name:'MacBook Pro 16" M3',price:2499,oldPrice:2700,cat:'Ноутбуки',badge:'top',rating:4.9,reviews:2876,imgIcon:'💻',
+   desc:'MacBook Pro M3 Pro. 18 год роботи, ProMotion 120Hz, 18GB об\'єднаної пам\'яті.',
+   specs:[['Чіп','M3 Pro'],['RAM','18 GB'],['SSD','512 GB'],['Автономність','18 год']]},
+  {id:32,name:'MacBook Air M3',price:1299,oldPrice:1399,cat:'Ноутбуки',badge:'new',rating:4.8,reviews:1543,imgIcon:'💻',
+   desc:'MacBook Air M3. Найтонший, 15.3" Liquid Retina, без вентилятора.',
+   specs:[['Чіп','M3'],['RAM','8 GB'],['SSD','256 GB'],['Товщина','11.5 mm']]},
+  {id:28,name:'Laptop Bag Premium',price:79,oldPrice:99,cat:'Ноутбуки',badge:'sale',rating:4.4,reviews:289,imgIcon:'🎒',
+   desc:'Водостійка сумка для ноутбуків до 16". Відділення для аксесуарів, USB-порт.',
+   specs:[['Для','до 16"'],['Матеріал','Нейлон'],['Вологозахист','Так'],['USB','Зовн.']]},
+  {id:4, name:'Gaming Mouse Pro',price:79,oldPrice:null,cat:'Периферія',badge:'new',rating:4.7,reviews:2108,imgIcon:'🖱️',
+   desc:'Ультралегка миша 59г, 25600 DPI, 6 кнопок, RGB, 70 год без зарядки.',
+   specs:[['Сенсор','25600 DPI'],['Вага','59 г'],['Кнопки','6'],['Бездротова','Так']]},
+  {id:5, name:'Keyboard RGB TKL',price:140,oldPrice:160,cat:'Периферія',badge:'sale',rating:4.5,reviews:1244,imgIcon:'⌨️',
+   desc:'Механічна TKL клавіатура Cherry MX Red, RGB per-key, алюмінієвий корпус.',
+   specs:[['Перемикачі','Cherry MX Red'],['Форм','TKL'],['RGB','Per-key'],['Матеріал','Алюміній']]},
+  {id:10,name:'Stream Deck XL',price:250,oldPrice:null,cat:'Периферія',badge:'new',rating:4.6,reviews:328,imgIcon:'🎛️',
+   desc:'32 LCD кнопки для стрімінгу та автоматизації. Ідеальний для контент-мейкерів.',
+   specs:[['Кнопки','32 LCD'],['Підключення','USB-C'],['Додаток','Desktop'],['Сумісність','Win/Mac']]},
+  {id:18,name:'4K Webcam Pro',price:149,oldPrice:179,cat:'Периферія',badge:'new',rating:4.6,reviews:567,imgIcon:'📷',
+   desc:'4K веб-камера 60fps, автофокус, ANC мікрофон, фізичний затвор.',
+   specs:[['Роздільність','4K 60fps'],['Мікрофон','ANC'],['Фокус','Авто'],['Затвор','Фізичний']]},
+  {id:23,name:'Desk Mousepad XL',price:35,oldPrice:45,cat:'Периферія',badge:'sale',rating:4.7,reviews:1892,imgIcon:'🖱️',
+   desc:'Великий ігровий килимок 900×400mm, вологостійкий, RGB підсвічування краю.',
+   specs:[['Розмір','900×400 мм'],['Товщина','4 мм'],['RGB','Так'],['Основа','Гума']]},
+  {id:8, name:'AirPods Pro 2',price:249,oldPrice:280,cat:'Аудіо',badge:'new',rating:4.9,reviews:4521,imgIcon:'🎧',
+   desc:'TWS з ANC, Adaptive Transparency, просторовий звук, 30 год з кейсом.',
+   specs:[['ANC','Adaptive'],['Автономність','30 год'],['Чіп','H2'],['IPX','IPX4']]},
+  {id:11,name:'Razer Kraken V3',price:99,oldPrice:130,cat:'Аудіо',badge:'sale',rating:4.5,reviews:1103,imgIcon:'🎵',
+   desc:'Ігрові навушники THX Spatial Audio, TriForce Titanium, ANC мікрофон.',
+   specs:[['Звук','THX Spatial'],['Мікрофон','ANC'],['Підключення','USB-A'],['RGB','Так']]},
+  {id:16,name:'Sony WH-1000XM5',price:349,oldPrice:399,cat:'Аудіо',badge:'top',rating:4.9,reviews:6234,imgIcon:'🎧',
+   desc:'Найкращі навушники з ANC. 30 год музики, LDAC, швидка зарядка.',
+   specs:[['ANC','Industry #1'],['Автономність','30 год'],['Кодек','LDAC'],['Зарядка','3 год/3хв']]},
+  {id:25,name:'Portable BT Speaker',price:129,oldPrice:149,cat:'Аудіо',badge:'sale',rating:4.6,reviews:892,imgIcon:'🔊',
+   desc:'40W 360° звук, IP67 водостійкість, 24 год роботи, вбудований мікрофон.',
+   specs:[['Потужність','40W'],['IP','IP67'],['Автономність','24 год'],['Bluetooth','5.3']]},
+  {id:27,name:'TWS Earbuds ANC',price:89,oldPrice:109,cat:'Аудіо',badge:'new',rating:4.5,reviews:743,imgIcon:'🎵',
+   desc:'Компактні TWS з ANC, 32 год автономності, IPX5, бездротова зарядка.',
+   specs:[['ANC','Так'],['Автономність','32 год'],['IPX','IPX5'],['Зарядка','Бездротова']]},
+  {id:34,name:'WH-XB910N Bass',price:179,oldPrice:219,cat:'Аудіо',badge:'sale',rating:4.4,reviews:529,imgIcon:'🎧',
+   desc:'Навушники EXTRA BASS з ANC. Ідеально для музики та подорожей, 35 год.',
+   specs:[['Бас','Extra Bass'],['ANC','Так'],['Автономність','35 год'],['Складання','Так']]},
+  {id:9, name:'SSD NVMe 2TB',price:159,oldPrice:180,cat:'Комплектуючі',badge:'new',rating:4.7,reviews:1892,imgIcon:'💾',
+   desc:'NVMe SSD Gen4 — читання 7400 MB/s, запис 6800 MB/s, 5-річна гарантія.',
+   specs:[['Читання','7400 MB/s'],['Запис','6800 MB/s'],['Інтерфейс','PCIe Gen4'],['Гарантія','5 років']]},
+  {id:20,name:'DDR5 RAM 32GB RGB',price:189,oldPrice:220,cat:'Комплектуючі',badge:'sale',rating:4.7,reviews:634,imgIcon:'🧩',
+   desc:'2×16GB DDR5 6000MHz CL36 ARGB. Intel XMP 3.0.',
+   specs:[[' Об\'єм','2×16 GB'],['Частота','6000 MHz'],['Тайминги','CL36'],['XMP','3.0']]},
+  {id:29,name:'CPU Cooler 240mm',price:99,oldPrice:119,cat:'Комплектуючі',badge:'new',rating:4.6,reviews:412,imgIcon:'❄️',
+   desc:'Рідинне охолодження 240mm, 2×120mm ARGB вентилятори, тиха помпа.',
+   specs:[['Радіатор','240 мм'],['Вентилятори','2×120 мм'],['RGB','ARGB'],['Шум','< 25 дБ']]},
+  {id:33,name:'Intel Core i9-14900K',price:599,oldPrice:649,cat:'Комплектуючі',badge:'hot',rating:4.8,reviews:891,imgIcon:'⚙️',
+   desc:'Флагман Intel 24 ядра (8P+16E), до 6.0 GHz Boost, DDR5.',
+   specs:[['Ядра','24 (8P+16E)'],['Boost','6.0 GHz'],['Кеш','36 MB L3'],['TDP','125W']]},
+  {id:6, name:'Gaming Chair Ergo',price:380,oldPrice:450,cat:'Меблі',badge:'sale',rating:4.4,reviews:567,imgIcon:'🪑',
+   desc:'Ергономічне ігрове крісло, підтримка попереку, підлокітники 4D, PU шкіра.',
+   specs:[['Матеріал','PU шкіра'],['Підлокітники','4D'],['Навантаження','150 кг'],['Нахил','180°']]},
+  {id:22,name:'Gaming Desk RGB 160cm',price:299,oldPrice:349,cat:'Меблі',badge:'new',rating:4.5,reviews:234,imgIcon:'🖥️',
+   desc:'Ігровий стіл 160×80 см з RGB підсвічуванням, гачками для навушників.',
+   specs:[['Розмір','160×80 см'],['RGB','Вбудований'],['Матеріал','МДФ+метал'],['Навантаж.','120 кг']]},
+  {id:13,name:'iPhone 16 Pro Max',price:1299,oldPrice:1399,cat:'Гаджети',badge:'new',rating:4.9,reviews:8921,imgIcon:'📱',
+   desc:'iPhone 16 Pro Max, A18 Pro, камера 48MP, OLED 6.9", Apple Intelligence.',
+   specs:[['Чіп','A18 Pro'],['Камера','48 MP'],['Екран','6.9" OLED'],['Акум.','5000 mAh']]},
+  {id:14,name:'Apple Watch Ultra 2',price:799,oldPrice:849,cat:'Гаджети',badge:'top',rating:4.8,reviews:3102,imgIcon:'⌚',
+   desc:'Apple Watch Ultra 2 для пригод. Titanium корпус, 36 год, GPS L1/L5.',
+   specs:[['Корпус','Titanium'],['Автономність','36 год'],['GPS','L1/L5'],['Водозахист','100m']]},
+  {id:15,name:'Meta Quest 3',price:499,oldPrice:550,cat:'Гаджети',badge:'hot',rating:4.7,reviews:1834,imgIcon:'🥽',
+   desc:'VR/MR гарнітура. Pancake лінзи, 4K+, Mixed Reality, Snapdragon XR2 Gen 2.',
+   specs:[['Тип','VR+MR'],['Дисплей','4K+'],['Чіп','Snapdragon XR2 G2'],["Пам'ять",'128 GB']]},
+  {id:21,name:'USB-C Microphone',price:119,oldPrice:139,cat:'Гаджети',badge:'new',rating:4.7,reviews:421,imgIcon:'🎙️',
+   desc:'Кардіоїдний USB мікрофон студійної якості, 48V, RGB підсвічування.',
+   specs:[['Полярність','Кардіоїдна'],['Підсилювач','48V'],['Підключення','USB-C'],['RGB','Так']]},
+  {id:24,name:'iPad Pro 13" M4',price:1099,oldPrice:1199,cat:'Гаджети',badge:'top',rating:4.9,reviews:2876,imgIcon:'📱',
+   desc:'iPad Pro M4, Ultra Retina XDR OLED, Apple Pencil Pro та Magic Keyboard.',
+   specs:[['Чіп','M4'],['Екран','13" OLED'],['RAM','8 GB'],['SSD','256 GB']]},
+  {id:31,name:'Xiaomi Band 9 Pro',price:59,oldPrice:69,cat:'Гаджети',badge:'sale',rating:4.5,reviews:2341,imgIcon:'⌚',
+   desc:'Розумний браслет AMOLED, 150+ режимів, 14 днів, SpO2.',
+   specs:[['Екран','AMOLED'],['Автономність','14 днів'],['Режими','150+'],['SpO2','Так']]},
+];
+
+/* Assign photos */
+products.forEach(p => { p.img = productPhotos[p.id] || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'; });
+
+const categories = ['all','GPU','Консолі','Монітори','Ноутбуки','Периферія','Аудіо','Комплектуючі','Меблі','Гаджети'];
+
+
+const payMethods = [
+  {id:'card',   icon:'💳', name:'Банківська картка',       desc:'Visa / Mastercard / Prostir',     badge:'instant', label:'МИТТЄВО'},
+  {id:'gpay',   icon:'📱', name:'Google Pay / Apple Pay',  desc:'Оплата в один дотик',              badge:'instant', label:'МИТТЄВО'},
+  {id:'paypal', icon:'🅿️', name:'PayPal',                  desc:'Міжнародна оплата PayPal',         badge:null, label:null},
+  {id:'privat', icon:'🟢', name:'ПриватБанк / Monobank',   desc:'Оплата через додаток банку',      badge:null, label:null},
+  {id:'cod',    icon:'📦', name:'Накладений платіж',        desc:'Оплата при отриманні на пошті',   badge:'np', label:'НП'},
+  {id:'crypto', icon:'₿',  name:'Криптовалюта',             desc:'BTC / ETH / USDT / BNB',          badge:'web3', label:'WEB3'},
+];
+
+/* ========== AUTH ========== */
+function showRegister(){document.getElementById('loginBox').classList.add('hidden');document.getElementById('registerBox').classList.remove('hidden');msg('','')}
+function showLogin(){document.getElementById('registerBox').classList.add('hidden');document.getElementById('loginBox').classList.remove('hidden');msg('','')}
+function msg(t,type){const el=document.getElementById('authMsg');el.textContent=t;el.className='auth-msg'+(type?' '+type:'')}
+function register(){
+  const u=document.getElementById('regUser').value.trim();
+  const p=document.getElementById('regPass').value.trim();
+  if(!u||!p) return msg('Заповни всі поля','');
+  if(u.length<3) return msg('Логін мінімум 3 символи','');
+  if(p.length<4) return msg('Пароль мінімум 4 символи','');
+  if(users[u]) return msg('Такий логін вже зайнятий','');
+  users[u]={password:p};
+  localStorage.setItem('nx_users',JSON.stringify(users));
+  msg('Акаунт створено! Тепер увійди 🎉','ok');
+  document.getElementById('regUser').value='';document.getElementById('regPass').value='';
+  setTimeout(showLogin,1400);
+}
+function login(){
+  const u=document.getElementById('logUser').value.trim();
+  const p=document.getElementById('logPass').value.trim();
+  if(!u||!p) return msg('Заповни всі поля','');
+  if(!users[u]) return msg('Акаунт не знайдено','');
+  if(users[u].password!==p) return msg('Невірний пароль','');
+  currentUser=u;localStorage.setItem('nx_user',u);
+  cart=JSON.parse(localStorage.getItem('nx_cart_'+u))||[];
+  wishlist=JSON.parse(localStorage.getItem('nx_wish_'+u))||[];
+  recentlyViewed=JSON.parse(localStorage.getItem('nx_recent_'+u))||[];
+  // Generate demo order history if first time
+  if (!localStorage.getItem('nx_orders_'+u)) {
+    const demo = [
+      {num:'NX421337',date:'12.04.2026',total:1149,status:'delivered',address:'м. Київ, вул. Хрещатик, 1',
+       items:[{id:5,name:'Keyboard RGB TKL',price:140,qty:1},{id:8,name:'AirPods Pro 2',price:249,qty:1},{id:11,name:'Razer Kraken V3',price:99,qty:1},{id:23,name:'Desk Mousepad XL',price:35,qty:2}]},
+      {num:'NX219084',date:'28.02.2026',total:899,status:'delivered',address:'м. Київ, вул. Хрещатик, 1',
+       items:[{id:19,name:'RX 7900 XTX',price:899,qty:1}]},
+      {num:'NX308512',date:'15.05.2026',total:338,status:'processing',address:'м. Київ, вул. Хрещатик, 1',
+       items:[{id:27,name:'TWS Earbuds ANC',price:89,qty:1},{id:4,name:'Gaming Mouse Pro',price:79,qty:1},{id:9,name:'SSD NVMe 2TB',price:159,qty:1}]},
+    ];
+    localStorage.setItem('nx_orders_'+u, JSON.stringify(demo));
+  }
+  startApp();
+}
+function logout(){saveData();localStorage.removeItem('nx_user');location.reload()}
+function startApp(){
+  document.getElementById('authWrap').style.display='none';
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('userName').textContent=currentUser;
+  document.getElementById('userInitials').textContent=currentUser.substring(0,2).toUpperCase();
+  buildFilterBar();buildStatsBar();renderGrid();updateCartUI();updateWishUI();startCountdown();
+  initHeroCanvas();renderRecentlyViewed();
+  document.getElementById('brandsStrip').style.display='block';
+  document.getElementById('siteFooter').style.display='block';
+  document.getElementById('dealsTicker').style.display='block';
+  document.getElementById('catShowcaseWrap').style.display='block';
+  document.getElementById('promoCards').style.display='grid';
+  document.getElementById('featuredBanner').style.display='block';
+  document.getElementById('trendingHead').style.display='flex';
+  buildTicker();buildCatShowcase();
+  initChat();
+}
+
+/* ========== FILTER ========== */
+function buildFilterBar(){
+  const bar=document.getElementById('filterBar');
+  const labels={all:'🎮 Всі',GPU:'🖥️ GPU',Консолі:'🕹️ Консолі',Монітори:'📺 Монітори',Ноутбуки:'💻 Ноутбуки',Периферія:'🖱️ Периферія',Аудіо:'🎧 Аудіо',Комплектуючі:'💾 Комплектуючі',Меблі:'🪑 Меблі',Гаджети:'📱 Гаджети'};
+  bar.innerHTML=categories.map(c=>`<button class="cat-btn${c===activeCategory?' active':''}" onclick="setCategory('${c}')">${labels[c]||c}</button>`).join('')+
+    `<select class="sort-select" onchange="setSort(this.value)">
+      <option value="default">За замовчуванням</option>
+      <option value="price_asc">Ціна ↑</option>
+      <option value="price_desc">Ціна ↓</option>
+      <option value="rating">Рейтинг ↓</option>
+      <option value="reviews">Відгуки ↓</option>
+    </select>
+    <div class="view-toggle">
+      <button class="vt-btn${viewMode==='grid'?' active':''}" onclick="setViewMode('grid')" title="Сітка">⊞</button>
+      <button class="vt-btn${viewMode==='list'?' active':''}" onclick="setViewMode('list')" title="Список">☰</button>
+    </div>`;
+}
+function setCategory(c){activeCategory=c;buildFilterBar();renderGrid()}
+function setSort(s){sortMode=s;renderGrid()}
+function setViewMode(m){viewMode=m;buildFilterBar();renderGrid()}
+
+/* ========== STATS ========== */
+function buildStatsBar(){
+  document.getElementById('statsBar').innerHTML=`
+    <div class="stat-item"><span class="stat-icon">📦</span><div class="stat-info"><span>Товарів</span><strong>${products.length}</strong></div></div>
+    <div class="stat-item"><span class="stat-icon">⭐</span><div class="stat-info"><span>Середній рейтинг</span><strong>${(products.reduce((a,p)=>a+p.rating,0)/products.length).toFixed(1)}</strong></div></div>
+    <div class="stat-item"><span class="stat-icon">💬</span><div class="stat-info"><span>Відгуків</span><strong>${products.reduce((a,p)=>a+p.reviews,0).toLocaleString()}</strong></div></div>
+    <div class="stat-item"><span class="stat-icon">🚀</span><div class="stat-info"><span>Доставка</span><strong>1-3 дні</strong></div></div>
+    <div class="stat-item"><span class="stat-icon">🔒</span><div class="stat-info"><span>Гарантія</span><strong>30 днів</strong></div></div>`;
+}
+
+/* ========== GRID ========== */
+function renderGrid(){
+  const search=document.getElementById('searchIn').value.toLowerCase();
+  let list=products.filter(p=>(activeCategory==='all'||p.cat===activeCategory)&&(p.name.toLowerCase().includes(search)||p.cat.toLowerCase().includes(search)));
+  if(sortMode==='price_asc') list.sort((a,b)=>a.price-b.price);
+  else if(sortMode==='price_desc') list.sort((a,b)=>b.price-a.price);
+  else if(sortMode==='rating') list.sort((a,b)=>b.rating-a.rating);
+  else if(sortMode==='reviews') list.sort((a,b)=>b.reviews-a.reviews);
+  const grid=document.getElementById('productsGrid');
+  grid.className='grid'+(viewMode==='list'?' list-view':'');
+  const countEl=document.getElementById('productCount');
+  if(countEl) countEl.textContent=`${list.length} товарів`;
+  if(!list.length){grid.innerHTML=`<div class="empty-state"><div>🔍</div><p>Нічого не знайдено</p></div>`;return}
+  const bmap={new:'badge-new NEW',hot:'badge-hot HOT',sale:'badge-sale SALE',top:'badge-top TOP'};
+  const stars=r=>'★'.repeat(Math.floor(r))+(r%1>=.5?'½':'')+('☆'.repeat(5-Math.floor(r)-(r%1>=.5?1:0)));
+  const inCompare=id=>compareList.includes(id);
+  grid.innerHTML=list.map((p,i)=>{
+    const inW=wishlist.includes(p.id);
+    const bp=bmap[p.badge]?.split(' ')||[];
+    const disc=p.oldPrice?Math.round((1-p.price/p.oldPrice)*100):null;
+    const stockPct=55+((p.id*37)%45); // pseudo-random stock
+    return `<div class="card" style="animation-delay:${i*.045}s" onclick="openModal(${p.id})">
+      <div class="card-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.img-fallback')?.style.setProperty('display','flex')">
+        <div class="img-fallback" style="display:none;width:100%;height:200px;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(135deg,var(--surface2),var(--surface3));gap:8px"><span style="font-size:52px;opacity:.5">${p.imgIcon}</span><span style="font-size:11px;color:var(--text3);padding:0 12px;text-align:center">${p.name}</span></div>
+        <div class="card-badges">
+          ${bp[0]?`<span class="badge ${bp[0]}">${bp[1]}</span>`:''}
+          ${disc?`<span class="badge badge-sale">−${disc}%</span>`:''}
+        </div>
+        <button class="wishlist-btn${inW?' active':''}" onclick="toggleWish(event,${p.id})" title="В вподобане">♥</button>
+        <button class="card-compare-btn${inCompare(p.id)?' active':''}" onclick="toggleCompare(event,${p.id})" title="Порівняти">⚖</button>
+        <div class="card-overlay"><button class="quick-add" onclick="addCart(event,${p.id})">🛒 + В кошик</button></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.cat}</div>
+        <h4>${p.name}</h4>
+        <div class="card-rating"><span class="stars">${stars(p.rating)}</span><span class="rating-count">(${p.reviews.toLocaleString()})</span><span class="live-viewers">👁 ${3+((p.id*13+7)%21)} зараз</span></div>
+        <div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-bottom:3px"><span>В наявності</span><span>${stockPct}%</span></div>
+          <div style="height:3px;background:var(--surface3);border-radius:2px"><div style="height:3px;width:${stockPct}%;background:${stockPct>70?'var(--accent2)':stockPct>40?'var(--gold)':'var(--accent3)'};border-radius:2px;transition:width .5s"></div></div>
+        </div>
+        <div class="card-footer">
+          <div>
+            <div style="display:flex;align-items:baseline;gap:6px"><span class="price">$${p.price}</span>${p.oldPrice?`<span class="price-old">$${p.oldPrice}</span>`:''}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:1px">≈ ${toUAH(p.price)} ₴</div>
+          </div>
+          <button class="add-btn" onclick="addCart(event,${p.id})" title="В кошик">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ========== WISHLIST ========== */
+function toggleWish(e,id){
+  e.stopPropagation();
+  if(wishlist.includes(id)){wishlist=wishlist.filter(x=>x!==id);showToast('Видалено з вподобаного','')}
+  else{wishlist.push(id);showToast('❤️ Додано до вподобаного','success')}
+  saveData();renderGrid();updateWishUI();
+  if(document.getElementById('wishPanel').classList.contains('active')) updateWishPanel();
+}
+function updateWishUI(){
+  const n=wishlist.length;
+  document.getElementById('wishCount').textContent=n;
+  document.getElementById('ddWishCount').textContent=n;
+}
+function openWishlist(){
+  closeCart();
+  document.getElementById('wishPanel').classList.add('active');
+  document.getElementById('overlay').classList.add('active');
+  updateWishPanel();
+}
+function closeWishlist(){
+  document.getElementById('wishPanel').classList.remove('active');
+  document.getElementById('overlay').classList.remove('active');
+}
+function updateWishPanel(){
+  const body=document.getElementById('wishBody');
+  const items=products.filter(p=>wishlist.includes(p.id));
+  if(!items.length){body.innerHTML=`<div class="panel-empty"><div>💔</div><p>Список порожній</p></div>`;return}
+  body.innerHTML=items.map(p=>`
+    <div class="wish-item">
+      <img class="wish-item-img" src="${p.img}" alt="${p.name}">
+      <div class="wish-item-info">
+        <div class="wish-item-name">${p.name}</div>
+        <div class="wish-item-cat">${p.cat}</div>
+        <div class="wish-item-price">$${p.price} <span style="font-size:11px;color:var(--text3);font-weight:400">/ ${toUAH(p.price)} ₴</span></div>
+      </div>
+      <div class="wish-item-actions">
+        <button class="wish-add-btn" onclick="addFromWish(${p.id})">🛒 В кошик</button>
+        <button class="wish-remove-btn" onclick="toggleWish(event,${p.id})">✕</button>
+      </div>
+    </div>`).join('');
+}
+function addFromWish(id){addCart({stopPropagation:()=>{}},id)}
+
+/* ========== CART ========== */
+function addCart(e,id){
+  e.stopPropagation();
+  const p=products.find(x=>x.id===id);if(!p) return;
+  const ex=cart.find(x=>x.id===id);
+  if(ex) ex.qty++;else cart.push({...p,qty:1});
+  saveData();updateCartUI();
+  showToast(`✅ ${p.name} в кошику`,'success');
+  const b=document.getElementById('cartCount');
+  b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');
+}
+function removeFromCart(id){cart=cart.filter(x=>x.id!==id);saveData();updateCartUI();updateCartPanel()}
+function changeQty(id,d){
+  const item=cart.find(x=>x.id===id);if(!item) return;
+  item.qty+=d;if(item.qty<=0) cart=cart.filter(x=>x.id!==id);
+  saveData();updateCartUI();updateCartPanel();
+}
+function saveData(){
+  if(currentUser){
+    localStorage.setItem('nx_cart_'+currentUser,JSON.stringify(cart));
+    localStorage.setItem('nx_wish_'+currentUser,JSON.stringify(wishlist));
+    localStorage.setItem('nx_recent_'+currentUser,JSON.stringify(recentlyViewed));
+  }
+}
+function getCartTotal(){
+  const sub=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  const ship=sub>200?0:15;
+  const disc=promoApplied?Math.round(sub*promoDiscount):0;
+  return {sub,ship,disc,total:sub+ship-disc};
+}
+function updateCartUI(){
+  const n=cart.reduce((s,x)=>s+x.qty,0);
+  document.getElementById('cartCount').textContent=n;
+  document.getElementById('ddCartCount').textContent=n;
+}
+function updateCartPanel(){
+  const body=document.getElementById('cartBody');
+  const summary=document.getElementById('cartSummary');
+  const btn=document.getElementById('checkoutBtn');
+  if(!cart.length){
+    body.innerHTML=`<div class="panel-empty"><div>🛒</div><p>Твій кошик порожній</p></div>`;
+    summary.innerHTML='';btn.disabled=true;return;
+  }
+  btn.disabled=false;
+  body.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-cat">${item.cat}</div>
+      </div>
+      <div class="cart-item-right">
+        <span class="cart-item-price">$${item.price*item.qty}</span>
+        <div class="qty-wrap">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          <button class="remove-item" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      </div>
+    </div>`).join('');
+  const {sub,ship,disc,total}=getCartTotal();
+  summary.innerHTML=`
+    <div class="cart-row"><span>Товари (${cart.reduce((s,x)=>s+x.qty,0)} шт.)</span><span>$${sub}</span></div>
+    <div class="cart-row"><span>Доставка</span><span>${ship===0?'🎁 Безкоштовно':'$'+ship}</span></div>
+    ${disc?`<div class="cart-row" style="color:var(--accent2)"><span>🎁 Промокод −${Math.round(promoDiscount*100)}%</span><span>−$${disc}</span></div>`:''}
+    <div class="cart-row total"><span>Разом</span><span>$${total}</span></div>`;
+}
+function openCart(){
+  closeWishlist();
+  document.getElementById('cartPanel').classList.add('active');
+  document.getElementById('overlay').classList.add('active');
+  updateCartPanel();
+}
+function closeCart(){
+  document.getElementById('cartPanel').classList.remove('active');
+  document.getElementById('overlay').classList.remove('active');
+}
+
+/* ========== CHECKOUT ========== */
+let currentStep=1;
+function openCheckout(){
+  if(!cart.length) return;
+  closeCart();
+  // Fill order summary
+  const {sub,ship,disc,total}=getCartTotal();
+  document.getElementById('oItems').innerHTML=cart.map(item=>`
+    <div class="o-item">
+      <img class="o-item-img" src="${item.img}" alt="${item.name}">
+      <div class="o-item-name">${item.name}<div class="o-item-qty">× ${item.qty}</div></div>
+      <div class="o-item-price">$${item.price*item.qty}</div>
+    </div>`).join('');
+  document.getElementById('oTotal').textContent=`$${total}`;
+  // Build pay methods
+  document.getElementById('pmGrid').innerHTML=payMethods.map(m=>`
+    <div class="pm${m.id===selPayMethod?' sel':''}" onclick="selectPM('${m.id}')">
+      <div class="pm-radio"><div class="pm-dot"></div></div>
+      <div class="pm-icon">${m.icon}</div>
+      <div class="pm-info"><div class="pm-name">${m.name}</div><div class="pm-desc">${m.desc}</div></div>
+      ${m.badge?`<div class="pm-badge ${m.badge}">${m.label}</div>`:''}
+    </div>`).join('');
+  toggleCardForm();
+  gotoStep(1,true);
+  document.getElementById('checkoutWrap').classList.add('active');
+}
+function closeCheckout(){document.getElementById('checkoutWrap').classList.remove('active')}
+function selectPM(id){
+  selPayMethod=id;
+  document.querySelectorAll('.pm').forEach(el=>el.classList.toggle('sel',el.getAttribute('onclick').includes(`'${id}'`)));
+  toggleCardForm();
+}
+function toggleCardForm(){
+  document.getElementById('cardFormEl').classList.toggle('show',selPayMethod==='card');
+}
+function gotoStep(n,init=false){
+  if(!init&&n===2){
+    if(!document.getElementById('dName').value.trim()||!document.getElementById('dPhone').value.trim()||!document.getElementById('dCity').value.trim()){
+      showToast('❗ Заповни всі дані доставки','error');return;
+    }
+  }
+  if(!init&&n===3){processPayment();return}
+  currentStep=n;
+  [1,2,3].forEach(i=>document.getElementById('cstep'+i).classList.toggle('active',i===n));
+  [1,2,3].forEach(i=>{
+    const dot=document.getElementById('cp'+i);
+    if(i<n){dot.className='c-pdot done';dot.textContent='✓'}
+    else if(i===n){dot.className='c-pdot active';dot.textContent=i}
+    else{dot.className='c-pdot';dot.textContent=i}
+  });
+  [1,2].forEach(i=>{if(document.getElementById('cl'+i)) document.getElementById('cl'+i).classList.toggle('done',i<n)});
+  const titles={1:'📦 ДОСТАВКА',2:'💳 ОПЛАТА',3:'✅ ПІДТВЕРДЖЕННЯ'};
+  document.getElementById('checkoutTitle').textContent=titles[n];
+}
+function processPayment(){
+  currentStep=3;
+  [1,2].forEach(i=>document.getElementById('cstep'+i).classList.remove('active'));
+  document.getElementById('cstep3').classList.add('active');
+  document.getElementById('cp3').className='c-pdot active';
+  document.getElementById('cl1').classList.add('done');
+  document.getElementById('cl2').classList.add('done');
+  document.getElementById('checkoutTitle').textContent='⏳ ОБРОБКА...';
+  document.getElementById('payResult').innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:center;height:200px;flex-direction:column;gap:20px">
+      <div class="spinner" style="width:48px;height:48px;border-width:3px"></div>
+      <p style="color:var(--text2);font-size:14px;text-align:center">Обробляємо ваш платіж...<br><span style="font-size:12px;color:var(--text3)">Це займе лише секунду</span></p>
+    </div>`;
+  setTimeout(()=>{
+    const orderId='NX-'+Math.random().toString(36).substring(2,8).toUpperCase();
+    const method=payMethods.find(m=>m.id===selPayMethod);
+    const {total}=getCartTotal();
+    const cartItems = cart.map(i=>({...i})); // snapshot before clearing
+    const name=document.getElementById('dName').value.trim();
+    document.getElementById('cp3').className='c-pdot done';document.getElementById('cp3').textContent='✓';
+    document.getElementById('checkoutTitle').textContent='✅ ОПЛАТА УСПІШНА';
+    document.getElementById('payResult').innerHTML=`
+      <div class="pay-success">
+        <div class="success-icon">✅</div>
+        <h3>Дякуємо, ${name.split(' ')[0] || currentUser}!</h3>
+        <p>Ваше замовлення прийнято та передане до обробки.<br>Очікуйте SMS-підтвердження на вказаний номер.</p>
+        <div class="order-num">${orderId}</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:24px">
+          💳 ${method.icon} ${method.name} · Сума: <b style="color:var(--text)">$${total}</b><br>
+          🚚 Доставка: 1-3 робочих дні
+        </p>
+        <button class="finish-btn" onclick="finishOrder()">🎉 Чудово! На головну</button>
+      </div>`;
+    cart=[];saveData();updateCartUI();
+    // Save to order history
+    try { saveOrderToHistory(cartItems, total); } catch(e){}
+  },2500);
+}
+function finishOrder(){closeCheckout();showToast('🎉 Замовлення №...оформлено! Дякуємо!','success')}
+
+/* ========== PROMO ========== */
+const PROMOS={'NEXUS20':.20,'SAVE10':.10,'VIP30':.30};
+function applyPromo(){
+  const code=document.getElementById('promoIn').value.trim().toUpperCase();
+  const st=document.getElementById('promoStatus');
+  if(!code){st.textContent='Введи промокод';st.className='promo-status err';return}
+  if(PROMOS[code]){
+    promoApplied=true;promoDiscount=PROMOS[code];
+    st.textContent=`✅ Промокод "${code}" застосовано! −${Math.round(promoDiscount*100)}%`;
+    st.className='promo-status ok';
+    const {total}=getCartTotal();
+    document.getElementById('oTotal').textContent=`$${total}`;
+    showToast(`🎁 Знижка ${Math.round(promoDiscount*100)}% застосована!`,'success');
+  } else {
+    st.textContent='❌ Невірний промокод';st.className='promo-status err';
+  }
+}
+
+/* ========== CARD FORMAT ========== */
+function formatCard(el){
+  let v=el.value.replace(/\D/g,'').substring(0,16);
+  el.value=v.replace(/(.{4})/g,'$1 ').trim();
+  const disp=v.padEnd(16,'•').replace(/(.{4})/g,'$1 ').trim();
+  document.getElementById('cardDisplay').textContent=disp;
+  const net=v.startsWith('4')?'💳 Visa':v.startsWith('5')?'💳 MC':v.startsWith('37')||v.startsWith('34')?'💳 Amex':'💳';
+  document.getElementById('cardNetwork').textContent=net;
+}
+function formatExp(el){
+  let v=el.value.replace(/\D/g,'');
+  if(v.length>=2) v=v.substring(0,2)+' / '+v.substring(2,4);
+  el.value=v;
+}
+
+/* ========== PRODUCT MODAL ========== */
+function openModal(id){
+  const p=products.find(x=>x.id===id);if(!p) return;
+  // Track recently viewed
+  recentlyViewed=recentlyViewed.filter(x=>x!==id);
+  recentlyViewed.unshift(id);
+  if(recentlyViewed.length>8) recentlyViewed.pop();
+  saveData();renderRecentlyViewed();
+  const stars=r=>'★'.repeat(Math.floor(r))+(r%1>=.5?'½':'')+('☆'.repeat(5-Math.floor(r)-(r%1>=.5?1:0)));
+  const inW=wishlist.includes(p.id);
+  document.getElementById('modal').innerHTML=`
+    <div class="modal-img-wrap">
+      <img class="modal-img" src="${p.img}" alt="${p.name}">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-cat">${p.cat}</div>
+      <div class="modal-name">${p.name}</div>
+      <div class="modal-rating">
+        <span class="stars">${stars(p.rating)}</span>
+        <span style="font-size:13px;color:var(--text2)">${p.rating} · ${p.reviews.toLocaleString()} відгуків</span>
+      </div>
+      <p class="modal-desc">${p.desc}</p>
+      <div class="modal-specs">${p.specs.map(s=>`<div class="spec-item"><div class="spec-label">${s[0]}</div><div class="spec-val">${s[1]}</div></div>`).join('')}</div>
+      <div class="modal-footer">
+        <div><span class="modal-price">$${p.price}</span>${p.oldPrice?`<span class="price-old" style="font-size:15px"> $${p.oldPrice}</span>`:''}<div style="font-size:11px;color:var(--text3);margin-top:2px">≈ ${toUAH(p.price)} ₴</div></div>
+        <button class="modal-wish-btn${inW?' active':''}" onclick="toggleWish(event,${p.id});this.classList.toggle('active')" title="Вподобане">♥</button>
+        <button class="modal-add-btn" onclick="addCart(event,${p.id});closeModal()">🛒 Додати в кошик</button>
+      </div>
+    </div>`;
+  document.getElementById('modalWrap').classList.add('active');
+}
+function closeModal(){document.getElementById('modalWrap').classList.remove('active')}
+
+/* ========== UTILS ========== */
+function closeAll(){closeCart();closeModal();closeWishlist()}
+function toggleTheme(){
+  lightMode=!lightMode;
+  document.body.classList.toggle('light',lightMode);
+  document.getElementById('themeBtn').textContent=lightMode?'☀️':'🌙';
+}
+function showToast(text,type=''){
+  const wrap=document.getElementById('toasts');
+  const t=document.createElement('div');
+  t.className='toast'+(type?' '+type:'');
+  t.textContent=text;
+  wrap.appendChild(t);
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),300)},2800);
+}
+function copyPromo(){
+  navigator.clipboard?.writeText('NEXUS20').catch(()=>{});
+  showToast('📋 Промокод NEXUS20 скопійовано!','success');
+}
+
+/* ========== COUNTDOWN ========== */
+function startCountdown(){
+  let end=new Date();end.setHours(23,59,59,999);
+  function tick(){
+    const now=new Date();const diff=end-now;
+    if(diff<=0){end=new Date();end.setDate(end.getDate()+1);end.setHours(23,59,59,999)}
+    const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    const s=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+    const el=document.getElementById('countdown');
+    if(el) el.textContent=`${h}:${m}:${s}`;
+  }
+  tick();setInterval(tick,1000);
+}
+
+/* ========== SCROLL TOP ========== */
+window.addEventListener('scroll',()=>{
+  document.getElementById('scrollTop')?.classList.toggle('show',window.scrollY>300);
+});
+
+/* ========== KEYBOARD ========== */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeCart();closeModal();closeWishlist();closeCheckout();document.getElementById('compareModalWrap').classList.remove('active')}
+});
+document.getElementById('logPass')?.addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+document.getElementById('logUser')?.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('logPass').focus()});
+document.getElementById('regPass')?.addEventListener('keydown',e=>{if(e.key==='Enter')register()});
+document.getElementById('regUser')?.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('regPass').focus()});
+
+/* ========== RECENTLY VIEWED ========== */
+function renderRecentlyViewed(){
+  const wrap=document.getElementById('recentlyWrap');
+  const list=document.getElementById('recentlyList');
+  const items=recentlyViewed.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  if(!items.length){wrap.style.display='none';return}
+  wrap.style.display='block';
+  list.innerHTML=items.map(p=>`
+    <div class="recently-item" onclick="openModal(${p.id})">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="recently-item-name">${p.name}</div>
+      <div class="recently-item-price">$${p.price}<br><span style="font-size:10px;color:var(--text3)">${toUAH(p.price)} ₴</span></div>
+    </div>`).join('');
+}
+
+/* ========== COMPARE ========== */
+function toggleCompare(e,id){
+  e.stopPropagation();
+  if(compareList.includes(id)){
+    compareList=compareList.filter(x=>x!==id);
+    showToast('Видалено з порівняння','');
+  } else {
+    if(compareList.length>=4){showToast('Максимум 4 товари для порівняння','');return}
+    compareList.push(id);
+    showToast('⚖️ Додано до порівняння','success');
+  }
+  renderGrid();renderCompareBar();
+}
+function renderCompareBar(){
+  const bar=document.getElementById('compareBar');
+  const itemsEl=document.getElementById('compareItems');
+  if(!compareList.length){bar.style.display='none';return}
+  bar.style.display='block';
+  itemsEl.innerHTML=compareList.map(id=>{
+    const p=products.find(x=>x.id===id);
+    return p?`<div class="compare-chip">${p.name.substring(0,14)}<button class="compare-chip-remove" onclick="toggleCompare({stopPropagation:()=>{}},${id})">✕</button></div>`:''
+  }).join('');
+}
+function openCompare(){
+  if(compareList.length<2){showToast('Обери мінімум 2 товари','');return}
+  const items=compareList.map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  const allKeys=['Ціна','Рейтинг','Відгуки','Категорія'];
+  const specKeys=[...new Set(items.flatMap(p=>p.specs.map(s=>s[0])))];
+  const rows=[...allKeys,...specKeys];
+  const getVal=(p,key)=>{
+    if(key==='Ціна') return `$${p.price}`;
+    if(key==='Рейтинг') return `${p.rating}★`;
+    if(key==='Відгуки') return p.reviews.toLocaleString();
+    if(key==='Категорія') return p.cat;
+    const spec=p.specs.find(s=>s[0]===key);
+    return spec?spec[1]:'—';
+  };
+  const numVal=(p,key)=>{
+    if(key==='Ціна') return p.price;
+    if(key==='Рейтинг') return p.rating;
+    if(key==='Відгуки') return p.reviews;
+    return 0;
+  };
+  document.getElementById('compareModal').innerHTML=`
+    <button class="compare-close-btn" onclick="document.getElementById('compareModalWrap').classList.remove('active')">✕</button>
+    <h2>⚖️ ПОРІВНЯННЯ ТОВАРІВ</h2>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <thead><tr><th>Характеристика</th>${items.map(p=>`<th><div style="font-size:28px;margin-bottom:4px">${p.imgIcon}</div><div style="font-size:13px;font-weight:700;color:var(--text)">${p.name}</div><div style="font-family:'Rajdhani','JetBrains Mono',monospace;font-size:15px;color:var(--accent2);margin-top:4px">$${p.price}</div></th>`).join('')}</tr></thead>
+      <tbody>${rows.map(key=>{
+        const vals=items.map(p=>({p,val:getVal(p,key),num:numVal(p,key)}));
+        const maxNum=Math.max(...vals.map(v=>v.num));
+        const isNum=['Ціна','Рейтинг','Відгуки'].includes(key);
+        return `<tr><td>${key}</td>${vals.map(v=>`<td class="compare-val${isNum&&v.num===maxNum&&maxNum>0?' compare-best':''}">${v.val}</td>`).join('')}</tr>`;
+      }).join('')}</tbody>
+    </table></div>
+    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+      ${items.map(p=>`<button class="checkout-btn" style="flex:1;min-width:140px;font-size:13px;padding:11px" onclick="addCart({stopPropagation:()=>{}},${p.id});document.getElementById('compareModalWrap').classList.remove('active')">🛒 ${p.name.substring(0,12)}</button>`).join('')}
+    </div>`;
+  document.getElementById('compareModalWrap').classList.add('active');
+}
+
+/* ========== HERO CANVAS PARTICLES ========== */
+function initHeroCanvas(){
+  const canvas=document.getElementById('heroCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight}
+  resize();
+  window.addEventListener('resize',resize);
+  const particles=Array.from({length:70},()=>({
+    x:Math.random()*canvas.width, y:Math.random()*canvas.height,
+    vx:(Math.random()-.5)*.4, vy:(Math.random()-.5)*.4,
+    r:Math.random()*2+.5,
+    alpha:Math.random()*.6+.1,
+    color:Math.random()<.5?'124,92,252':'0,229,195'
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.color},${p.alpha})`;
+      ctx.fill();
+    });
+    // Draw connections
+    particles.forEach((a,i)=>{
+      particles.slice(i+1).forEach(b=>{
+        const dx=a.x-b.x, dy=a.y-b.y, dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<90){
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(124,92,252,${.12*(1-dist/90)})`;
+          ctx.lineWidth=.6;ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+/* ========== DEALS TICKER ========== */
+function buildTicker(){
+  const items=products.filter(p=>p.oldPrice||p.badge==='hot').slice(0,8);
+  const html=items.map(p=>`
+    <span class="ticker-item">
+      <span class="ticker-badge">${p.badge?.toUpperCase()||'DEAL'}</span>
+      ${p.imgIcon} ${p.name}
+      <span class="ticker-price">$${p.price}</span>
+      ${p.oldPrice?`<span style="text-decoration:line-through;color:var(--text3);font-size:10px">$${p.oldPrice}</span>`:''}
+      <span class="ticker-sep">·</span>
+    </span>`).join('');
+  const ticker=document.getElementById('tickerInner');
+  ticker.innerHTML=html+html; // duplicate for seamless loop
+}
+
+/* ========== CATEGORY SHOWCASE ========== */
+function buildCatShowcase(){
+  const catData=[
+    {cat:'GPU',icon:'🖥️',color:'rgba(124,92,252,.15)',color2:'rgba(90,61,224,.08)'},
+    {cat:'Консолі',icon:'🎮',color:'rgba(0,180,255,.12)',color2:'rgba(0,100,200,.06)'},
+    {cat:'Монітори',icon:'📺',color:'rgba(0,229,195,.12)',color2:'rgba(0,180,155,.06)'},
+    {cat:'Ноутбуки',icon:'💻',color:'rgba(240,165,0,.12)',color2:'rgba(200,120,0,.06)'},
+    {cat:'Периферія',icon:'🖱️',color:'rgba(124,92,252,.12)',color2:'rgba(90,61,224,.06)'},
+    {cat:'Аудіо',icon:'🎧',color:'rgba(255,85,85,.12)',color2:'rgba(200,50,50,.06)'},
+    {cat:'Комплектуючі',icon:'⚙️',color:'rgba(100,200,100,.12)',color2:'rgba(60,150,60,.06)'},
+    {cat:'Меблі',icon:'🪑',color:'rgba(180,140,80,.12)',color2:'rgba(140,100,40,.06)'},
+    {cat:'Гаджети',icon:'📱',color:'rgba(0,229,195,.15)',color2:'rgba(0,150,130,.08)'},
+  ];
+  const sc=document.getElementById('catShowcase');
+  sc.innerHTML=catData.map(c=>{
+    const count=products.filter(p=>p.cat===c.cat).length;
+    return `<div class="cat-card" style="--cc1:${c.color};--cc2:${c.color2}" onclick="setCategory('${c.cat}');document.getElementById('heroBanner').style.display='none'">
+      <div class="cat-card-icon">${c.icon}</div>
+      <div class="cat-card-name">${c.cat}</div>
+      <div class="cat-card-count">${count} товарів</div>
+    </div>`;
+  }).join('');
+}
+
+/* ========== AI CHAT ========== */
+let chatHistory=[];
+let chatOpen=false;
+let chatBotTyping=false;
+
+function initChat(){
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML='';
+  addBotMsg('Привіт! 👋 Я AI-асистент NexusSHOP. Можу допомогти обрати товар, дати пораду або відповісти на будь-яке питання про магазин. Що тебе цікавить?');
+}
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('aiChatWrap').classList.toggle('open',chatOpen);
+  const notif=document.querySelector('#aiChatBtn .chat-notif');
+  if(chatOpen&&notif) notif.style.display='none';
+  if(chatOpen) setTimeout(()=>document.getElementById('chatInput').focus(),300);
+}
+
+function addBotMsg(text){
+  const msgs=document.getElementById('chatMessages');
+  const time=new Date().toLocaleTimeString('uk',{hour:'2-digit',minute:'2-digit'});
+  const el=document.createElement('div');
+  el.className='chat-msg bot';
+  el.innerHTML=`<div class="chat-msg-bubble">${text}</div><div class="chat-msg-time">🤖 NEXUS AI · ${time}</div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addUserMsg(text){
+  const msgs=document.getElementById('chatMessages');
+  const time=new Date().toLocaleTimeString('uk',{hour:'2-digit',minute:'2-digit'});
+  const el=document.createElement('div');
+  el.className='chat-msg user';
+  el.innerHTML=`<div class="chat-msg-bubble">${text}</div><div class="chat-msg-time">${time}</div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showTyping(){
+  const msgs=document.getElementById('chatMessages');
+  const el=document.createElement('div');
+  el.className='chat-typing';el.id='chatTyping';
+  el.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(el);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function hideTyping(){
+  const t=document.getElementById('chatTyping');
+  if(t) t.remove();
+}
+
+function chatKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}
+}
+
+function sendQuick(text){
+  document.getElementById('chatInput').value=text;
+  sendChat();
+}
+
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const text=input.value.trim();
+  if(!text||chatBotTyping) return;
+  input.value='';
+  addUserMsg(text);
+  chatHistory.push({role:'user',content:text});
+  chatBotTyping=true;
+  document.getElementById('chatSendBtn').disabled=true;
+  showTyping();
+
+  // Build product context for AI
+  const productList=products.map(p=>`${p.name} (${p.cat}) — $${p.price}${p.oldPrice?`, знижка з $${p.oldPrice}`:''}, рейтинг ${p.rating}★`).join('\n');
+  const systemPrompt=`Ти AI-асистент інтернет-магазину NexusSHOP. Відповідай ТІЛЬКИ українською мовою. Будь дружнім, корисним та лаконічним.
+
+Поточний каталог магазину (${products.length} товарів):
+${productList}
+
+Промокоди: NEXUS20 (−20%), SAVE10 (−10%), VIP30 (−30%)
+Доставка: Нова Пошта (1-3 дні, від $5), Укрпошта (3-7 днів, від $2), Meest Express (1-2 дні, від $8), Кур'єр (1 день, від $12)
+Безкоштовна доставка при замовленні від $200.
+Повернення: 30 днів.
+Оплата: картка Visa/MC, Google/Apple Pay, PayPal, ПриватБанк/Mono, накладений платіж, криптовалюта.
+
+Якщо питають про конкретний товар — розкажи про нього детально. Якщо просять пораду — запропонуй 2-3 варіанти з каталогу. Відповідай коротко (3-5 речень максимум). Не вигадуй товари яких немає в каталозі.`;
+
+  try {
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:500,
+        system:systemPrompt,
+        messages:chatHistory.slice(-10)
+      })
+    });
+    const data=await resp.json();
+    hideTyping();
+    const reply=data.content?.[0]?.text||'Вибач, сталась помилка. Спробуй ще раз!';
+    chatHistory.push({role:'assistant',content:reply});
+    addBotMsg(reply);
+  } catch(err){
+    hideTyping();
+    addBotMsg('Вибач, проблема з підключенням. Спробуй пізніше або напиши нам на підтримку!');
+  }
+  chatBotTyping=false;
+  document.getElementById('chatSendBtn').disabled=false;
+  document.getElementById('chatInput').focus();
+}
+
+/* ========== AUTO LOGIN ========== */
+if(currentUser&&users[currentUser]){
+  cart=JSON.parse(localStorage.getItem('nx_cart_'+currentUser))||[];
+  wishlist=JSON.parse(localStorage.getItem('nx_wish_'+currentUser))||[];
+  recentlyViewed=JSON.parse(localStorage.getItem('nx_recent_'+currentUser))||[];
+  startApp();
+}
+
+/* ===== V5 NEW FEATURES ===== */
+let priceMin = 0;
+let priceMax = 99999;
+let ratingFilter = 0;
+
+function applyPriceFilter() {
+  const min = parseFloat(document.getElementById('priceMin').value) || 0;
+  const max = parseFloat(document.getElementById('priceMax').value) || 99999;
+  priceMin = Math.max(0, min);
+  priceMax = Math.max(priceMin, max);
+  updateActiveFilters();
+  renderGrid();
+  showToast(`💰 Фільтр: $${priceMin} — $${priceMax}`, 'success');
+}
+
+function resetPriceFilter() {
+  priceMin = 0; priceMax = 99999;
+  document.getElementById('priceMin').value = '';
+  document.getElementById('priceMax').value = '';
+  updateActiveFilters();
+  renderGrid();
+}
+
+function setRatingFilter(r) {
+  ratingFilter = r;
+  document.querySelectorAll('.rating-filter-btn').forEach(b => b.classList.remove('active'));
+  const id = r === 4.5 ? 'rfBtn45' : r === 4 ? 'rfBtn4' : 'rfBtnAll';
+  document.getElementById(id)?.classList.add('active');
+  updateActiveFilters();
+  renderGrid();
+}
+
+function updateActiveFilters() {
+  const af = document.getElementById('activeFilters');
+  let chips = '';
+  if (priceMin > 0 || priceMax < 99999) {
+    chips += `<div class="active-filter-chip">💰 $${priceMin}–$${priceMax}<button onclick="resetPriceFilter()">✕</button></div>`;
+  }
+  if (ratingFilter > 0) {
+    chips += `<div class="active-filter-chip">⭐ ${ratingFilter}+<button onclick="setRatingFilter(0)">✕</button></div>`;
+  }
+  af.innerHTML = chips;
+}
+
+/* ===== SEARCH SUGGESTIONS ===== */
+let searchBlurTimeout;
+
+function onSearchInput() {
+  clearTimeout(searchBlurTimeout);
+  const q = document.getElementById('searchIn').value.trim().toLowerCase();
+  const dropdown = document.getElementById('searchDropdown');
+  renderGrid();
+  if (!q || q.length < 2) { dropdown.classList.remove('show'); return; }
+  const matches = products.filter(p => 
+    p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q)
+  ).slice(0, 6);
+  if (!matches.length) { dropdown.classList.remove('show'); return; }
+  dropdown.innerHTML = matches.map(p => `
+    <div class="search-suggestion" onmousedown="selectSearchSuggestion(${p.id})">
+      <span class="search-suggestion-icon">${p.imgIcon}</span>
+      <div style="flex:1;min-width:0">
+        <div class="search-suggestion-name">${p.name}</div>
+        <div class="search-suggestion-cat">${p.cat}</div>
+      </div>
+      <span class="search-suggestion-price">$${p.price}</span>
+    </div>`).join('');
+  dropdown.classList.add('show');
+}
+
+function hideSearchDropdown() {
+  searchBlurTimeout = setTimeout(() => {
+    document.getElementById('searchDropdown').classList.remove('show');
+  }, 150);
+}
+
+function selectSearchSuggestion(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('searchIn').value = p.name;
+  document.getElementById('searchDropdown').classList.remove('show');
+  renderGrid();
+  setTimeout(() => openModal(id), 100);
+}
+
+/* ===== OVERRIDE renderGrid to add price/rating filter ===== */
+const _origRenderGrid = renderGrid;
+renderGrid = function() {
+  const search = document.getElementById('searchIn').value.toLowerCase();
+  let list = products.filter(p => {
+    const catMatch = activeCategory === 'all' || p.cat === activeCategory;
+    const searchMatch = p.name.toLowerCase().includes(search) || p.cat.toLowerCase().includes(search);
+    const priceMatch = p.price >= priceMin && p.price <= priceMax;
+    const ratingMatch = ratingFilter === 0 || p.rating >= ratingFilter;
+    return catMatch && searchMatch && priceMatch && ratingMatch;
+  });
+  if (sortMode === 'price_asc') list.sort((a,b) => a.price - b.price);
+  else if (sortMode === 'price_desc') list.sort((a,b) => b.price - a.price);
+  else if (sortMode === 'rating') list.sort((a,b) => b.rating - a.rating);
+  else if (sortMode === 'reviews') list.sort((a,b) => b.reviews - a.reviews);
+  const grid = document.getElementById('productsGrid');
+  grid.className = 'grid' + (viewMode === 'list' ? ' list-view' : '');
+  const countEl = document.getElementById('productCount');
+  if (countEl) countEl.textContent = `${list.length} товарів`;
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty-state"><div>🔍</div><p>Нічого не знайдено за заданими фільтрами</p></div>`;
+    return;
+  }
+  const bmap = {new:'badge-new NEW', hot:'badge-hot HOT', sale:'badge-sale SALE', top:'badge-top TOP'};
+  const stars = r => '★'.repeat(Math.floor(r)) + (r%1>=.5?'½':'') + ('☆'.repeat(5-Math.floor(r)-(r%1>=.5?1:0)));
+  const inCompare = id => compareList.includes(id);
+  grid.innerHTML = list.map((p,i) => {
+    const inW = wishlist.includes(p.id);
+    const bp = bmap[p.badge]?.split(' ') || [];
+    const disc = p.oldPrice ? Math.round((1-p.price/p.oldPrice)*100) : null;
+    const stockPct = 55 + ((p.id*37) % 45);
+    const stockClass = stockPct > 70 ? 'green' : stockPct > 40 ? 'yellow' : 'red';
+    const stockColor = stockPct > 70 ? 'var(--accent2)' : stockPct > 40 ? 'var(--gold)' : 'var(--accent3)';
+    return `<div class="card" style="animation-delay:${i*.04}s" onclick="openModal(${p.id})">
+      <div class="card-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.img-fallback').style.display='flex'">
+        <div class="img-fallback" style="display:none;width:100%;height:190px;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(135deg,var(--surface2),var(--surface3));gap:8px"><span style="font-size:48px;opacity:.5">${p.imgIcon}</span><span style="font-size:11px;color:var(--text3);padding:0 12px;text-align:center">${p.name}</span></div>
+        <div class="card-badges">
+          ${bp[0]?`<span class="badge ${bp[0]}">${bp[1]}</span>`:''}
+          ${disc?`<span class="badge badge-sale">−${disc}%</span>`:''}
+        </div>
+        <button class="wishlist-btn${inW?' active':''}" onclick="toggleWish(event,${p.id})" title="В вподобане">♥</button>
+        <button class="card-compare-btn${inCompare(p.id)?' active':''}" onclick="toggleCompare(event,${p.id})" title="Порівняти">⚖</button>
+        <div class="card-overlay"><button class="quick-add" onclick="addCart(event,${p.id})">🛒 + В кошик</button></div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.cat}</div>
+        <h4>${p.name}</h4>
+        <div class="card-rating">
+          <span class="stars">${stars(p.rating)}</span>
+          <span class="rating-count">(${p.reviews.toLocaleString()})</span>
+          <span class="live-viewers">👁 ${3+((p.id*13+7)%21)} зараз</span>
+        </div>
+        <div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--text3);margin-bottom:4px">
+            <span style="display:flex;align-items:center"><span class="in-stock-dot ${stockClass}"></span>В наявності</span>
+            <span style="font-weight:700;color:${stockColor}">${stockPct}%</span>
+          </div>
+          <div style="height:4px;background:var(--surface3);border-radius:4px;overflow:hidden">
+            <div style="height:4px;width:${stockPct}%;background:linear-gradient(90deg,${stockColor},${stockColor}aa);border-radius:4px;transition:width .6s cubic-bezier(.16,1,.3,1)"></div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div>
+            <div style="display:flex;align-items:baseline;gap:6px"><span class="price">$${p.price}</span>${p.oldPrice?`<span class="price-old">$${p.oldPrice}</span>`:''}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:1px">≈ ${toUAH(p.price)} ₴</div>
+          </div>
+          <button class="add-btn" onclick="addCart(event,${p.id})" title="В кошик">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+};
+
+/* ===== PROFILE ===== */
+let profileData = {};
+let orderHistory = [];
+
+function openProfile() {
+  profileData = JSON.parse(localStorage.getItem('nx_profile_' + currentUser) || '{}');
+  orderHistory = JSON.parse(localStorage.getItem('nx_orders_' + currentUser) || '[]');
+
+  // Fill avatar
+  const avatarImg = document.getElementById('profileAvatarImg');
+  const avatarPh  = document.getElementById('profileAvatarPlaceholder');
+  const saved = localStorage.getItem('nx_avatar_' + currentUser);
+  if (saved) {
+    avatarImg.src = saved;
+    avatarImg.style.display = 'block';
+    avatarPh.style.display = 'none';
+    // also update header mini avatar
+  } else {
+    avatarImg.style.display = 'none';
+    avatarPh.style.display = 'flex';
+    avatarPh.textContent = currentUser.substring(0,2).toUpperCase();
+  }
+
+  // Names & email
+  document.getElementById('profileNameDisplay').textContent = (profileData.firstname && profileData.lastname)
+    ? profileData.firstname + ' ' + profileData.lastname
+    : currentUser;
+  document.getElementById('profileEmailDisplay').textContent = profileData.email || (currentUser + '@nexusshop.ua');
+
+  // Fill edit fields
+  document.getElementById('pf-firstname').value = profileData.firstname || '';
+  document.getElementById('pf-lastname').value  = profileData.lastname  || '';
+  document.getElementById('pf-email').value      = profileData.email    || '';
+  document.getElementById('pf-phone').value      = profileData.phone    || '';
+  document.getElementById('pf-city').value       = profileData.city     || '';
+  document.getElementById('pf-zip').value        = profileData.zip      || '';
+  document.getElementById('pf-address').value    = profileData.address  || '';
+
+  // Stats
+  const spent = orderHistory.reduce((s, o) => s + o.total, 0);
+  document.getElementById('ps-orders').textContent = orderHistory.length;
+  document.getElementById('ps-spent').textContent  = '$' + spent.toLocaleString();
+  document.getElementById('ps-wish').textContent   = wishlist.length;
+  document.getElementById('ps-reviews').textContent = Math.floor(orderHistory.length * 0.7);
+
+  // render orders & wishlist tabs
+  renderProfileOrders();
+  renderProfileWishlist();
+
+  switchProfileTab('overview');
+  document.getElementById('profileWrap').classList.add('active');
+}
+
+function closeProfile() {
+  document.getElementById('profileWrap').classList.remove('active');
+}
+
+function switchProfileTab(name) {
+  document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('ptab-' + name).classList.add('active');
+  const tabs = ['overview','orders','wishlist','edit','security'];
+  const idx = tabs.indexOf(name);
+  document.querySelectorAll('.profile-tab')[idx].classList.add('active');
+}
+
+function handleAvatarUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { toast('Файл надто великий (макс 5MB)', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const dataUrl = ev.target.result;
+    localStorage.setItem('nx_avatar_' + currentUser, dataUrl);
+    const avatarImg = document.getElementById('profileAvatarImg');
+    const avatarPh  = document.getElementById('profileAvatarPlaceholder');
+    avatarImg.src = dataUrl;
+    avatarImg.style.display = 'block';
+    avatarPh.style.display  = 'none';
+    // update header avatar too
+    const hdr = document.getElementById('userInitials');
+    hdr.innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
+    toast('Аватарка оновлена! 🎉', 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfileData() {
+  profileData = {
+    firstname: document.getElementById('pf-firstname').value.trim(),
+    lastname:  document.getElementById('pf-lastname').value.trim(),
+    email:     document.getElementById('pf-email').value.trim(),
+    phone:     document.getElementById('pf-phone').value.trim(),
+    city:      document.getElementById('pf-city').value.trim(),
+    zip:       document.getElementById('pf-zip').value.trim(),
+    address:   document.getElementById('pf-address').value.trim(),
+  };
+  localStorage.setItem('nx_profile_' + currentUser, JSON.stringify(profileData));
+  if (profileData.firstname) {
+    document.getElementById('profileNameDisplay').textContent =
+      profileData.firstname + (profileData.lastname ? ' ' + profileData.lastname : '');
+  }
+  if (profileData.email) document.getElementById('profileEmailDisplay').textContent = profileData.email;
+  toast('Дані збережено ✓', 'success');
+}
+
+function renderProfileOrders() {
+  const c = document.getElementById('ordersContainer');
+  if (!orderHistory.length) {
+    c.innerHTML = `<div class="orders-empty"><div>📦</div><p>У тебе ще немає замовлень.<br>Час зробити першу покупку!</p></div>`;
+    return;
+  }
+  c.innerHTML = orderHistory.slice().reverse().map((o, i) => {
+    const statusMap = { delivered:'delivered', processing:'processing', cancelled:'cancelled' };
+    const statusLabel = { delivered:'Доставлено', processing:'Обробляється', cancelled:'Скасовано' };
+    const st = o.status || 'delivered';
+    const itemsHTML = (o.items || []).map(it => {
+      const p = products.find(x => x.id === it.id) || {};
+      return `<div class="order-item-row">
+        <img class="order-item-img" src="${p.img || ''}" alt="${p.name || it.name}">
+        <div class="order-item-name">${p.name || it.name} × ${it.qty}</div>
+        <div class="order-item-price">$${(it.price * it.qty)}</div>
+      </div>`;
+    }).join('');
+    return `<div class="order-card">
+      <div class="order-head" onclick="toggleOrderBody(this)" id="ohd-${i}">
+        <div>
+          <div class="order-num">#${o.num}</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:2px">${(o.items||[]).length} товар(ів)</div>
+        </div>
+        <div class="order-date">${o.date}</div>
+        <div class="order-total">$${o.total}</div>
+        <span class="order-status ${statusMap[st]}">${statusLabel[st]}</span>
+        <span class="order-arrow">▾</span>
+      </div>
+      <div class="order-body" id="ob-${i}">
+        ${itemsHTML}
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--border);margin-top:6px">
+          <span style="font-size:11px;color:var(--text3)">Адреса: ${o.address || 'не вказана'}</span>
+          <span style="font-family:'Rajdhani',monospace;font-size:15px;font-weight:700;color:var(--accent2)">Разом: $${o.total}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleOrderBody(el) {
+  el.classList.toggle('open');
+  const idx = el.id.replace('ohd-','');
+  const body = document.getElementById('ob-' + idx);
+  body.classList.toggle('open');
+}
+
+function renderProfileWishlist() {
+  const c = document.getElementById('profileWishContainer');
+  const items = wishlist.map(id => products.find(p => p.id === id)).filter(Boolean);
+  if (!items.length) {
+    c.innerHTML = `<div class="orders-empty"><div>❤️</div><p>Список вподобаних порожній.<br>Додай товари що сподобались!</p></div>`;
+    return;
+  }
+  c.innerHTML = `<div class="p-wish-grid">${items.map(p => `
+    <div class="p-wish-card" onclick="closeProfile();setTimeout(()=>openModal(${p.id}),200)">
+      <img class="p-wish-img" src="${p.img}" alt="${p.name}">
+      <div class="p-wish-name">${p.name}</div>
+      <div class="p-wish-price">$${p.price}</div>
+    </div>`).join('')}</div>`;
+}
+
+/* ===== PATCH: save orders on checkout success ===== */
+const _origFinishOrder = typeof finishOrder === 'function' ? finishOrder : null;
+function saveOrderToHistory(cartItems, total) {
+  const num = 'NX' + Date.now().toString().slice(-6);
+  const order = {
+    num,
+    date: new Date().toLocaleDateString('uk-UA'),
+    total,
+    status: 'processing',
+    items: cartItems.map(i => ({id: i.id, name: i.name, price: i.price, qty: i.qty})),
+    address: (function(){
+      try{ return localStorage.getItem('nx_last_addr_'+currentUser)||'Не вказана'; }catch(e){return '';}
+    })()
+  };
+  orderHistory.push(order);
+  localStorage.setItem('nx_orders_' + currentUser, JSON.stringify(orderHistory));
+}
+
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    document.getElementById('searchIn')?.focus();
+  }
+});
+
+/* ===== SWIPE GESTURE for filter bar ===== */
+(function() {
+  let startX = 0;
+  const bar = document.getElementById('filterBar');
+  if (!bar) return;
+  bar.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+})();
+
+</script>
+</body>
+</html>
